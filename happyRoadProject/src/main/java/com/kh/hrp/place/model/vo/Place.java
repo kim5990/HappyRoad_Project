@@ -43,7 +43,7 @@ public class Place {
    }
    
    
-   
+   // placeLikeSelectList 에서 사용하는 생성자
    public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
          String placeAddress) {
       super();
@@ -54,8 +54,7 @@ public class Place {
       this.placeAddress = placeAddress;
    }
    
-   
-
+   // selectPlace 에서 사용하는 생성자
    public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
          String placeAddress, String placeHomepage, String placeContact, String placeTime, Date placeStart,
          Date placeEnd) {

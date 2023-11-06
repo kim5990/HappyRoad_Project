@@ -183,20 +183,48 @@ public class PlaceDao {
          close(rset);
          close(pstmt);
       }
-      return list;   
-      
+      return list;
       
    }
 
 	public int selectSearchCount(Connection conn, HashMap<String, String> map) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
-	
-	public ArrayList<Place> selectPlaceImage(Connection conn, HashMap<String, String> map, PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public ArrayList<Place> selectSearchList(Connection conn, HashMap<String, String> map, PageInfo pi) {
+		ArrayList<Place> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSearchList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Place p = new Place();
+				p.setPlaceNo(rset.getInt("place_no"));
+				p.setPlaceTitle(rset.getString("place_title"));
+				p.setPlaceAddress(rset.getString("place_address"));
+				p.setPlaceTitleImg(rset.getString("place_image_path"));;
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
+	
+	
    
 
 }

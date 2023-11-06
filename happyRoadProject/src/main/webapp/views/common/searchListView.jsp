@@ -71,7 +71,41 @@
             <li class="page-item"><a class="page-link" href="">3</a></li>
             <li class="page-item"><a class="page-link" href="">&gt;</a></li>
         </ul>
-    </div>
+        
+	<%-- <div id="paging-area">
+        <c:if test="${ pi.currentPage ne 1 }">
+       	<c:choose>
+            <c:when test="${empty condition }">
+            <a href="list.bo?cpage=${ pi.currentPage - 1}">[이전]</a>
+            </c:when>
+            <c:otherwise>
+            <a href="search.bo?cpage=${ pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">[이전]</a>
+            </c:otherwise>
+        </c:choose>
+        </c:if>
+            
+        <c:forEach var="i" begin="${pi.startPage}" end="${ pi.endPage }">
+        <c:choose>
+            <c:when test="${empty condition }">
+            <a href="list.bo?cpage=${ i }">${ i }</a>
+            </c:when>
+            <c:otherwise>
+            <a href="search.bo?cpage=${ i }&condition=${condition}&keyword=${keyword}">${ i }</a>
+            </c:otherwise>
+        </c:choose>
+        </c:forEach>
+            
+        <c:if test="${ pi.currentPage ne pi.maxPage }">
+       	<c:choose>
+            <c:when test="${empty condition }">
+            <a href="list.bo?cpage=${ pi.currentPage + 1}">[다음]</a>
+            </c:when>
+            <c:otherwise>
+            <a href="search.bo?cpage=${ pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">[다음]</a>
+            </c:otherwise>
+        </c:choose>
+        </c:if>
+	</div> --%>
 	    
     <%@ include file = "./footer.jsp"%>
 	    

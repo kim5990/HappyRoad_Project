@@ -2,44 +2,58 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-   <entry key="selectListCount">
-      SELECT COUNT(*) COUNT
-      FROM PLACE_LIKE
-      JOIN PLACE USING(PLACE_NO)
-      WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
-   </entry>
-   
-   
-   <entry key="placeLikeSelectList">
-      SELECT *        
-      FROM(SELECT ROWNUM RNUM, A.* 
-          FROM (SELECT PLACE_NO, 
-                   PLACE_TITLE, 
-                   PLACE_CONTENT_POINT, 
-                   PLACE_CONTENT_DETAIL, 
-                   PLACE_IMAGE_PATH
-                  FROM PLACE_LIKE
-                  JOIN PLACE USING(PLACE_NO)
-                  LEFT JOIN PLACE_IMAGE USING(PLACE_NO)
-                  WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
-                  ORDER BY LIKE_NO DESC 
-              ) A
-          )
-      WHERE RNUM BETWEEN ? AND ?
-   </entry>
-   
-   <entry key="placeLikeDeleteController">
-        DELETE FROM PLACE_LIKE 
-        WHERE USER_NO = ? AND PLACE_NO = ?
-   </entry>
-   
-   <entry key="selectPlaceImage">
-      SELECT PLACE_IMAGE_NO
-           , PLACE_IMAGE_CHANGE
-           , PLACE_IMAGE_PATH
-       FROM PLACE_IMAGE
-       WHERE PLACE_NO = ?
-   </entry>
-   
-   
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		FROM PLACE_LIKE
+		JOIN PLACE USING(PLACE_NO)
+		WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
+	</entry>
+
+
+	<entry key="placeLikeSelectList">
+		SELECT *
+		FROM(SELECT ROWNUM RNUM, A.*
+			FROM (SELECT PLACE_NO,
+						 PLACE_TITLE,
+						 PLACE_CONTENT_POINT,
+						 PLACE_CONTENT_DETAIL,
+						 PLACE_IMAGE_PATH
+				 FROM PLACE_LIKE
+				 JOIN PLACE USING(PLACE_NO)
+				 LEFT JOIN PLACE_IMAGE USING(PLACE_NO)
+				 	WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
+						ORDER BY LIKE_NO DESC
+			) A
+		)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	<entry key="placeLikeDeleteController">
+		DELETE FROM PLACE_LIKE
+		WHERE USER_NO = ? AND PLACE_NO = ?
+	</entry>
+
+	<entry key="selectPlaceImage">
+		SELECT PLACE_IMAGE_NO
+			 , PLACE_IMAGE_CHANGE
+			 , PLACE_IMAGE_PATH
+		FROM PLACE_IMAGE
+			WHERE PLACE_NO = ?
+	</entry>
+	
+	<entry key="selectSearchCount">
+
+	</entry>
+
+	<entry key="selectSearchList">
+		SELECT PLACE_NO
+		     , PLACE_TITLE
+		     , PLACE_ADDRESS
+		     , PLACE_IMAGE_PATH
+	    FROM PLACE P
+	  	JOIN PLACE_IMAGE USING (PLACE_NO)
+			WHERE P.PLACE_STATUS = 'Y'
+	</entry>
+
+
 </properties>

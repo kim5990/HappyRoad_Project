@@ -68,7 +68,7 @@ public class PlaceService {
 	public ArrayList<Place> selectSearchList(HashMap<String, String> map, PageInfo pi) {
 		
 		Connection conn = getConnection();
-		ArrayList<Place> list = new PlaceDao().selectPlaceImage(conn, map, pi);
+		ArrayList<Place> list = new PlaceDao().selectSearchList(conn, map, pi);
 
 		close(conn);
 		return list;

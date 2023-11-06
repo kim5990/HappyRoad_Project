@@ -149,5 +149,7 @@
             <img src="/ONe/imgs/202212008462_500.jpg" alt="" class="photo-sub" onclick="">
         </div>
     </div>
+    <%@ include file = "../common/footer.jsp"%>
+    
 </body>
 </html>
