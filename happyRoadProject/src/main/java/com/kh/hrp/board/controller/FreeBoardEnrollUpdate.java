@@ -30,15 +30,18 @@ public class FreeBoardEnrollUpdate extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		
-		int boardNo = Integer.parseInt(request.getParameter("bno"));
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContend = request.getParameter("boardContend");
 		
 		Board b = new Board();
-		b.setBoardNo(boardNo);
+		b.setBoardTitle(boardTitle);
+		b.setBoardContent(boardContend);
 		
-		int result = new BoardService().updateBoard(b);
+		int result = new BoardService().updateBoard(b, userNo);
+		
 		
 		if (result > 0) {
 			request.getSession().setAttribute("alertMsg", "성공적으로 수정하였습니다.");

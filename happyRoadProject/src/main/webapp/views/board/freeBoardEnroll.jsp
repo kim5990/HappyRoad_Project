@@ -22,6 +22,9 @@
    <%@ include file = "../common/menubar.jsp"%>
     <div class="freeBoard-area" align="center">
         <form action="<%=contextPath %>/enrollupdate.fb" method="POST">
+        
+        	<input type="hidden" name="userNo" value="<%=loginUser.getUserNo() %>">
+        	
             <table>
                 <h1 align="center" style="font-size: 30px;">자유게시판</h1>
                 <tr align="left">
@@ -41,7 +44,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="boardWriter" class="text-area" placeholder="작성자를 입력하세요">
+                        <input type="text" name="boardWriter" class="text-area" value = "<%= loginUser.getUserName() %>" disable >>
                     </td>
                 </tr>
                 <tr align="left">

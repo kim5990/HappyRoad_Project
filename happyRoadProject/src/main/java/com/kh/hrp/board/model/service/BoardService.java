@@ -63,10 +63,10 @@ public class BoardService {
       return b;
    }
    
-   public int updateBoard(Board b) { // 게시물 수정 
+   public int updateBoard(Board b, int userNo) { // 게시물 추가
       Connection conn = getConnection();
       
-      int result = new BoardDao().updateBoard(conn, b);
+      int result = new BoardDao().updateBoard(conn, b, userNo);
       
       if (result > 0) {
          commit(conn);

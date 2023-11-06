@@ -50,11 +50,17 @@
    </entry>
    
    <entry key="updateBoard">
-      UPDATE BOARD
-         SET BOARD_CATEGORY = ?
-           , BOARD_TITLE = ?
-           , BOARD_CONTENT = ?
-       WHERE BOARD_NO = ?
+    INSERT 
+		INTO BOARD (
+					BOARD_NO
+				   ,BOARD_TITLE
+				   ,BOARD_CONTENT
+					)
+			VALUES(
+				   SEQ_BNO.NEXTVAL
+				   ,?
+				   ,?
+				  )
    </entry>
    
 </properties>

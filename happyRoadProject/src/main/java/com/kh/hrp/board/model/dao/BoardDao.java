@@ -153,7 +153,7 @@ public class BoardDao {
    }
    
    
-   public int updateBoard(Connection conn, Board b) {
+   public int updateBoard(Connection conn, Board b, int userNo) {
       int result = 0;
       
       PreparedStatement pstmt = null;
@@ -162,10 +162,8 @@ public class BoardDao {
       try {
          pstmt = conn.prepareStatement(sql);
          
-         pstmt.setString(1, b.getBoardCategory());
-         pstmt.setString(2, b.getBoardTitle());
-         pstmt.setString(3, b.getBoardContent());
-         pstmt.setInt(4, b.getBoardNo());
+         pstmt.setString(1, b.getBoardTitle());
+         pstmt.setString(2, b.getBoardContent());
          
          result = pstmt.executeUpdate();
       } catch (SQLException e) {
