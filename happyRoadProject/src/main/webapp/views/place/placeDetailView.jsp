@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +39,18 @@
     .td1{
        max-width: 250px;
     }
-
-
-
+    
+    .review-area{
+       /* border: 1px solid black; */
+       max-width: 680px;
+       width:100%;
+       /* background-color: rgb(235, 235, 208); */   
+    }
+    
+    .review-pagebar  a{
+    	margin: 0 5px; /* 좌우 여백을 5px로 조정, 필요한 간격으로 조절 가능 */
+        text-decoration: none;
+    }
 
 
 </style>
@@ -51,9 +61,9 @@
    <div id="outer" align="center">
         <br>
         <br>
-        <h1>독립기념관단풍나무숲길</h1>
+        <h1>${p.placeTitle}</h1>
 
-        <h3 style="color: rgb(65, 65, 65);">가을의 낭만을 즐길 수 있는 곳</h3>
+        <h3 style="color: rgb(65, 65, 65);">${p.placeContentPoint}</h3>
 
         <div align="right" style="max-width: 650px;">
             <!-- 즐겨찾기 안했을 때 -->
@@ -75,7 +85,7 @@
         <br>
 
         <div id="text1">
-            독립기념관 단풍나무숲길은 2017년 ‘제1회 단풍나무숲길힐링축제’ 개최를 통해 독립운동사 강연, 통기타 공연, 사진 촬영 등 다채로운 프로그램을 선보였다. 전국의 관광객들에게 독립기념관 단풍나무길을 알리는데 큰 역할을 하였다. 독립기념관 단풍나무숲길은 봄과 여름에는 파랗지만 가을에는 어김없이 빨갛게 물드는 고유수종 청단풍으로 이루어졌다. 수령 20년이 넘은 나무가 터널을 이루어 여느 단풍길과 비교해도 손색이 없다.
+            ${p.placeContentDetail}
         </div>
 
         <br><br>
@@ -90,26 +100,83 @@
             <table id="table-area">
                 <tr>
                     <th><li>주소</li></th>
-                    <td class="td1">서울특별시 강남구 테헤란로14길 6</td>
+                    <td class="td1">${p.placeAddress}</td>
                     <th><li>테마</li></th>
-                    <td>계절</td>
+                    <td>${p.placeThema}</td>
                 </tr>
                 <tr>
                     <th><li>홈페이지</li></th>
-                    <td class="td1"><a>https://www.iei.or.kr/main/main.kh</a></td>
+                    <td class="td1"><a>${p.placeHomepage}</a></td>
                     <th><li>연락처</li></th>
-                    <td>0507-1400-2037</td>
+                    <td>${p.placeContact}</td>
                 </tr>
                 <tr>
                     <th><li>이용시간</li></th>
-                    <td>12:00 ~ 15:00</td>
+                    <td>${p.placeTime}</td>
                     <th><li>행사기간</li></th>
-                    <td>2023-10-01 ~ 2023-12-31</td>
+                    <td>${p.placeStart} ~ ${p.placeEnd}</td>
                 </tr>
             </table>
         </div>
-    </div>
+    
     <br><br><br>
+    
+    <br><br><br><br>
+        
+        <h2 style="margin-right: 600px">후기</h2>
+        <hr width="700">
+        <br>
+
+
+        <!-- 로그인 정보 없을 경우 -->
+
+        <!-- 리뷰 없을 경우 -->
+
+
+        <!-- 로그인 정보 + 리뷰 있을 경우 -->
+        
+
+        <table class="review-area" style="padding-right: 20px;">              
+                <tr>
+                    <th rowspan="2" style="width:50px;">user01</th>
+                    <td align="center" style="height: 40px;">ㅇㅇㅇㅇㅇ</td>
+                    <td align="right" style="padding-right: 50px;">2023-11-03</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="padding: 10px;">정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 </td>
+                </tr>
+                <tr style="height: 15px;"></tr>
+                
+
+
+                <tr>
+                    <th rowspan="2" style="width: 120px;">user01</th>
+                    <td align="center" style="height: 40px;">ㅇㅁㅁㅁㅁ</td>
+                    <td align="right" style="padding-right: 50px;">2023-11-03</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="padding: 10px;">만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요  </td>
+                </tr>
+                <tr style="height: 15px;"></tr>
+        </table>
+        <br>
+
+        <div class="review-pagebar">
+            <a><</a>
+            <a>1</a>
+            <a>2</a>
+            <a>3</a>
+            <a>></a>
+
+        </div>
+        
+        <br><br>
+    </div>
+
+    <%@ include file = "../common/footer.jsp"%>
+    
+    
+    </div>
 
 </body>
 </html>

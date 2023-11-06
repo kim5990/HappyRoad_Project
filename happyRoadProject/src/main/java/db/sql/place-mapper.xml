@@ -42,4 +42,30 @@
    </entry>
    
    
+   <entry key="increaseCount">
+		UPDATE PLACE
+		   SET PLACE_COUNT = PLACE_COUNT + 1
+		 WHERE PLACE_NO = ?
+		   AND PLACE_STATUS = 'Y'
+   </entry>
+   
+    <entry key="selectPlace">
+    	SELECT PLACE_NO
+		        ,PLACE_TITLE
+		        ,PLACE_CONTENT_POINT
+		        ,PLACE_CONTENT_DETAIL
+		        ,PLACE_THEMA
+		        ,PLACE_ADDRESS
+		        ,PLACE_HOMEPAGE
+		        ,PLACE_CONTACT
+		        ,PLACE_TIME
+		        ,PLACE_START
+		        ,PLACE_END
+		FROM PLACE
+		WHERE PLACE_NO = ?
+		    AND PLACE_STATUS = 'Y'
+
+   </entry>
+   
+   
 </properties>
