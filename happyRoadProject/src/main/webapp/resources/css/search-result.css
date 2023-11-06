@@ -1,0 +1,80 @@
+
+.search-container{
+    width: 100%;
+}
+
+#search-content{
+    width: 800px;
+    height: 50px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-top: 1px solid rgb(224, 224, 224);
+    border-bottom: 1px solid rgb(224, 224, 224);
+    padding: 20px 0;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+
+.search-result-area{
+    display: inline-flex;
+    width: 800px;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 17px;
+}
+
+/* .search-result-area > button{
+    position: relative;
+    background: rgb(224, 224, 224);
+    border: none;
+    border-radius: 15px;
+    margin: 10px;
+    cursor: pointer;
+} */
+.ulclass{
+    margin: 0 0 0 0;
+    padding-left: 0px;
+}
+#btn-order{
+    border-radius: 20px;
+}
+.serach-result-all{
+    width: 800px;
+    margin: 0 auto;
+}
+
+.search-info-list > ul > li{
+    width: 800px;
+    list-style:none;
+    display: inline-flex;
+    
+    padding: 20px 0;
+    
+    border-bottom: 1px solid rgb(224, 224, 224);
+    
+}
+
+.search-info-list > ul > li > a > img{
+    
+    width: 250px;
+    height: 150px;
+}
+
+.result-content .result-title > a{
+    padding: 0px 0px 0px 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+.result-content .result-area > span{
+    padding: 0px 0px 0px 15px;
+    
+}
+#search-pagination{
+    margin: 60px 0 30px 0;
+}
