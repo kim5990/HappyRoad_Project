@@ -17,6 +17,7 @@ public class Place {
    private int placeCount;
    private Date placeCreateDate;
    private String placeStatus;
+   private String placeTitleImg;
    
    public Place() {
       super();
@@ -72,105 +73,135 @@ public class Place {
       this.placeEnd = placeEnd;
    }
 
-   public int getPlaceNo() {
-      return placeNo;
-   }
-   public void setPlaceNo(int placeNo) {
-      this.placeNo = placeNo;
-   }
-   public String getPlaceTitle() {
-      return placeTitle;
-   }
-   public void setPlaceTitle(String placeTitle) {
-      this.placeTitle = placeTitle;
-   }
-   public String getPlaceContentPoint() {
-      return placeContentPoint;
-   }
-   public void setPlaceContentPoint(String placeContentPoint) {
-      this.placeContentPoint = placeContentPoint;
-   }
-   public String getPlaceContentDetail() {
-      return placeContentDetail;
-   }
-   public void setPlaceContentDetail(String placeContentDetail) {
-      this.placeContentDetail = placeContentDetail;
-   }
-   public String getPlaceThema() {
-      return placeThema;
-   }
-   public void setPlaceThema(String placeThema) {
-      this.placeThema = placeThema;
-   }
-   public String getPlaceAddress() {
-      return placeAddress;
-   }
-   public void setPlaceAddress(String placeAddress) {
-      this.placeAddress = placeAddress;
-   }
-   public String getPlaceHomepage() {
-      return placeHomepage;
-   }
-   public void setPlaceHomepage(String placeHomepage) {
-      this.placeHomepage = placeHomepage;
-   }
-   public String getPlaceTime() {
-      return placeTime;
-   }
-   public void setPlaceTime(String placeTime) {
-      this.placeTime = placeTime;
-   }
-   public Date getPlaceStart() {
-      return placeStart;
-   }
-   public void setPlaceStart(Date placeStart) {
-      this.placeStart = placeStart;
-   }
-   public Date getPlaceEnd() {
-      return placeEnd;
-   }
-   public void setPlaceEnd(Date placeEnd) {
-      this.placeEnd = placeEnd;
-   }
-   public int getPlaceCount() {
-      return placeCount;
-   }
-   public void setPlaceCount(int placeCount) {
-      this.placeCount = placeCount;
-   }
-   public Date getPlaceCreateDate() {
-      return placeCreateDate;
-   }
-   public void setPlaceCreateDate(Date placeCreateDate) {
-      this.placeCreateDate = placeCreateDate;
-   }
-   public String getPlaceStatus() {
-      return placeStatus;
-   }
-   public void setPlaceStatus(String placeStatus) {
-      this.placeStatus = placeStatus;
-   }
-   
-   
-   
-   public String getPlaceContact() {
-      return placeContact;
-   }
+	public int getPlaceNo() {
+		return placeNo;
+	}
 
-   public void setPlaceContact(String placeContact) {
-      this.placeContact = placeContact;
-   }
+	public void setPlaceNo(int placeNo) {
+		this.placeNo = placeNo;
+	}
 
-   @Override
-   public String toString() {
-      return "Place [placeNo=" + placeNo + ", placeTitle=" + placeTitle + ", placeContentPoint=" + placeContentPoint
-            + ", placeContentDetail=" + placeContentDetail + ", placeThema=" + placeThema + ", placeAddress="
-            + placeAddress + ", placeHomepage=" + placeHomepage + ", placeContact=" + placeContact + ", placeTime="
-            + placeTime + ", placeStart=" + placeStart + ", placeEnd=" + placeEnd + ", placeCount=" + placeCount
-            + ", placeCreateDate=" + placeCreateDate + ", placeStatus=" + placeStatus + "]";
-   }
+	public String getPlaceTitle() {
+		return placeTitle;
+	}
 
-   
-   
+	public void setPlaceTitle(String placeTitle) {
+		this.placeTitle = placeTitle;
+	}
+
+	public String getPlaceContentPoint() {
+		return placeContentPoint;
+	}
+
+	public void setPlaceContentPoint(String placeContentPoint) {
+		this.placeContentPoint = placeContentPoint;
+	}
+
+	public String getPlaceContentDetail() {
+		return placeContentDetail;
+	}
+
+	public void setPlaceContentDetail(String placeContentDetail) {
+		this.placeContentDetail = placeContentDetail;
+	}
+
+	public String getPlaceThema() {
+		return placeThema;
+	}
+
+	public void setPlaceThema(String placeThema) {
+		this.placeThema = placeThema;
+	}
+
+	public String getPlaceAddress() {
+		return placeAddress;
+	}
+
+	public void setPlaceAddress(String placeAddress) {
+		this.placeAddress = placeAddress;
+	}
+
+	public String getPlaceHomepage() {
+		return placeHomepage;
+	}
+
+	public void setPlaceHomepage(String placeHomepage) {
+		this.placeHomepage = placeHomepage;
+	}
+
+	public String getPlaceContact() {
+		return placeContact;
+	}
+
+	public void setPlaceContact(String placeContact) {
+		this.placeContact = placeContact;
+	}
+
+	public String getPlaceTime() {
+		return placeTime;
+	}
+
+	public void setPlaceTime(String placeTime) {
+		this.placeTime = placeTime;
+	}
+
+	public Date getPlaceStart() {
+		return placeStart;
+	}
+
+	public void setPlaceStart(Date placeStart) {
+		this.placeStart = placeStart;
+	}
+
+	public Date getPlaceEnd() {
+		return placeEnd;
+	}
+
+	public void setPlaceEnd(Date placeEnd) {
+		this.placeEnd = placeEnd;
+	}
+
+	public int getPlaceCount() {
+		return placeCount;
+	}
+
+	public void setPlaceCount(int placeCount) {
+		this.placeCount = placeCount;
+	}
+
+	public Date getPlaceCreateDate() {
+		return placeCreateDate;
+	}
+
+	public void setPlaceCreateDate(Date placeCreateDate) {
+		this.placeCreateDate = placeCreateDate;
+	}
+
+	public String getPlaceStatus() {
+		return placeStatus;
+	}
+
+	public void setPlaceStatus(String placeStatus) {
+		this.placeStatus = placeStatus;
+	}
+
+	public String getPlaceTitleImg() {
+		return placeTitleImg;
+	}
+
+	public void setPlaceTitleImg(String placeTitleImg) {
+		this.placeTitleImg = placeTitleImg;
+	}
+
+	@Override
+	public String toString() {
+		return "Place [placeNo=" + placeNo + ", placeTitle=" + placeTitle + ", placeContentPoint=" + placeContentPoint
+				+ ", placeContentDetail=" + placeContentDetail + ", placeThema=" + placeThema + ", placeAddress="
+				+ placeAddress + ", placeHomepage=" + placeHomepage + ", placeContact=" + placeContact + ", placeTime="
+				+ placeTime + ", placeStart=" + placeStart + ", placeEnd=" + placeEnd + ", placeCount=" + placeCount
+				+ ", placeCreateDate=" + placeCreateDate + ", placeStatus=" + placeStatus + "]";
+	}
+
+     
    
 }

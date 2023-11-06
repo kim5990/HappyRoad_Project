@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
@@ -186,6 +187,16 @@ public class PlaceDao {
       
       
    }
+
+	public int selectSearchCount(Connection conn, HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public ArrayList<Place> selectPlaceImage(Connection conn, HashMap<String, String> map, PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
    
 
 }

@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.hrp.common.PageInfo, java.util.ArrayList, com.kh.hrp.place.model.vo.Place"%>
 <%
-PageInfo pi = (PageInfo)request.getAttribute("pi");
-ArrayList<Place> list = (ArrayList<Place>)request.getAttribute("list");
-
-int currentPage = pi.getCurrentPage();
-int startPage = pi.getStartPage();
-int endPage = pi.getEndPage();
-int maxPage = pi.getMaxPage();
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Place> list = (ArrayList<Place>)request.getAttribute("list");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +48,7 @@ int maxPage = pi.getMaxPage();
                 	<% for(Place p : list){ %>
                 	<li>
                         <a href="">
-                            <img src="<%= p.getTitleImg() %>" alt="검색결과이미지">
+                            <img src="<%= p.getPlaceTitleImg() %>" alt="검색결과이미지">
                         </a>
                         <div class="result-content">
                             <div class="">
