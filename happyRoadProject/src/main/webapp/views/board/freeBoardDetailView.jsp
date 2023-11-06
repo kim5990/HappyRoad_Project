@@ -217,7 +217,11 @@
     </div>
     <div class="boardbuttondiv">
         <div class="boardbutton">
+        
+        <%if (loginUser != null && loginUser.getUserId().equals(b.getBoardWriter())) {%>
             <button type="button" class="btn btn-dark" onclick="location.href='<%=contextPath %>/updateForm.fv?bno=<%=b.getBoardNo() %>'">수정하기</button>
+        <%} %>
+        
             <button type="button" class="btn btn-secondary" onclick="location.href='freeboardForm.fb?cpage=1'">돌아가기</button>
         </div>
     </div>

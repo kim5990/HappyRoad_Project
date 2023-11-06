@@ -67,7 +67,7 @@
                 <tr>
                     <td align="center">
                         <input type="submit" value="저장"></input>
-                        <input type="button" value="돌아가기" onclick="submitCancel()">
+                        <input type="button" value="돌아가기" onclick="location.href='freeboardForm.fb?cpage=1'">
                     </td>
                     
                 </tr>

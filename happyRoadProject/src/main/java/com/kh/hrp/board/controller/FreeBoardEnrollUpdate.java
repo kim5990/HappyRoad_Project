@@ -42,10 +42,8 @@ public class FreeBoardEnrollUpdate extends HttpServlet {
 		
 		if (result > 0) {
 			request.getSession().setAttribute("alertMsg", "성공적으로 수정하였습니다.");
-			// session으로 안되있음
-//			response.sendRedirect(request.getContextPath() + "/detail.fv?bno=" + boardNo);
 			
-			request.getRequestDispatcher("/detail.fv?bno=" + boardNo).forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/detail.fv?bno=" + boardNo);
 			
 		} else {
 			request.setAttribute("errorMsg", "게시글 수정 실패");
