@@ -1,0 +1,35 @@
+/*fonts.css*/
+@font-face {
+    src: url("../font/KoPub Dotum Bold.ttf");
+    font-family: 'KoPubDotumBold';
+}
+
+@font-face {
+    src: url("../font/KoPub Dotum Light.ttf");
+    font-family: 'KoPubDotumLight';
+}
+
+@font-face {
+    src: url("../font/KoPub Dotum Medium.ttf");
+    font-family: 'KoPubDotumMedium';
+}
+
+@font-face {
+    src: url("../font/KoPub Dotum Medium.ttf");
+    font-family: 'KoPubDotumMedium';
+}
+
+@font-face {
+    src: url("../font/KoPub Batang Bold.ttf");
+    font-family: 'KoPubBatangBold';
+}
+
+@font-face {
+    src: url("../font/KoPub Batang Medium.ttf");
+    font-family: 'KoPubBatangMedium';
+}
+
+@font-face {
+    src: url("../font/KoPub Batang Light.ttf");
+    font-family: 'KoPubBatangLight';
+}

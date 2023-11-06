@@ -1,0 +1,70 @@
+@charset "UTF-8";
+        .tage{
+            border: 1px solid;
+            height: 50px;
+            display: flex;
+            column-gap: 16px;
+            row-gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .shop{
+            padding-left: 50px;
+            margin-right: 50px;
+            display: flex;
+        }
+        .photo{
+            /* border: 1px solid; */
+            display: flex;
+            justify-content: space-between;
+
+        }
+        .dog{
+            height: 180px;
+            width: 180px;
+            cursor: pointer;
+        }
+        .left-btn{
+            margin-top: 80px;
+            margin-left: 50px;
+            cursor: pointer;
+        }
+        .right-btn{
+            margin-top: 80px;
+            margin-right: 50px;
+            cursor: pointer;
+        }
+        .dog-titl{
+            height: 180px;
+            width: 180px;
+        }
+        .sumbnail-title{
+            /* border: 2px solid; */
+            display: flex;
+            
+        }
+        .sumbnail{
+            border:1px solid;
+            height: 340px;
+            width: 300px;
+            align-items: center;
+            display: flex;
+            margin-left: 150px;
+            border-radius: 15% 15% 15% 15%;
+            
+        }
+        .photo-sub{
+            height: 250px;
+            width: 250px;
+            margin-top: 50px;
+            margin-left: 25px;
+            
+        }
+        .www{
+            display: flex;
+            border:1px solid;
+            
+        }
+        .aaa{
+            border:1px solid;
+        }
