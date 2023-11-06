@@ -21,6 +21,16 @@ public class PlaceImage {
 		this.placeImagePath = placeImagePath;
 		this.placeImageDate = placeImageDate;
 	}
+	
+	
+	
+	// selectImage 용 생성자
+	public PlaceImage(int placeImageNo, String placeImageChange, String placeImagePath) {
+		super();
+		this.placeImageNo = placeImageNo;
+		this.placeImageChange = placeImageChange;
+		this.placeImagePath = placeImagePath;
+	}
 
 	public int getPlaceImageNo() {
 		return placeImageNo;

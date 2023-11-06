@@ -208,7 +208,7 @@ pageEncoding="UTF-8"%>
                 </div>
                 <div class="hotNow-list-node1">
                     <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name" onclick="location.href = 'eventdetailView.ed?pno=16'">장소이름3</div>
+                        <div class="hotNow-list-node1-name" onclick="location.href = 'eventdetailView.ed?pno=18'">장소이름3</div>
                         <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
                         <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
                     </div>

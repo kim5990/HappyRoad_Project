@@ -1,10 +1,6 @@
 package com.kh.hrp.place.model.service;
 
-import static com.kh.hrp.common.JDBCTemplate.close;
-import static com.kh.hrp.common.JDBCTemplate.commit;
-import static com.kh.hrp.common.JDBCTemplate.getConnection;
-import static com.kh.hrp.common.JDBCTemplate.rollback;
-
+import static com.kh.hrp.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -12,6 +8,7 @@ import com.kh.hrp.common.PageInfo;
 import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.dao.PlaceDao;
 import com.kh.hrp.place.model.vo.Place;
+import com.kh.hrp.place.model.vo.Review;
 
 public class PlaceService {
    public int selectListCount(int userNo) {
@@ -47,7 +44,7 @@ public class PlaceService {
    
    public Place increaseCount(int placeNo) {
 	   Connection conn = getConnection();
-		PlaceDao pDao = new PlaceDao();
+	   PlaceDao pDao = new PlaceDao();
 		
 		// 1) 조회수 1올리기
 		int result = pDao.increaseCount(conn, placeNo);
@@ -62,6 +59,22 @@ public class PlaceService {
 		}
 		close(conn);
 		return p;
+   }
+   
+   public ArrayList<PlaceImage> selectPlaceImageList(int placeNo){
+	   Connection conn = getConnection();
+		ArrayList<PlaceImage> list = new PlaceDao().selectPlaceImageList(conn, placeNo);
+		close(conn);
+		return list;
+	   
+   }
+   
+   public ArrayList<Review> selectReviewList(int PlaceNo){
+		Connection conn = getConnection();
+		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, PlaceNo);
+		close(conn);
+		return list;
+	   
    }
    
    
