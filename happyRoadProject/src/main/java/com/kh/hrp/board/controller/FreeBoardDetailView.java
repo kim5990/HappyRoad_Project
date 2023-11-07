@@ -32,9 +32,12 @@ public class FreeBoardDetailView extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
+		System.out.println(boardNo);
 		
 		// 조회수 1증가 시키고 데티일 페이지 가져오는 객체
 		Board b = new BoardService().increaseCount(boardNo);
+		
+		System.out.println(b);
 		
 		if (b != null) {
 			request.setAttribute("b", b);
