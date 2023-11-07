@@ -63,7 +63,7 @@
                        	<input type="image" onclick="location.href = ''" src="./resources/logo/관리자.png"
                            	height="17" width="17">
                          <%}else{ %>
-                          <input type="image" onclick="location.href = ''" src="./resources/logo/로그인-후.png"
+                          <input type="image" onclick="location.href = 'myPage.me'" src="./resources/logo/로그인-후.png"
                          height="17" width="17">
                          <%} %>
                     <% } %>
