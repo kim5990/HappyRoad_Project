@@ -21,7 +21,7 @@
 <body>
    <%@ include file = "../common/menubar.jsp"%>
     <div class="freeBoard-area" align="center">
-        <form action="<%=contextPath %>/enrollupdate.fb" method="POST">
+        <form action="<%=contextPath %>/enrollInsert.fb" method="POST">
         
         	<input type="hidden" name="userNo" value="<%=loginUser.getUserNo() %>">
         	
@@ -53,20 +53,21 @@
                 <tr>
                     <td><textarea name="boardContend" id="" placeholder="내용을 입력하세요"></textarea></td>
                 </tr>
-                <tr align="left">
+               <!-- <tr align="left">
                     <th>카테고리</th>
                 </tr>
                 <tr>
                     <td>
-                        <select>
+                          <select>
                             <option>후기</option>
                             <option>질문</option>
                             <option>일상</option>
                             <option>의견</option>
                             <option>기타</option>
                         </select>
+                        
                     </td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td align="center">
                         <input type="submit" value="저장"></input>

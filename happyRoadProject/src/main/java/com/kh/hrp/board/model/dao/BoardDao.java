@@ -28,7 +28,7 @@ public class BoardDao {
       }
    }
    
-   public int selectListCount(Connection conn) {
+   public int selectListCount(Connection conn) { // 게시물 총 갯수
       
       int listCount = 0;
       
@@ -55,7 +55,7 @@ public class BoardDao {
    }
    
    
-   public ArrayList<Board> selectList(Connection conn, PageInfo pi){
+   public ArrayList<Board> selectList(Connection conn, PageInfo pi){ // 보여질 게시물
       
       ArrayList<Board> list = new ArrayList<>();
       
@@ -98,7 +98,7 @@ public class BoardDao {
       return list;
    }
    
-   public int increaseCount(Connection conn, int boardNo) {
+   public int increaseCount(Connection conn, int boardNo) { // 게시물 조회수 올려주고 디테일 페이지 가져오기
       int result = 0;
       
       PreparedStatement pstmt = null;
@@ -118,7 +118,7 @@ public class BoardDao {
       return result;
    }
    
-   public Board selectBoard(Connection conn, int boardNo) {
+   public Board selectBoard(Connection conn, int boardNo) { // 디테일 보여주기
       
       ResultSet rset = null;
       Board b = null;
@@ -153,18 +153,19 @@ public class BoardDao {
    }
    
    
-   public int updateBoard(Connection conn, Board b, int userNo) {
+   public int insertBoard(Connection conn, Board b, int userNo) { // 게시물 추가
       int result = 0;
       
       PreparedStatement pstmt = null;
-      String sql = prop.getProperty("updateBoard");
+      String sql = prop.getProperty("insertBoard");
       
       try {
          pstmt = conn.prepareStatement(sql);
          
-         pstmt.setString(1, b.getBoardTitle());
-         pstmt.setString(2, b.getBoardContent());
-         
+         pstmt.setInt(1, userNo);
+         pstmt.setString(2, b.getBoardTitle());
+         pstmt.setString(3, b.getBoardContent());
+  
          result = pstmt.executeUpdate();
       } catch (SQLException e) {
          e.printStackTrace();
