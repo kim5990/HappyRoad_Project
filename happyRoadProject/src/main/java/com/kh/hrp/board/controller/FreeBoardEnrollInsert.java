@@ -1,7 +1,6 @@
-package com.kh.hrp.place.controller;
+package com.kh.hrp.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,23 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.hrp.common.PageInfo;
-import com.kh.hrp.common.PageInfoController;
-import com.kh.hrp.common.model.vo.PlaceImage;
-import com.kh.hrp.place.model.service.PlaceService;
-import com.kh.hrp.place.model.vo.Place;
+import com.kh.hrp.board.model.service.BoardService;
+import com.kh.hrp.board.model.vo.Board;
 
 /**
- * Servlet implementation class PlaceLikeListForm
+ * Servlet implementation class FreeBoardEnrollUpdate
  */
-@WebServlet("/list.fa")
-public class PlaceLikeListForm extends HttpServlet {
+@WebServlet("/enrollInsert.fb")
+public class FreeBoardEnrollInsert extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PlaceLikeListForm() {
+    public FreeBoardEnrollInsert() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +30,28 @@ public class PlaceLikeListForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
-
-		int listCount = new PlaceService().selectListCount(userNo); //현재 총 게시글 수
-		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
-		PageInfo pi = PageInfoController.pageController(listCount, currentPage, 3, 6);
-		ArrayList<Place> list = new PlaceService().placeLikeSelectList(userNo, pi);
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContend = request.getParameter("boardContend");
+		
+		Board b = new Board();
+		b.setBoardTitle(boardTitle);
+		b.setBoardContent(boardContend);
+		
+		int result = new BoardService().insertBoard(b, userNo);
 		
 		
-		request.setAttribute("list", list);
-		request.setAttribute("pi", pi);
-		
-		request.getRequestDispatcher("views/place/placeLike.jsp").forward(request, response);
+		if (result > 0) {
+			request.getSession().setAttribute("alertMsg", "일반게시글 작성 성공");
+			
+			response.sendRedirect(request.getContextPath() + "/freeboardForm.fb?cpage=1");
+			
+		} else {
+			request.setAttribute("errorMsg", "일반게시글 작성 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

@@ -2,6 +2,27 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
+
+	<entry key="selectSearchCount">
+		SELECT COUNT(*) COUNT
+		FROM PLACE
+		PLACE_TITLE PLACE_ADDRESS
+		
+		WHERE PLACE_STATUS = 'Y'
+	</entry>
+
+	<entry key="selectSearchList">
+		SELECT PLACE_NO
+		     , PLACE_TITLE
+		     , PLACE_ADDRESS
+		     , PLACE_IMAGE_PATH
+	    FROM PLACE P
+	  	JOIN PLACE_IMAGE USING (PLACE_NO)
+			WHERE P.PLACE_STATUS = 'Y'
+	</entry>
+
+
+
    <entry key="selectListCount">
       SELECT COUNT(*) COUNT
       FROM PLACE_LIKE
@@ -41,6 +62,7 @@
        WHERE PLACE_NO = ?
    </entry>
    
+
    
    <entry key="increaseCount">
 		UPDATE PLACE
@@ -113,4 +135,5 @@
    </entry>
    
    
+
 </properties>

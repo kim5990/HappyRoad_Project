@@ -195,12 +195,14 @@
                 </tr>
             </table>
         </div>
+
     
   	    <br><br><br><br><br>
         
         <h2 style="margin-right: 600px">후기</h2>
         <hr width="700">
         <br>
+
 
         
 

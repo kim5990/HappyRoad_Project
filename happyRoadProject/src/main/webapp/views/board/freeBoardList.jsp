@@ -136,11 +136,13 @@
         </div>
         <br>
     
+    	<% if (loginUser != null) {%>
         <div class="search-input">
             <div class="left-search-section">
                 <input type="button" value="글쓰기" class="btn btn-light" id="write-btn" onclick="location.href = 'freeboardenroll.fb'">
             </div>
         </div>
+        <%} %>
     
         <br><br>
 

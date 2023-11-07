@@ -9,7 +9,7 @@
    </entry>
    
    <entry key="selectList">
-      SELECT *
+            SELECT *
          FROM(
             SELECT ROWNUM RNUM, A.*
                    FROM (
@@ -21,7 +21,7 @@
                                ,BOARD_COUNT
                                ,TO_CHAR(BOARD_ENROLL_DATE, 'YYYY/MM/DD') AS "BOARD_ENROLL_DATE"
                            FROM BOARD B
-                           JOIN MEMBER ON (BOARD_NO = USER_NO)
+                           JOIN MEMBER ON (BOARD_USER = USER_NO)
                              WHERE BOARD_STATUS = 'Y'
                              ORDER BY BOARD_NO DESC
                  ) A
@@ -45,16 +45,25 @@
            , BOARD_COUNT
            , TO_CHAR(BOARD_ENROLL_DATE, 'YYYY/MM/DD') "BOARD_ENROLL_DATE"
         FROM BOARD
-           JOIN MEMBER ON (BOARD_NO = USER_NO)
+           JOIN MEMBER ON (BOARD_USER = USER_NO)
        WHERE BOARD_NO = ?
    </entry>
    
-   <entry key="updateBoard">
-      UPDATE BOARD
-         SET BOARD_CATEGORY = ?
-           , BOARD_TITLE = ?
-           , BOARD_CONTENT = ?
-       WHERE BOARD_NO = ?
+   <entry key="insertBoard">
+    INSERT 
+		INTO BOARD (
+					BOARD_NO
+				   ,BOARD_USER
+				   ,BOARD_TITLE
+				   ,BOARD_CONTENT
+				   
+					)
+			VALUES(
+				   SEQ_BNO.NEXTVAL
+				   ,?
+				   ,?
+				   ,?
+				  )
    </entry>
    
 </properties>

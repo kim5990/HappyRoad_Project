@@ -9,7 +9,9 @@ public class PlaceImage {
 	private String placeImagePath;
 	private String placeImageDate;
 	
-	public PlaceImage() {}
+	public PlaceImage() {
+		super();
+	}
 
 	public PlaceImage(int placeImageNo, int placeNo, String placeImageOrigin, String placeImageChange,
 			String placeImagePath, String placeImageDate) {

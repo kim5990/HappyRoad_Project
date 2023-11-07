@@ -1,4 +1,4 @@
-package com.kh.hrp.board.controller;
+package com.kh.hrp.member.controller;
 
 import java.io.IOException;
 
@@ -7,21 +7,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.kh.hrp.board.model.service.BoardService;
-import com.kh.hrp.board.model.vo.Board;
+import com.kh.hrp.member.model.service.MemberService;
+import com.kh.hrp.member.model.vo.Member;
 
 /**
- * Servlet implementation class FreeBoardEnrollUpdate
+ * Servlet implementation class UpdatePwd
  */
-@WebServlet("/enrollupdate.fb")
-public class FreeBoardEnrollUpdate extends HttpServlet {
+@WebServlet("/update.pwd")
+public class UpdatePwdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FreeBoardEnrollUpdate() {
+    public UpdatePwdController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,26 +31,23 @@ public class FreeBoardEnrollUpdate extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		
-		int boardNo = Integer.parseInt(request.getParameter("bno"));
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		String updatePwd = request.getParameter("updatePwd");
 		
-		Board b = new Board();
-		b.setBoardNo(boardNo);
-		
-		int result = new BoardService().updateBoard(b);
-		
-		if (result > 0) {
-			request.getSession().setAttribute("alertMsg", "성공적으로 수정하였습니다.");
-			// session으로 안되있음
-//			response.sendRedirect(request.getContextPath() + "/detail.fv?bno=" + boardNo);
-			
-			request.getRequestDispatcher("/detail.fv?bno=" + boardNo).forward(request, response);
-			
-		} else {
-			request.setAttribute("errorMsg", "게시글 수정 실패");
+		Member updateMem = new MemberService().updatePwdMember(userId, userPwd, updatePwd);
+		System.out.println(updateMem);
+		if (updateMem == null) {
+			request.setAttribute("errorMsg", "비밀번호 수정에 실패하였습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		} else {
+			HttpSession session = request.getSession();
+			session.setAttribute("alertMsg", "성공적으로 수정하였습니다.");
+			session.setAttribute("loginUser", updateMem);
+			
+			response.sendRedirect(request.getContextPath() + "/myPage.me");
 		}
 	}
 
