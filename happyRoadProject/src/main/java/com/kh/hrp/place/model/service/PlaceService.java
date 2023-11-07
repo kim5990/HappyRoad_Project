@@ -77,5 +77,12 @@ public class PlaceService {
 	   
    }
    
+   public int reviewListCount(int PlaceNo) {
+		Connection conn = getConnection();      
+		int reviewListCount = new PlaceDao().reviewListCount(conn, PlaceNo);
+		close(conn);
+		return reviewListCount;
+   }
+   
    
 }

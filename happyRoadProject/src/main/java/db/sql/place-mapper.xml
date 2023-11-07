@@ -93,7 +93,7 @@
 		WHERE PLACE_NO = ?
    </entry>
    
-       <entry key="selectReviewList">
+   <entry key="selectReviewList">
 		SELECT REVIEW_NO
 		        ,USER_NAME
 		        ,REVIEW_STAR
@@ -103,6 +103,13 @@
 		JOIN MEMBER USING (USER_NO)
 		WHERE PLACE_NO = ?
 		ORDER BY REVIEW_CREATE_DATE DESC
+   </entry>
+   
+    <entry key="reviewListCount">
+      SELECT COUNT(*) COUNT
+      FROM REVIEW
+      JOIN PLACE USING(PLACE_NO)
+      WHERE PLACE_NO = ?
    </entry>
    
    

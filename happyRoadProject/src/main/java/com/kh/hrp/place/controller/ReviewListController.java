@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.common.PageInfoController;
 import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.Review;
 
@@ -33,6 +35,10 @@ public class ReviewListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int PlaceNo = Integer.parseInt(request.getParameter("pno"));
+
+//		int reviewListCount = new PlaceService().reviewListCount(PlaceNo); //현재 총 리뷰 수
+//		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
+//		PageInfo pi = PageInfoController.pageController(reviewListCount, currentPage, 5, 3);
 		
 		ArrayList<Review> list = new PlaceService().selectReviewList(PlaceNo);
 		// [{},{},{}]
@@ -41,6 +47,7 @@ public class ReviewListController extends HttpServlet {
 		new Gson().toJson(list, response.getWriter());
 		
 		
+
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class SearchListController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchListController() {
+    public SearchListController() 
         super();
         // TODO Auto-generated constructor stub
     }

@@ -239,6 +239,31 @@ public class PlaceDao {
 	   
    }
    
+   public int reviewListCount(Connection conn, int PlaceNo) {
+		int reviewListCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewListCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, PlaceNo);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				reviewListCount = rset.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return reviewListCount;
+	}
+   
    
    
 

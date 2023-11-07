@@ -235,16 +235,12 @@
                             success: function(res){
                                 // 위에서가 아닌 success에서 그려줘야 화면 새로고침안하고 만들어짐 
                                 let str = ""
-
-
                                 for (let review of res){
                                     let score = "";
                                     for (let i = 0; i < review.reviewStar; i++) {
                                             score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
                                         }
                                     str += '<tr><th rowspan="2" style="width:50px;">' + review.userNo + '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score + '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate +'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent +'</td></tr><tr><td colspan="3"><hr style="width:680px;"><td></tr>'
-                                        
-  
                                 }
                             document.querySelector("#review-area tbody").innerHTML = str;
 
@@ -261,7 +257,7 @@
 			</tbody>
         </table>
 
-        
+
         <br>
 
         <div class="review-pagebar">
