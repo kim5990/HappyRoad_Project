@@ -117,19 +117,26 @@ public class PlaceService {
 	   
    }
    
-   public ArrayList<Review> selectReviewList(int PlaceNo){
+   public ArrayList<Review> selectReviewList(int placeNo){
 		Connection conn = getConnection();
-		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, PlaceNo);
+		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, placeNo);
 		close(conn);
 		return list;
 	   
    }
    
-   public int reviewListCount(int PlaceNo) {
+   public int reviewListCount(int placeNo) {
 		Connection conn = getConnection();      
-		int reviewListCount = new PlaceDao().reviewListCount(conn, PlaceNo);
+		int reviewListCount = new PlaceDao().reviewListCount(conn, placeNo);
 		close(conn);
 		return reviewListCount;
+   }
+   
+   public boolean checkLike(int placeNo, int userNo) {
+		Connection conn = getConnection();      
+		boolean isLike = new PlaceDao().checkLike(conn, placeNo, userNo);
+		close(conn);
+		return isLike;
    }
    
 }

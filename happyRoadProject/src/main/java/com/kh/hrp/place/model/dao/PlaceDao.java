@@ -310,7 +310,7 @@ public class PlaceDao {
    }
    
    
-   public ArrayList<Review> selectReviewList(Connection conn, int PlaceNo){
+   public ArrayList<Review> selectReviewList(Connection conn, int placeNo){
 	   ArrayList<Review> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
@@ -319,7 +319,7 @@ public class PlaceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, PlaceNo);
+			pstmt.setInt(1, placeNo);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -341,7 +341,7 @@ public class PlaceDao {
 	   
    }
    
-   public int reviewListCount(Connection conn, int PlaceNo) {
+   public int reviewListCount(Connection conn, int placeNo) {
 		int reviewListCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -349,7 +349,7 @@ public class PlaceDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, PlaceNo);
+			pstmt.setInt(1, placeNo);
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
@@ -365,6 +365,31 @@ public class PlaceDao {
 		}
 		return reviewListCount;
 	}
+   
+   public boolean checkLike(Connection conn, int placeNo, int userNo) {
+	   boolean isLike = false;
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   String sql = prop.getProperty("checkLike");
+	   
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeNo);
+			pstmt.setInt(2, userNo);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				isLike = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return isLike; 
+   }
    
    
    

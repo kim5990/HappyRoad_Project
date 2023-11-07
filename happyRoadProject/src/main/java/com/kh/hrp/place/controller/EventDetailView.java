@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.common.PageInfoController;
 import com.kh.hrp.common.model.vo.PlaceImage;
+import com.kh.hrp.member.model.vo.Member;
 import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.Place;
 
@@ -34,7 +37,9 @@ public class EventDetailView extends HttpServlet {
     */
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       int placeNo = Integer.parseInt(request.getParameter("pno"));
+      int userNo = Integer.parseInt(request.getParameter("mno"));
       
+
       PlaceService pService = new PlaceService();
       
       // 1. 조회수 1 증가시키고 보여줄 place 객체 가져오기
@@ -45,6 +50,14 @@ public class EventDetailView extends HttpServlet {
       if (p != null) {
          ArrayList<PlaceImage> list = pService.selectPlaceImageList(placeNo);
          
+         // 3. 즐겨찾기 확인
+         boolean like = pService.checkLike(placeNo, userNo);
+         
+         
+         
+         
+         request.setAttribute("userNo", userNo);
+         request.setAttribute("like", like);
 		 request.setAttribute("p", p);
          request.setAttribute("list", list);
          request.setAttribute("listSize", list.size());

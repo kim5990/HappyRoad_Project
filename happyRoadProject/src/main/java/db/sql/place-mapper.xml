@@ -134,6 +134,13 @@
       WHERE PLACE_NO = ?
    </entry>
    
+    <entry key="checkLike">
+      SELECT LIKE_NO
+      FROM PLACE_LIKE
+      WHERE PLACE_NO = ?
+      		AND USER_NO =?
+   </entry>
+   
    
 
 </properties>

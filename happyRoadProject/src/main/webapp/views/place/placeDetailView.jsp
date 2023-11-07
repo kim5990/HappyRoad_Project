@@ -111,12 +111,21 @@
         <div align="right" style="max-width: 650px;">
         
         	<!-- 로그인 정보 없을 때 -->
-        	
-            <!-- 즐겨찾기 안했을 때 -->
+        	<!--  
+
             <img src="../../resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" id="like">
-            <!-- 즐겨찾기 했을 때-->
+
             <img src="../../resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" id="like">
+	         -->
 	            
+	        <c:choose>
+		        <c:when test="${ userNo == null || like == false }">
+					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" id="like" onclick="">
+		        </c:when>
+		        <c:otherwise>
+					<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" id="like" onclick="">
+				</c:otherwise>
+		    </c:choose>
         </div>
 
         <br><br>
