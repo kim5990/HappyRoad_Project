@@ -12,16 +12,16 @@ import com.kh.hrp.board.model.service.BoardService;
 import com.kh.hrp.board.model.vo.Board;
 
 /**
- * Servlet implementation class FreeBoardUpdate
+ * Servlet implementation class FreeBoardEnrollUpdate
  */
-@WebServlet("/updateForm.fv")
-public class FreeBoardUpdate extends HttpServlet {
+@WebServlet("/enrollUpdate.fb")
+public class FreeBoardEnrollUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FreeBoardUpdate() {
+    public FreeBoardEnrollUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +31,31 @@ public class FreeBoardUpdate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContend = request.getParameter("boardContend");
 		
-		Board b = new BoardService().selectBoard(boardNo);
+		System.out.println(boardNo);
+		System.out.println(boardTitle);
+		System.out.println(boardContend);
 		
-		request.setAttribute("b", b);
+		Board b = new Board();
+		b.setBoardNo(boardNo);
+		b.setBoardTitle(boardTitle);
+		b.setBoardContent(boardContend);
 		
-		request.getRequestDispatcher("views/board/freeBoardUpdate.jsp").forward(request, response);
+		int result = new BoardService().updateBoard(b);
+		
+		if (result > 0) {
+			request.getSession().setAttribute("alertMsg", "성공적으로 수정하였습니다.");
+			response.sendRedirect(request.getContextPath() + "/detail.fv?bno=" + boardNo);
+			
+		} else {
+			request.setAttribute("errorMsg", "게시글 수정 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

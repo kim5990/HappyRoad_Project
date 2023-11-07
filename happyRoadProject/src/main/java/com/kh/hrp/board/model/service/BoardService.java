@@ -40,8 +40,6 @@ public class BoardService {
 
       int result = new BoardDao().increaseCount(conn, boardNo);
       
-      System.out.println(result);
-      
       Board b = null;
       if (result > 0) {
          commit(conn);
@@ -80,4 +78,15 @@ public class BoardService {
       
       return result;
    }
+   
+   public int updateBoard(Board b) { // 게시글 수정
+	   Connection conn = getConnection();
+		
+	   int result = new BoardDao().updateBoard(conn, b);
+	   System.out.println(result);
+	   return result;
+   }
+   
+   
+   
 }
