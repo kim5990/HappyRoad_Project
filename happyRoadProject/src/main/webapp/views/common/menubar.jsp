@@ -16,17 +16,17 @@
                 integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
                 crossorigin="anonymous">
 
-            <link rel="stylesheet" href="resources/css/fonts.css">
-            <link rel="stylesheet" href="resources/css/header.css">
-            <link rel="stylesheet" href="resources/css/main.css">
-            <link rel="stylesheet" href="resources/css/placetitle.css">
-            <link rel="stylesheet" href="resources/css/placeList.css">
-            <link rel="stylesheet" href="resources/css/eventtitle.css">
-            <link rel="stylesheet" href="resources/css/eventcalender.css">
-            <link rel="stylesheet" href="resources/css/hotnowtitle.css">
-            <link rel="stylesheet" href="resources/css/hotNow.css">
-            <link rel="stylesheet" href="resources/css/tail.css">
-            <link rel="stylesheet" href="resources/css/mainboard.css">
+            <link rel="stylesheet" href="./resources/css/fonts.css">
+            <link rel="stylesheet" href="./resources/css/header.css">
+            <link rel="stylesheet" href="./resources/css/main.css">
+            <link rel="stylesheet" href="./resources/css/placetitle.css">
+            <link rel="stylesheet" href="./resources/css/placeList.css">
+            <link rel="stylesheet" href="./resources/css/eventtitle.css">
+            <link rel="stylesheet" href="./resources/css/eventcalender.css">
+            <link rel="stylesheet" href="./resources/css/hotnowtitle.css">
+            <link rel="stylesheet" href="./resources/css/hotNow.css">
+            <link rel="stylesheet" href="./resources/css/tail.css">
+            <link rel="stylesheet" href="./resources/css/mainboard.css">
 
             <script type="text/javascript" src="./resources/js/main.js"></script>
 

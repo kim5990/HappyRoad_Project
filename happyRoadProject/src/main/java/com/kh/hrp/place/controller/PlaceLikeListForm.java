@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.hrp.common.PageInfo;
 import com.kh.hrp.common.PageInfoController;
+import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.Place;
 

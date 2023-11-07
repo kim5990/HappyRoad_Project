@@ -12,14 +12,14 @@ pageEncoding="UTF-8"%>
   <%@ include file = "./views/common/menubar.jsp"%>
 	<main class="main-container">
 	        <div class="main-section1">
-	            <input type="image" src="resources/images/메인-개나리.png" height="400" width="940" class="main-section-image" onclick = "">
+	            <input type="image" src="resources/images/main1.png" height="400" width="940" class="main-section-image">
 	        </div>
 	        <div class="main-section3">
-	            <input type="button" onclick = "location.href = ''  " class="main-section3-button" value="1" >
-	            <input type="button" onclick = "location.href = '' " class="main-section3-button" value="2">
-	            <input type="button" onclick = "location.href = '' " class="main-section3-button" value="3">
-	            <input type="button" onclick = "location.href = '' " class="main-section3-button" value="4">
-	            <input type="button" onclick = "location.href = '' " class="main-section3-button" value="5">
+	            <input type="button" onclick = "changeImg(1)" class="main-section3-button" value="1" >
+	            <input type="button" onclick = "changeImg(2)" class="main-section3-button" value="2">
+	            <input type="button" onclick = "changeImg(3)" class="main-section3-button" value="3">
+	            <input type="button" onclick = "changeImg(4)" class="main-section3-button" value="4">
+	            <input type="button" onclick = "changeImg(5)" class="main-section3-button" value="5">
 	        </div>
 	        <div class="main-section2">
 	            <div class="main-section-div">
@@ -27,6 +27,12 @@ pageEncoding="UTF-8"%>
 	                <div class="main-section-div-text2">23.10.27 - 23.10.27 </div>
 	            </div>
 	        </div>
+	        <script>
+	        	function changeImg(num){
+                    document.querySelector(".main-section-image").src = "resources/images/main" + num + ".png";
+                    // $(".main-section-image").attr("src","resources/images/main" + num + ".png");
+	        	}
+	        </script>
 	</main>
     <div class="place-section">
         <div class="place-section-title">

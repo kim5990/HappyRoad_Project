@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.dao.PlaceDao;
 import com.kh.hrp.place.model.vo.Place;
 

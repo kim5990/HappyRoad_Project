@@ -129,7 +129,7 @@
                   	 <%for(Place p : list) {%>
                     <div class="favorites">
                             <div class="card" aria-hidden="true">
-                              <img src="./resources/images/HOTNOW_2.png" class="card-img-top">
+                              <img src="<%=p.getImagePath() %>" class="card-img-top">
                               <div class="card-body">
                                 <h5 class="card-title">
                                   <%=p.getPlaceTitle() %>
