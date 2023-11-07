@@ -16,16 +16,16 @@ import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.Place;
 
 /**
- * Servlet implementation class SearchListForm
+ * Servlet implementation class SearhListView
  */
-@WebServlet("/searchDetail.sd")
-public class SearchListController extends HttpServlet {
+@WebServlet("/search.sc")
+public class SearhListView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchListController() {
+    public SearhListView() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,28 +34,15 @@ public class SearchListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String condition = request.getParameter("condition"); // "writer" || "title" || "content"
-		String keyword = request.getParameter("keyword"); // 사용자가 입력한 키워드값
-		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		
-		
-		int searchCount = new PlaceService().selectSearchCount(map);
+		int cpage = Integer.parseInt(request.getParameter("cpage"));
+		String title = request.getParameter("keyword");
+
+		int searchCount = new PlaceService().selectSearchCount(keyword);
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
-		ArrayList<Place> list = new PlaceService().selectSearchList(map, pi);
-		
-		request.setAttribute("list", list);
-		request.setAttribute("pi", pi);
-		request.setAttribute("condition", condition);
-		request.setAttribute("keyword", keyword);
-		
+		ArrayList<Place> list = new PlaceService().selectSearchList(keyword, pi);
 		request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
-	
 	}
 
 	/**

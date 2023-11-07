@@ -223,6 +223,6 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </div>
-	<%@ include file = "views/common/footer.jsp"%>
+	<%@ include file = "./views/common/footer.jsp"%>
 </body>
 </html>

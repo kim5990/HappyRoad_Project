@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
@@ -155,37 +156,104 @@ public class PlaceDao {
       
    }
    
-   
-   public ArrayList<PlaceImage> selectPlaceImage(Connection conn, int placeNo){
-      ArrayList<PlaceImage> list = new ArrayList<>();
-      
-      PreparedStatement pstmt = null;
-      ResultSet rset = null;
-      String sql = prop.getProperty("selectPlaceImage");
-      
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setInt(1, boardNo);
-         
-         rset = pstmt.executeQuery();
-         
-         while(rset.next()) {
-            Attachment at = new Attachment();
-            at.setChangeName(rset.getString("change_name"));
-            at.setFilePath(rset.getString("file_path"));
-            
-            list.add(at);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         close(rset);
-         close(pstmt);
-      }
-      return list;   
-      
-      
-   }
+	public ArrayList<PlaceImage> selectPlaceImage(Connection conn, int placeNo) {
+		ArrayList<PlaceImage> list = new ArrayList<>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectPlaceImage");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setChangeName(rset.getString("change_name"));
+				at.setFilePath(rset.getString("file_path"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+
+	}
+
+	public int selectSearchCount(Connection conn, String keyword) {
+
+		int SearchCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSearchCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				SearchCount = rset.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return SearchCount;
+	}
+
+	public ArrayList<Place> selectSearchList(Connection conn, String keyword, PageInfo pi) {
+
+		ArrayList<Place> list = new ArrayList<>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectSearchList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			System.out.println(startRow);
+			System.out.println(endRow);
+			pstmt.setInt(1, );
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Place(rset.getInt("PLACE_NO"), 
+		                           rset.getString("PLACE_TITLE"), 
+		                           rset.getString("PLACE_ADDRESS"), 
+		                           rset.getString("PLACE_IMAGE_PATH"))
+									);
+		      }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+
+	}
+	
    
 
 }
