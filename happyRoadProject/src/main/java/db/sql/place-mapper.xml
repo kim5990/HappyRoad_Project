@@ -42,7 +42,11 @@
 	</entry>
 	
 	<entry key="selectSearchCount">
-
+		SELECT COUNT(*) COUNT
+		FROM PLACE
+		PLACE_TITLE PLACE_ADDRESS
+		
+		WHERE PLACE_STATUS = 'Y'
 	</entry>
 
 	<entry key="selectSearchList">

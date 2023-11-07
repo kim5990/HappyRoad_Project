@@ -23,54 +23,61 @@ public class Place {
       super();
    }
    
-   public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
-         String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
-         Date placeCreateDate, String placeStatus) {
-      super();
-      this.placeNo = placeNo;
-      this.placeTitle = placeTitle;
-      this.placeContentPoint = placeContentPoint;
-      this.placeContentDetail = placeContentDetail;
-      this.placeThema = placeThema;
-      this.placeAddress = placeAddress;
-      this.placeHomepage = placeHomepage;
-      this.placeTime = placeTime;
-      this.placeStart = placeStart;
-      this.placeEnd = placeEnd;
-      this.placeCount = placeCount;
-      this.placeCreateDate = placeCreateDate;
-      this.placeStatus = placeStatus;
-   }
+	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
+			String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
+			Date placeCreateDate, String placeStatus) {
+		super();
+		this.placeNo = placeNo;
+		this.placeTitle = placeTitle;
+		this.placeContentPoint = placeContentPoint;
+		this.placeContentDetail = placeContentDetail;
+		this.placeThema = placeThema;
+		this.placeAddress = placeAddress;
+		this.placeHomepage = placeHomepage;
+		this.placeTime = placeTime;
+		this.placeStart = placeStart;
+		this.placeEnd = placeEnd;
+		this.placeCount = placeCount;
+		this.placeCreateDate = placeCreateDate;
+		this.placeStatus = placeStatus;
+	}
+
+	// placeLikeSelectList 에서 사용하는 생성자
+	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
+			String placeAddress) {
+		super();
+		this.placeNo = placeNo;
+		this.placeTitle = placeTitle;
+		this.placeContentPoint = placeContentPoint;
+		this.placeContentDetail = placeContentDetail;
+		this.placeAddress = placeAddress;
+	}
+
+	// selectPlace 에서 사용하는 생성자
+	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
+			String placeAddress, String placeHomepage, String placeContact, String placeTime, Date placeStart,
+			Date placeEnd) {
+		super();
+		this.placeNo = placeNo;
+		this.placeTitle = placeTitle;
+		this.placeContentPoint = placeContentPoint;
+		this.placeContentDetail = placeContentDetail;
+		this.placeThema = placeThema;
+		this.placeAddress = placeAddress;
+		this.placeHomepage = placeHomepage;
+		this.placeContact = placeContact;
+		this.placeTime = placeTime;
+		this.placeStart = placeStart;
+		this.placeEnd = placeEnd;
+	}
    
-   
-   // placeLikeSelectList 에서 사용하는 생성자
-   public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
-         String placeAddress) {
-      super();
-      this.placeNo = placeNo;
-      this.placeTitle = placeTitle;
-      this.placeContentPoint = placeContentPoint;
-      this.placeContentDetail = placeContentDetail;
-      this.placeAddress = placeAddress;
-   }
-   
-   // selectPlace 에서 사용하는 생성자
-   public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
-         String placeAddress, String placeHomepage, String placeContact, String placeTime, Date placeStart,
-         Date placeEnd) {
-      super();
-      this.placeNo = placeNo;
-      this.placeTitle = placeTitle;
-      this.placeContentPoint = placeContentPoint;
-      this.placeContentDetail = placeContentDetail;
-      this.placeThema = placeThema;
-      this.placeAddress = placeAddress;
-      this.placeHomepage = placeHomepage;
-      this.placeContact = placeContact;
-      this.placeTime = placeTime;
-      this.placeStart = placeStart;
-      this.placeEnd = placeEnd;
-   }
+	// selectSearchList 에서 사용하는 생성자
+	public Place(int placeNo, String placeTitle, String placeAddress) {
+		super();
+		this.placeNo = placeNo;
+		this.placeTitle = placeTitle;
+		this.placeAddress = placeAddress;
+	}
 
 	public int getPlaceNo() {
 		return placeNo;

@@ -22,7 +22,25 @@ public class PlaceService {
 		close(conn);
 		return listCount;
 	}
+	
+	public int selectSearchCount(String keyword) {
+		
+		Connection conn = getConnection();
+		int SearchCount = new PlaceDao().selectSearchCount(conn, keyword);
 
+		close(conn);
+		return SearchCount;
+	}
+	
+	public ArrayList<PlaceImage> selectPlaceImage(int placeNo) {
+		
+		Connection conn = getConnection();
+		ArrayList<PlaceImage> list = new PlaceDao().selectPlaceImage(conn, placeNo);
+		
+		close(conn);
+		return list;
+	}
+	
 	public ArrayList<Place> placeLikeSelectList(int userNo, PageInfo pi) {
 		
 		Connection conn = getConnection();
@@ -47,31 +65,16 @@ public class PlaceService {
 		return result;
 	}
 
-	public ArrayList<PlaceImage> selectPlaceImage(int placeNo) {
+	public ArrayList<Place> selectSearchList(String keyword, PageInfo pi) {
 		
 		Connection conn = getConnection();
-		ArrayList<PlaceImage> list = new PlaceDao().selectPlaceImage(conn, placeNo);
+		ArrayList<Place> list = new PlaceDao().selectSearchList(conn, keyword, pi);
 		
 		close(conn);
 		return list;
 	}
 
-	public int selectSearchCount(HashMap<String, String> map) {
-		
-		Connection conn = getConnection();
-		int SearchCount = new PlaceDao().selectSearchCount(conn, map);
 
-		close(conn);
-		return SearchCount;
-	}
 
-	public ArrayList<Place> selectSearchList(HashMap<String, String> map, PageInfo pi) {
-		
-		Connection conn = getConnection();
-		ArrayList<Place> list = new PlaceDao().selectSearchList(conn, map, pi);
-
-		close(conn);
-		return list;
-	}
 
 }

@@ -35,13 +35,10 @@
 <body>
     <header class="header-container">
         <div class="header-section">
+        
             <div class="left-section">
-            	<form action="search.sc">
-            		<input type="hidden" name="cpage" value="1">
-                 <input type="text" class="left-section_input" name="keyword" value="${ keyword }">
-                 <input type="image" src="./resources/logo/free-icon-magnifier-2319177.png" height="17"
-                     width="17">
-                </form>
+					<input type="text" class="left-section_input" name="keyword" >
+					<input type="image" onclick = "searchOn()" src="./resources/logo/free-icon-magnifier-2319177.png" height="17" width="17">
             </div>
             
             <div class="middle-section">
@@ -53,13 +50,20 @@
             <div class="right-section">
                 <input type="image" onclick="location.href = 'freeboardForm.fb?cpage=1'"
                     src="./resources/logo/header-게시판.png" height="17" width="17">
-                <input type="image" onclick="location.href = 'list.fa?cpage=1&userNo=3'" src="./resources/logo/즐겨찾기모음+즐겨찾기전.png"
-                    height="17" width="17">
-                <input type="image" onclick="location.href = 'loginForm.me'" src="./resources/logo/로그인-전.png"
-                    height="17" width="17">
+                <input type="image" onclick="location.href = 'list.fa?cpage=1&userNo=3'"
+                	src="./resources/logo/즐겨찾기모음+즐겨찾기전.png" height="17" width="17">
+                <input type="image" onclick="location.href = 'loginForm.me'"
+                	src="./resources/logo/로그인-전.png" height="17" width="17">
             </div>
+            
         </div>
     </header>
+    <script>
+    	function searchOn(){
+    		let searchText = document.querySelector("input[name='keyword']").value;
+    		location.href = 'search.sc?cpage=1&keyword='+ searchText;
+    	}
+    </script>
 </body>
 
 </html>
