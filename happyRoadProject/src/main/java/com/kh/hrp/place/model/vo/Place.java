@@ -17,36 +17,13 @@ public class Place {
    private int placeCount;
    private Date placeCreateDate;
    private String placeStatus;
-<<<<<<< HEAD
-   private String placeTitleImg;
-=======
    private String imagePath;
->>>>>>> 89ce1d5c9f8c6cb041be4dc351f25c9ee66abf3c
    
    public Place() {
       super();
    }
    
-<<<<<<< HEAD
-	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
-			String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
-			Date placeCreateDate, String placeStatus) {
-		super();
-		this.placeNo = placeNo;
-		this.placeTitle = placeTitle;
-		this.placeContentPoint = placeContentPoint;
-		this.placeContentDetail = placeContentDetail;
-		this.placeThema = placeThema;
-		this.placeAddress = placeAddress;
-		this.placeHomepage = placeHomepage;
-		this.placeTime = placeTime;
-		this.placeStart = placeStart;
-		this.placeEnd = placeEnd;
-		this.placeCount = placeCount;
-		this.placeCreateDate = placeCreateDate;
-		this.placeStatus = placeStatus;
-	}
-=======
+
    public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
          String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
          Date placeCreateDate, String placeStatus, String imagePath) {
@@ -79,19 +56,6 @@ public class Place {
       this.imagePath = imagePath;
    }
    
-   
->>>>>>> 89ce1d5c9f8c6cb041be4dc351f25c9ee66abf3c
-
-	// placeLikeSelectList 에서 사용하는 생성자
-	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
-			String placeAddress) {
-		super();
-		this.placeNo = placeNo;
-		this.placeTitle = placeTitle;
-		this.placeContentPoint = placeContentPoint;
-		this.placeContentDetail = placeContentDetail;
-		this.placeAddress = placeAddress;
-	}
 
 	// selectPlace 에서 사용하는 생성자
 	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
@@ -118,16 +82,16 @@ public class Place {
 		this.placeTitle = placeTitle;
 		this.placeAddress = placeAddress;
 	}
-
-<<<<<<< HEAD
+	
+	
 	public int getPlaceNo() {
 		return placeNo;
 	}
-=======
-   public void setPlaceContact(String placeContact) {
-      this.placeContact = placeContact;
-   }
-   
+
+	public void setPlaceNo(int placeNo) {
+		this.placeNo = placeNo;
+	}
+	
    public String getImagePath() {
 	      return imagePath;
    }
@@ -135,11 +99,6 @@ public class Place {
    public void setImagePath(String imagePath) {
 	      this.imagePath = imagePath;
    }
->>>>>>> 89ce1d5c9f8c6cb041be4dc351f25c9ee66abf3c
-
-	public void setPlaceNo(int placeNo) {
-		this.placeNo = placeNo;
-	}
 
 	public String getPlaceTitle() {
 		return placeTitle;
@@ -243,14 +202,6 @@ public class Place {
 
 	public void setPlaceStatus(String placeStatus) {
 		this.placeStatus = placeStatus;
-	}
-
-	public String getPlaceTitleImg() {
-		return placeTitleImg;
-	}
-
-	public void setPlaceTitleImg(String placeTitleImg) {
-		this.placeTitleImg = placeTitleImg;
 	}
 
 	@Override

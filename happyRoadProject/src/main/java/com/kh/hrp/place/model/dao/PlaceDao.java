@@ -196,7 +196,7 @@ public class PlaceDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, );
+			pstmt.setString(1, keyword);
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {

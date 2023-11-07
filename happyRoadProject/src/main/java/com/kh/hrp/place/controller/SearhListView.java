@@ -35,11 +35,7 @@ public class SearhListView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cpage = Integer.parseInt(request.getParameter("cpage"));
-		String keyword = request.getParameter("keyword");
-
-
-//		HashMap<String, String> map = new HashMap<>();
-//		map.put("keyword", keyword);
+		String title = request.getParameter("keyword");
 
 		int searchCount = new PlaceService().selectSearchCount(keyword);
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));
