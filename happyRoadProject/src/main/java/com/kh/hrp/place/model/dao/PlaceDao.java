@@ -3,20 +3,18 @@ package com.kh.hrp.place.model.dao;
 import static com.kh.hrp.common.JDBCTemplate.close;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
-
-import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.vo.Place;
+import com.kh.hrp.place.model.vo.Review;
 
 public class PlaceDao {
    private Properties prop = new Properties();
@@ -177,6 +175,69 @@ public class PlaceDao {
 	   
    }
    
+   public ArrayList<PlaceImage> selectPlaceImageList(Connection conn, int placeNo){
+	   ArrayList<PlaceImage> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectPlaceImage");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				PlaceImage pi = new PlaceImage(
+								rset.getInt("PLACE_IMAGE_NO"),
+								rset.getString("PLACE_IMAGE_CHANGE"),
+								rset.getString("PLACE_IMAGE_PATH")
+						);
+
+				
+				list.add(pi);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;	
+   }
+   
+   
+   public ArrayList<Review> selectReviewList(Connection conn, int PlaceNo){
+	   ArrayList<Review> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectReviewList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, PlaceNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(
+							rset.getString("REVIEW_NO"),
+							rset.getString("USER_NAME"),
+							rset.getString("REVIEW_STAR"),
+							rset.getString("REVIEW_CONTENT"),
+							rset.getString("REVIEW_CREATE_DATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	   
+   }
    
    
    

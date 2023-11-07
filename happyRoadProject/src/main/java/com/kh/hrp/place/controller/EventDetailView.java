@@ -34,7 +34,6 @@ public class EventDetailView extends HttpServlet {
     */
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       int placeNo = Integer.parseInt(request.getParameter("pno"));
-      System.out.println("placeNo");
       
       PlaceService pService = new PlaceService();
       
@@ -43,29 +42,18 @@ public class EventDetailView extends HttpServlet {
       
       
       // 2. 사진 list 불러오기
-//      if (p != null) {
-//         ArrayList<PlaceImage> list = pService.selectPlaceImage(placeNo);
-//         
-//         request.setAttribute("b", b);
-//         request.setAttribute("list", list);
-//         request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
-//      } else {
-//         request.setAttribute("errorMsg", "게시글 조회에 실패");
-//         request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-//      }
-//      
-      
-		if(p != null) {  //성공
-			System.out.println("성공?");
-			System.out.println(p.getPlaceTitle());
-			request.setAttribute("p", p);
-			request.getRequestDispatcher("views/place/placeDetailView.jsp").forward(request, response);
-		} else {  //실패
-			request.setAttribute("errorMsg", "게시글 조회에 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
-      
-      
+      if (p != null) {
+         ArrayList<PlaceImage> list = pService.selectPlaceImageList(placeNo);
+         
+		 request.setAttribute("p", p);
+         request.setAttribute("list", list);
+         request.setAttribute("listSize", list.size());
+         request.getRequestDispatcher("views/place/placeDetailView.jsp").forward(request, response);
+      } else {
+         request.setAttribute("errorMsg", "게시글 조회에 실패");
+         request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+      }
+  
    }
 
    /**
