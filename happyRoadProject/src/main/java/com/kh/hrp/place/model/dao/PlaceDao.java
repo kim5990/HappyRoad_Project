@@ -186,7 +186,7 @@ public class PlaceDao {
 
 	}
 
-	public int selectSearchCount(Connection conn, String keyword) {
+	public int selectSearchCount(Connection conn, String placeTitle) {
 
 		int SearchCount = 0;
 		PreparedStatement pstmt = null;
@@ -196,15 +196,15 @@ public class PlaceDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, keyword);
+			pstmt.setString(1, placeTitle);
+			
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
 				SearchCount = rset.getInt("count");
 			}
-
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -214,7 +214,7 @@ public class PlaceDao {
 		return SearchCount;
 	}
 
-	public ArrayList<Place> selectSearchList(Connection conn, String keyword, PageInfo pi) {
+	public ArrayList<Place> selectSearchList(Connection conn, String placeTitle, PageInfo pi) {
 
 		ArrayList<Place> list = new ArrayList<>();
 
@@ -230,7 +230,7 @@ public class PlaceDao {
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			System.out.println(startRow);
 			System.out.println(endRow);
-			pstmt.setInt(1, );
+			pstmt.setString(1, placeTitle);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 

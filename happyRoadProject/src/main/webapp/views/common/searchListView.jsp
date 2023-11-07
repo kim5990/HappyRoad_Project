@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.hrp.common.PageInfo, java.util.ArrayList, com.kh.hrp.place.model.vo.Place"%>
+<%
+	PageInfo pi=(PageInfo)request.getAttribute("pi");
+	ArrayList<Place> list = (ArrayList<Place>)request.getAttribute("list");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -34,18 +38,23 @@
         <div class="serach-result-all">
             <div class="search-info-list">
                 <ul class="ulclass">
-                	<li>(검색어)검색 결과가 없습니다.</li>
-                	<li>
-                        <a href="">
-                            <img src="" alt="검색결과이미지">
-                        </a>
-                        <div class="result-content">
-                            <div class="">
-                                <div class="result-title"><a href="">sdfaf</a></div>
-                                <div class="result-area"><span>asdfasdfsadfasf</span></div>
-                            </div>
-                        </div>
-                    </li>
+                	<% if (list.isEmpty()) { %>
+                		<li>검색 결과가 없습니다.</li>
+                	<% } else { %>
+                	<% for (Place p : list) { %>
+	                	<li>
+	                        <a href="">
+	                            <img src="<%= p.getImagePath() %>" alt="검색결과이미지">
+	                        </a>
+	                        <div class="result-content">
+	                            <div class="">
+	                                <div class="result-title"><a href=""><%= p.getPlaceTitle() %></a></div>
+	                                <div class="result-area"><span><%= p.getPlaceAddress() %></span></div>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <% } %>
+                    <% } %>
                 </ul>
             </div>
         </div>

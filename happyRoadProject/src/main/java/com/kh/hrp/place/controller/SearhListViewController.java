@@ -19,13 +19,13 @@ import com.kh.hrp.place.model.vo.Place;
  * Servlet implementation class SearhListView
  */
 @WebServlet("/search.sc")
-public class SearhListView extends HttpServlet {
+public class SearhListViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearhListView() {
+    public SearhListViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,14 +35,18 @@ public class SearhListView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cpage = Integer.parseInt(request.getParameter("cpage"));
-		String title = request.getParameter("keyword");
+		String placeTitle = request.getParameter("title");
+		if(placeTitle == null){
+			
+		}else {
+			int searchCount = new PlaceService().selectSearchCount(placeTitle);
+			int currentPage = Integer.parseInt(request.getParameter("cpage"));
+			System.out.println("ㅇㅇㅇ" + searchCount);
+			PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
+			ArrayList<Place> list = new PlaceService().selectSearchList(placeTitle, pi);
+			request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
+		}
 
-		int searchCount = new PlaceService().selectSearchCount(keyword);
-		int currentPage = Integer.parseInt(request.getParameter("cpage"));
-		
-		PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
-		ArrayList<Place> list = new PlaceService().selectSearchList(keyword, pi);
-		request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
 	}
 
 	/**

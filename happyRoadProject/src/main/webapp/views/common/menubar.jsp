@@ -38,8 +38,8 @@
 		<div class="header-section">
 		
 			<div class="left-section">
-				<input type="text" class="left-section_input">
-				<input type="image" src="./resources/logo/free-icon-magnifier-2319177.png" height="17" width="17">
+				<input type="text" class="left-section_input" name="placeTitle" onkeyup="enterkey()">
+				<input type="image" onclick = "searchOn()" src="./resources/logo/free-icon-magnifier-2319177.png" height="17" width="17">
 			</div>
 
 			<div class="middle-section">
@@ -78,8 +78,15 @@
 	
     <script>
     	function searchOn(){
-    		let searchText = document.querySelector("input[name='keyword']").value;
-    		location.href = 'search.sc?cpage=1&keyword='+ searchText;
+    		let searchText = document.querySelector("input[name='placeTitle']").value;
+    		location.href = 'search.sc?cpage=1&placeTitle='+ searchText;
+    	}
+    	
+    	function enterkey() {
+    		if (window.event.keyCode == 13) {
+    			let searchText = document.querySelector("input[name='placeTitle']").value;
+    			location.href = 'search.sc?cpage=1&placeTitle='+ searchText;
+    	    }
     	}
     </script>
     

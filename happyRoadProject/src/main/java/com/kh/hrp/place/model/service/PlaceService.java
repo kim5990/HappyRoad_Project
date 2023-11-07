@@ -23,10 +23,10 @@ public class PlaceService {
 		return listCount;
 	}
 	
-	public int selectSearchCount(String keyword) {
+	public int selectSearchCount(String placeTitle) {
 		
 		Connection conn = getConnection();
-		int SearchCount = new PlaceDao().selectSearchCount(conn, keyword);
+		int SearchCount = new PlaceDao().selectSearchCount(conn, placeTitle);
 
 		close(conn);
 		return SearchCount;
@@ -65,10 +65,10 @@ public class PlaceService {
 		return result;
 	}
 
-	public ArrayList<Place> selectSearchList(String keyword, PageInfo pi) {
+	public ArrayList<Place> selectSearchList(String placeTitle, PageInfo pi) {
 		
 		Connection conn = getConnection();
-		ArrayList<Place> list = new PlaceDao().selectSearchList(conn, keyword, pi);
+		ArrayList<Place> list = new PlaceDao().selectSearchList(conn, placeTitle, pi);
 		
 		close(conn);
 		return list;
