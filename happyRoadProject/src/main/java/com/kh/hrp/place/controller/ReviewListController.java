@@ -33,7 +33,6 @@ public class ReviewListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int PlaceNo = Integer.parseInt(request.getParameter("pno"));
-		System.out.println("서블릿왓니");
 		
 		ArrayList<Review> list = new PlaceService().selectReviewList(PlaceNo);
 		// [{},{},{}]
@@ -41,12 +40,6 @@ public class ReviewListController extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(list, response.getWriter());
 		
-		
-		//gpt답변
-//	    String json = new Gson().toJson(list);
-//
-//	    response.setContentType("application/json; charset=utf-8");
-//	    response.getWriter().write(json);
 		
 	}
 

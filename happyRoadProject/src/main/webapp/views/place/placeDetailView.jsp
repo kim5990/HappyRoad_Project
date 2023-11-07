@@ -6,15 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- jQuery 3.7.1 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 <style>
 
 
     .place-image{
         width: 700px;
-        height: 350px;
+        height: 400px;
         overflow: hidden; /* 내부 내용을 잘라내는 설정 */
         /* background-color: beige;*/
         position: relative;
+
         
     }
     
@@ -87,6 +91,9 @@
     	margin: 0 5px; /* 좌우 여백을 5px로 조정 */
         text-decoration: none;
     }
+    
+    
+    
 
 
 </style>
@@ -195,6 +202,8 @@
         <hr width="700">
         <br>
 
+        
+
 
         <!-- 로그인 정보 없을 경우 -->
 
@@ -204,54 +213,21 @@
         <!-- 로그인 정보 + 리뷰 있을 경우 -->
         
 
-        <table id="review-area" style="padding-right: 20px;">              
+        <table id="review-area" style="padding-right: 20px; width:650px;">              
 			<tbody>
 			
-			
-                <!-- 
-                    <tr>
-                        <th rowspan="2" style="width:50px;">user01</th>
-                        <td align="center" style="height: 40px;">ㅇㅇㅇㅇㅇ</td>
-                        <td align="right" style="padding-right: 50px;">2023-11-03</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="padding: 10px;">정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 정말 별로였습니다 다들 가지 마세요 </td>
-                    </tr>
-                    <tr style="height: 15px;"></tr>
-                    
-
-
-                    <tr>
-                        <th rowspan="2" style="width: 120px;">user01</th>
-                        <td align="center" style="height: 40px;">ㅇㅁㅁㅁㅁ</td>
-                        <td align="right" style="padding-right: 50px;">2023-11-03</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="padding: 10px;">만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요 만족했습니다 갈만해요  </td>
-                    </tr>
-                    <tr style="height: 15px;"></tr>
-                -->
-              
-              	<!-- 리뷰 불러오기 -->
-              	
               	
                 <script>
-                
-                    var placeNo = "${p.placeNo}";
-                        
-
-                    window.onload = function(){
+                    onload = function(){
                         // 댓글 가져와서 그려주기
-                        console.log(" 여기니")
                         selectReviewList();
-                        console.log(" 여기니22")
                     }
-
-                    
-                    
+          
+            
                     function selectReviewList(){
+                    	var placeNo = "${p.placeNo}";
+
                         $.ajax({
-                            console.log("아젝스 여기니")
                             url : "rlist.pl",
                             data : {
                                 pno : placeNo
@@ -259,12 +235,19 @@
                             success: function(res){
                                 // 위에서가 아닌 success에서 그려줘야 화면 새로고침안하고 만들어짐 
                                 let str = ""
-                                
+
+
                                 for (let review of res){
-                                    console.log(review)
-                                    str += '<tr><th rowspan="2" style="width:50px;">' + review.userNo + '</th><td align="center" style="height: 40px;">'+review.reviewStar+'</td><td align="right" style="padding-right: 50px;">'+review.reviewCreateDate+'</td></tr><tr><td colspan="3" style="padding: 10px;">'+review.reviewContent+'</td></tr><tr style="height: 15px;"></tr>'
+                                    let score = "";
+                                    for (let i = 0; i < review.reviewStar; i++) {
+                                            score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
+                                        }
+                                    str += '<tr><th rowspan="2" style="width:50px;">' + review.userNo + '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score + '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate +'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent +'</td></tr><tr><td colspan="3"><hr style="width:680px;"><td></tr>'
+                                        
+  
                                 }
-                                document.querySelector("#review-area tbody").innerHTML = str;
+                            document.querySelector("#review-area tbody").innerHTML = str;
+
 
                             },
                             error : function(){
@@ -272,21 +255,21 @@
                             }
                         })
                     }
-                
-
                 </script>
                         
 			
 			</tbody>
         </table>
+
+        
         <br>
 
         <div class="review-pagebar">
-            <a><</a>
+            <a>&lt;</a>
             <a>1</a>
             <a>2</a>
             <a>3</a>
-            <a>></a>
+            <a>&gt;</a>
 
         </div>
         
@@ -356,10 +339,7 @@
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };  
-        
-        // JSP변수를 JS 변수에 할당
-        var palceTitle = "${p.placeTitle}";
-        var placeAddress = "${p.placeAddress}";
+
         
         // 지도를 생성합니다    
         var map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -368,7 +348,7 @@
         var geocoder = new kakao.maps.services.Geocoder();
         
         // 주소로 좌표를 검색합니다
-        geocoder.addressSearch(placeAddress, function(result, status) {
+        geocoder.addressSearch("${p.placeAddress}", function(result, status) {
         
             // 정상적으로 검색이 완료됐으면 
             if (status === kakao.maps.services.Status.OK) {
@@ -383,7 +363,7 @@
         
                 // 인포윈도우로 장소에 대한 설명을 표시합니다
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">'+palceTitle+'</div>'
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">'+"${p.placeTitle}"+'</div>'
                 });
                 infowindow.open(map, marker);
         
