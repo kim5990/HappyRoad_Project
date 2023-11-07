@@ -54,18 +54,28 @@
 </head>
 <body>
     <%@ include file = "../common/menubar.jsp"%>
+    <%
+    	String userId = loginUser.getUserId();
+    	String userName = loginUser.getUserName();
+    	String userPhone = loginUser.getUserPhone();
+    	String userEmail = loginUser.getUserEmail();
+    	String userPwd = loginUser.getUserPwd();
+    %>
 
    <div class="myPageForm">
       <div class = "myPageFormdiv">
           <div class="myPageFormHeader">
               <div class="myPageTitle"><h2>마이페이지</h2></div>
-              <form action="" method="post" class="row g-3 needs-validation" novalidate>
+              <form action="update.pwd" method="post" class="row g-3 needs-validation" novalidate>
               <div class="form-floating">
-                <input type="text" class="form-control" readonly id="idInput" value="아이디" required>
+                <input type="text" class="form-control" readonly id="idInput" name="userId" value="<%=userId %>" required>
                 <label for="floatingId">아이디</label>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="passInput" placeholder="Password를 입력하세요." required>
+              	<input type="password" class="form-control" id="pwdInput" name="userPwd" value="<%=userPwd %>" readonly>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="passInput" name="updatePwd" placeholder="Password를 입력하세요." required>
                 <label for="passInput">변경할 비밀번호</label>
                 <div class="invalid-feedback">
                   비밀번호 8이상 13이하 (숫자, 문자 합성해주세요)
@@ -85,19 +95,21 @@
                 </div>
               </div>
               <div class="form-floating">
-                <input type="text" class="form-control" id="nameInput" value="권두원" readonly required>
+                <input type="text" class="form-control" id="nameInput" value="<%=userName %>" readonly required>
                 <label for="floatingName">이름</label>
               </div>
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" aria-label="email" value="whgdk9548@naver.com" required>
+             <div class="form-floating">
+                <input type="text" class="form-control" id="nameInput" value="<%=userEmail %>" readonly required>
+                <label for="floatingName">이메일</label>
               </div>
-              <div class="mb-3">
-                <select class="form-select" required aria-label="select example">
-                  <option value="">남자</option>
-                </select>
+              <div class="form-floating">
+                <input type="text" class="form-control" placeholder="전화번호작성" value="<%=userPhone %>" readonly required>
+              	<label for="floatingName">전화번호</label>
+              	
               </div>
               <button  class="btn btn-outline-success" type="submit">수정완료</button>
-              <button  class="btn btn-danger" id="back-btn" type="button">뒤로가기</button>        
+              <button  class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#deleteModal">회원탈퇴</button>
+              <button  class="btn btn-outline-danger" onclick="history.back()" type="button">뒤로가기</button>        
             </form>
           </div>
       </div>
@@ -138,5 +150,32 @@
         }
       })
     </script>
+    
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">회원탈퇴</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body" align="center">
+                    <form action="/delete.me" method="post">
+                    	<b>탈퇴 후 복구가 불가능합니다. <br> 정말로 탈퇴하시겠습니까?</b>
+                    	<br><br>
+                    	
+                    	<input type="hidden" name="userId" value="<%=userId %>">
+                    	
+                    	비밀번호 : <input type="password" name="userPwd" required>
+                    	<br><br>
+                    	<button type="submit" class="btn btn-sm btn-danger">탈퇴하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

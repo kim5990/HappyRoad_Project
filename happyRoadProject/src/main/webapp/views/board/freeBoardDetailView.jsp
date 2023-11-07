@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board"%>
+    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member"%>
 <%
    //글번호, 작성자, 카테고리명, 제목, 내용, 작성일
    Board b = (Board)request.getAttribute("b");
@@ -217,7 +217,11 @@
     </div>
     <div class="boardbuttondiv">
         <div class="boardbutton">
+        
+        <%if (loginUser != null && loginUser.getUserName().equals(b.getBoardUser())) {%>
             <button type="button" class="btn btn-dark" onclick="location.href='<%=contextPath %>/updateForm.fv?bno=<%=b.getBoardNo() %>'">수정하기</button>
+        <%} %>
+        
             <button type="button" class="btn btn-secondary" onclick="location.href='freeboardForm.fb?cpage=1'">돌아가기</button>
         </div>
     </div>

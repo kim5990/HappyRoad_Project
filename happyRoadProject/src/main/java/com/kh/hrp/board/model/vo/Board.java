@@ -24,6 +24,18 @@ public class Board {
       this.boardCount = boardCount;
       this.boardEnrollDate = boardEnrollDate;
    }
+   
+   // 게시물 가져오기
+   public Board(int boardNo, String boardUser, String boardTitle, String boardContent,
+	         int boardCount, String boardEnrollDate) {
+	      super();
+	      this.boardNo = boardNo;
+	      this.boardUser = boardUser;
+	      this.boardTitle = boardTitle;
+	      this.boardContent = boardContent;
+	      this.boardCount = boardCount;
+	      this.boardEnrollDate = boardEnrollDate;
+	   }
 
    public Board(int boardNo, String boardUser, String boardCategory, String boardTitle, String boardContent,
          int boardCount, String boardEnrollDate, String boardStatus) {

@@ -17,12 +17,17 @@ public class Place {
    private int placeCount;
    private Date placeCreateDate;
    private String placeStatus;
+<<<<<<< HEAD
    private String placeTitleImg;
+=======
+   private String imagePath;
+>>>>>>> 89ce1d5c9f8c6cb041be4dc351f25c9ee66abf3c
    
    public Place() {
       super();
    }
    
+<<<<<<< HEAD
 	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
 			String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
 			Date placeCreateDate, String placeStatus) {
@@ -41,6 +46,41 @@ public class Place {
 		this.placeCreateDate = placeCreateDate;
 		this.placeStatus = placeStatus;
 	}
+=======
+   public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
+         String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
+         Date placeCreateDate, String placeStatus, String imagePath) {
+      super();
+      this.placeNo = placeNo;
+      this.placeTitle = placeTitle;
+      this.placeContentPoint = placeContentPoint;
+      this.placeContentDetail = placeContentDetail;
+      this.placeThema = placeThema;
+      this.placeAddress = placeAddress;
+      this.placeHomepage = placeHomepage;
+      this.placeTime = placeTime;
+      this.placeStart = placeStart;
+      this.placeEnd = placeEnd;
+      this.placeCount = placeCount;
+      this.placeCreateDate = placeCreateDate;
+      this.placeStatus = placeStatus;
+      this.imagePath = imagePath;
+   }
+   
+   
+   
+   public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
+         String imagePath) {
+      super();
+      this.placeNo = placeNo;
+      this.placeTitle = placeTitle;
+      this.placeContentPoint = placeContentPoint;
+      this.placeContentDetail = placeContentDetail;
+      this.imagePath = imagePath;
+   }
+   
+   
+>>>>>>> 89ce1d5c9f8c6cb041be4dc351f25c9ee66abf3c
 
 	// placeLikeSelectList 에서 사용하는 생성자
 	public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
@@ -79,9 +119,23 @@ public class Place {
 		this.placeAddress = placeAddress;
 	}
 
+<<<<<<< HEAD
 	public int getPlaceNo() {
 		return placeNo;
 	}
+=======
+   public void setPlaceContact(String placeContact) {
+      this.placeContact = placeContact;
+   }
+   
+   public String getImagePath() {
+	      return imagePath;
+   }
+
+   public void setImagePath(String imagePath) {
+	      this.imagePath = imagePath;
+   }
+>>>>>>> 89ce1d5c9f8c6cb041be4dc351f25c9ee66abf3c
 
 	public void setPlaceNo(int placeNo) {
 		this.placeNo = placeNo;

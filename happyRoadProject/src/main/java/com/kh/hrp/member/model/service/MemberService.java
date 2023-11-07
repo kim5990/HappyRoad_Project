@@ -6,6 +6,8 @@ import static com.kh.hrp.common.JDBCTemplate.getConnection;
 import static com.kh.hrp.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 import com.kh.hrp.member.model.dao.MemberDao;
 import com.kh.hrp.member.model.vo.Member;
 
@@ -19,4 +21,48 @@ public class MemberService {
       close(conn);
       return m;
    }
+   
+   public int insertMember(Member m) {
+	   
+	   Connection conn = getConnection();
+	   int result = new MemberDao().insertMember(conn, m);
+	   close(conn);
+	   return result;
+   }
+   
+   public Member updatePwdMember(String userId,String userPwd,String updatePwd) {
+	    System.out.println(userId);
+	    System.out.println(userPwd);
+	    System.out.println(updatePwd);
+		Connection conn = getConnection();
+		int result = new MemberDao().updatePwdMember(conn, userId, userPwd, updatePwd);
+		System.out.println(result);
+		Member updateMem = null;
+		if (result > 0) {
+			commit(conn);
+			updateMem = new MemberDao().selectMember(conn, userId);
+		} else {
+			rollback(conn);
+		}
+		System.out.println(updateMem);
+		close(conn);
+		
+		return updateMem;
+	}
+   
+   public int deleteMember(String userId,String userPwd) {
+		Connection conn = getConnection();
+		int result = new MemberDao().deleteMember(conn, userId, userPwd);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
 }

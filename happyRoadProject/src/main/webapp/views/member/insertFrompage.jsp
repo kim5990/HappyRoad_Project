@@ -87,9 +87,9 @@
       <div class = "insertFormdiv">
           <div class="insertFormHeader">
               <div class="insertTitle"><h2>회원가입</h2></div>
-              <form action="" method="post" class="row g-3 needs-validation" novalidate>
+              <form action="insert.me" method="post" class="row g-3 needs-validation" novalidate>
               <div class="form-floating">
-                <input type="text" class="form-control" id="idInput" placeholder="ID를 입력하세요" required>
+                <input type="text" class="form-control" id="idInput" name="userId" placeholder="ID를 입력하세요" required>
                 <label for="idInput">아이디</label>
                 <div class="invalid-feedback">
                   5글자 이상 10글자 이하로 작성해 주세요.
@@ -99,7 +99,7 @@
                 </div>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="passInput" placeholder="Password를 입력하세요." required>
+                <input type="password" class="form-control" id="passInput" name="userPwd"  placeholder="Password를 입력하세요." required>
                 <label for="passInput">비밀번호</label>
                 <div class="invalid-feedback">
                   비밀번호 8이상 13이하 (숫자, 문자 합성해주세요)
@@ -119,7 +119,7 @@
                 </div>
               </div>
               <div class="form-floating">
-                <input type="text" class="form-control" id="nameInput" placeholder="이름을 입력하세요" required>
+                <input type="text" class="form-control" id="nameInput" name="userName"  placeholder="이름을 입력하세요" required>
                 <label for="floatingName">이름</label>
                 <div class="invalid-feedback">
                   5글자 이상 10글자 이하로 작성해 주세요.
@@ -129,27 +129,26 @@
                 </div>
               </div>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="이메일작성" aria-label="email" required>
+                <input type="text" class="form-control" placeholder="이메일작성" name="firstEmail" aria-label="email" required>
                 <span class="input-group-text">@</span>
-                <input type="text" class="form-control" placeholder="ex)naver.com" aria-label="emailaddress" required>
+                <input type="text" class="form-control" placeholder="ex)naver.com" name="secondEmail" aria-label="emailaddress" required>
                 <div class="invalid-feedback">
                   작성이 안됐습니다.
                 </div>
                 <div class="valid-feedback">
                   참 잘했습니다.
                 </div>
-                
               </div>
-              <div class="mb-3">
-                <select class="form-select" required aria-label="select example">
-                  <option value="">성별(선택)</option>
-                  <option value="1">남자</option>
-                  <option value="2">여자</option>
-                </select>
-                <br>
-                <div class="invalid-feedback">성별은 반드시 입력해주세요</div>
+           	  <div class="form-floating">
+              	<input type="text" class="form-control" placeholder="전화번호작성" name="userPhone" required>
+              	<label for="floatingName">전화번호</label>
+              	<div class="invalid-feedback">
+                  작성이 안됐습니다.
+                </div>
+                <div class="valid-feedback">
+                  참 잘했습니다.
+                </div>
               </div>
-
               <button  class="btn btn-outline-success" type="submit">가입하기</button>
               <button  class="btn btn-danger" id="back-btn" type="button">뒤로가기</button>        
             </form>
