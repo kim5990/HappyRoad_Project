@@ -17,6 +17,7 @@ public class Place {
    private int placeCount;
    private Date placeCreateDate;
    private String placeStatus;
+   private String imagePath;
    
    public Place() {
       super();
@@ -24,7 +25,7 @@ public class Place {
    
    public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
          String placeAddress, String placeHomepage, String placeTime, Date placeStart, Date placeEnd, int placeCount,
-         Date placeCreateDate, String placeStatus) {
+         Date placeCreateDate, String placeStatus, String imagePath) {
       super();
       this.placeNo = placeNo;
       this.placeTitle = placeTitle;
@@ -39,18 +40,19 @@ public class Place {
       this.placeCount = placeCount;
       this.placeCreateDate = placeCreateDate;
       this.placeStatus = placeStatus;
+      this.imagePath = imagePath;
    }
    
    
    
    public Place(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
-         String placeAddress) {
+         String imagePath) {
       super();
       this.placeNo = placeNo;
       this.placeTitle = placeTitle;
       this.placeContentPoint = placeContentPoint;
       this.placeContentDetail = placeContentDetail;
-      this.placeAddress = placeAddress;
+      this.imagePath = imagePath;
    }
    
    
@@ -159,6 +161,14 @@ public class Place {
 
    public void setPlaceContact(String placeContact) {
       this.placeContact = placeContact;
+   }
+   
+   public String getImagePath() {
+	      return imagePath;
+   }
+
+   public void setImagePath(String imagePath) {
+	      this.imagePath = imagePath;
    }
 
    @Override
