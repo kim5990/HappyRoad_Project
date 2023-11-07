@@ -12,16 +12,16 @@ import com.kh.hrp.board.model.service.BoardService;
 import com.kh.hrp.board.model.vo.Board;
 
 /**
- * Servlet implementation class FreeBoardDetailView
+ * Servlet implementation class FreeBoardEnrollUpdate
  */
-@WebServlet("/detail.fv")
-public class FreeBoardDetailView extends HttpServlet {
+@WebServlet("/enrollInsert.fb")
+public class FreeBoardEnrollInsert extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FreeBoardDetailView() {
+    public FreeBoardEnrollInsert() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,21 +30,26 @@ public class FreeBoardDetailView extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
-		int boardNo = Integer.parseInt(request.getParameter("bno"));
-		System.out.println(boardNo);
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContend = request.getParameter("boardContend");
 		
-		// 조회수 1증가 시키고 데티일 페이지 가져오는 객체
-		Board b = new BoardService().increaseCount(boardNo);
+		Board b = new Board();
+		b.setBoardTitle(boardTitle);
+		b.setBoardContent(boardContend);
 		
-		System.out.println(b);
+		int result = new BoardService().insertBoard(b, userNo);
 		
-		if (b != null) {
-			request.setAttribute("b", b);
+		
+		if (result > 0) {
+			request.getSession().setAttribute("alertMsg", "일반게시글 작성 성공");
 			
-			request.getRequestDispatcher("views/board/freeBoardDetailView.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/freeboardForm.fb?cpage=1");
+			
 		} else {
-			request.setAttribute("errorMsg", "게시글 조회 실패");
+			request.setAttribute("errorMsg", "일반게시글 작성 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}
