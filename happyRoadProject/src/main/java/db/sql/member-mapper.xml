@@ -18,4 +18,54 @@
       AND USER_PWD = ?
       AND USER_STATUS = 'Y'
    </entry>
+   <entry key="insertMember">
+   		INSERT INTO MEMBER
+		(
+		   USER_NO
+	     , USER_ID
+	     , USER_PWD
+	     , USER_NAME
+	     , USER_EMAIL
+	     , USER_PHONE
+		)
+		VALUES
+		(
+			SEQ_UNO.NEXTVAL
+			, ?
+			, ?
+			, ?
+			, ?
+			, ?
+		)
+   </entry>
+   <entry key="updatePwdMember">
+		UPDATE MEMBER
+		SET USER_PWD = ?
+		  , USER_MODIFY_DATE = SYSDATE
+		WHERE USER_ID = ?
+		AND USER_PWD = ?
+	</entry>
+	<entry key="selectMember">
+		SELECT 
+	       USER_NO
+	     , USER_ID
+	     , USER_PWD
+	     , USER_EMAIL
+	     , USER_NAME
+	     , USER_PHONE
+	     , USER_LEVEL
+	     , USER_ENROLL_DATE
+	     , USER_MODIFY_DATE
+	     , USER_STATUS
+	  FROM MEMBER
+	 WHERE USER_ID = ?
+	   AND USER_STATUS = 'Y'
+	</entry>
+	<entry key="deleteMember">
+	  UPDATE MEMBER
+		 SET USER_STATUS = 'N'
+		   , USER_MODIFY_DATE = SYSDATE
+	   WHERE USER_ID = ?
+		 AND USER_PWD = ?
+	</entry>
 </properties>

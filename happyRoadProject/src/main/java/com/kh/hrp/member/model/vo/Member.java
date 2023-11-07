@@ -33,9 +33,21 @@ public class Member {
 		this.userStatus = userStatus;
 	}
 	
+	//회원가입 생성자
+	
+	
 	public int getUserNo() {
 		return userNo;
 	}
+	public Member(String userId, String userPwd, String userEmail, String userName, String userPhone) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userEmail = userEmail;
+		this.userName = userName;
+		this.userPhone = userPhone;
+	}
+
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
