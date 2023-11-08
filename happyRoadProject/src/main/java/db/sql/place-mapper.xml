@@ -87,13 +87,19 @@
 	</entry>
 
 	<entry key="selectSearchList">
-		SELECT PLACE_NO
-		     , PLACE_TITLE
-		     , PLACE_ADDRESS
-		     , PLACE_IMAGE_PATH
-	    FROM PLACE P
-	  	JOIN PLACE_IMAGE USING (PLACE_NO)
-			WHERE P.PLACE_STATUS = 'Y'
+		SELECT *        
+		FROM(SELECT ROWNUM RNUM, A.* 
+		    FROM (SELECT PLACE_NO
+				       , PLACE_TITLE
+				       , PLACE_ADDRESS
+				       , PLACE_IMAGE_PATH
+			      FROM PLACE P
+			      JOIN PLACE_IMAGE USING (PLACE_NO)
+			      WHERE P.PLACE_STATUS = 'Y'
+			      ORDER BY PLACE_NO DESC
+		        ) A
+		    )
+		WHERE RNUM BETWEEN ? AND ?
 	</entry>
    
 

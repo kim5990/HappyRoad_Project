@@ -77,19 +77,18 @@ public class PlaceDao {
          pstmt.setInt(3, endRow);
          
          rset = pstmt.executeQuery();
-      while(rset.next()) {
-         placeList.add(new Place(rset.getInt("PLACE_NO"), 
-                           rset.getString("PLACE_TITLE"), 
-                           rset.getString("PLACE_CONTENT_POINT"), 
-                           rset.getString("PLACE_CONTENT_DETAIL"),  
-                           rset.getString("PLACE_IMAGE_PATH"))
-               );
-      }
+         while (rset.next()) {
+	         placeList.add(new Place(rset.getInt("PLACE_NO"), 
+		                           rset.getString("PLACE_TITLE"), 
+		                           rset.getString("PLACE_CONTENT_POINT"), 
+		                           rset.getString("PLACE_CONTENT_DETAIL"),  
+		                           rset.getString("PLACE_IMAGE_PATH"))
+		               );
+		      }
          
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
-      }finally {
+      } finally {
          close(rset);
          close(pstmt);
       }
@@ -108,9 +107,8 @@ public class PlaceDao {
          
          result = pstmt.executeUpdate();
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
-      }finally {
+      } finally {
          close(pstmt);
       }
       
@@ -230,9 +228,8 @@ public class PlaceDao {
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			System.out.println(startRow);
 			System.out.println(endRow);
-			pstmt.setString(1, placeTitle);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 
 			rset = pstmt.executeQuery();
 			

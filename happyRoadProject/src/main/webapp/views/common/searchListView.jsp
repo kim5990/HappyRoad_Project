@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.kh.hrp.common.PageInfo, java.util.ArrayList, com.kh.hrp.place.model.vo.Place"%>
 <%
-	PageInfo pi=(PageInfo)request.getAttribute("pi");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Place> list = (ArrayList<Place>)request.getAttribute("list");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
 %>
 
 <!DOCTYPE html>
@@ -60,48 +65,29 @@
         </div>
 
         <!-- 페이지네이션 -->
-        <ul class="pagination justify-content-center" id="search-pagination">
+        <!-- <ul class="pagination justify-content-center" id="search-pagination">
             <li class="page-item"><a class="page-link" href="">&lt;</a></li>
             <li class="page-item"><a class="page-link" href="">1</a></li>
             <li class="page-item"><a class="page-link" href="">2</a></li>
             <li class="page-item"><a class="page-link" href="">3</a></li>
             <li class="page-item"><a class="page-link" href="">&gt;</a></li>
-        </ul>
+        </ul> -->
         
-	<%-- <div id="paging-area">
-        <c:if test="${ pi.currentPage ne 1 }">
-       	<c:choose>
-            <c:when test="${empty condition }">
-            <a href="list.bo?cpage=${ pi.currentPage - 1}">[이전]</a>
-            </c:when>
-            <c:otherwise>
-            <a href="search.bo?cpage=${ pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">[이전]</a>
-            </c:otherwise>
-        </c:choose>
-        </c:if>
-            
-        <c:forEach var="i" begin="${pi.startPage}" end="${ pi.endPage }">
-        <c:choose>
-            <c:when test="${empty condition }">
-            <a href="list.bo?cpage=${ i }">${ i }</a>
-            </c:when>
-            <c:otherwise>
-            <a href="search.bo?cpage=${ i }&condition=${condition}&keyword=${keyword}">${ i }</a>
-            </c:otherwise>
-        </c:choose>
-        </c:forEach>
-            
-        <c:if test="${ pi.currentPage ne pi.maxPage }">
-       	<c:choose>
-            <c:when test="${empty condition }">
-            <a href="list.bo?cpage=${ pi.currentPage + 1}">[다음]</a>
-            </c:when>
-            <c:otherwise>
-            <a href="search.bo?cpage=${ pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">[다음]</a>
-            </c:otherwise>
-        </c:choose>
-        </c:if>
-	</div> --%>
+		<% if (currentPage != 1) { %>
+			<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=currentPage - 1 %>'">&lt;</button>
+        <% } %>
+			<% for(int p = startPage; p <= endPage; p++) { %>
+				<% if (p == currentPage) { %>
+					<button disabled><%=p %></button>
+            	<% } else { %>
+            		<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=p %>'"><%=p %></button>
+           		<% } %>
+           	<% } %>
+           
+            <% if (currentPage != maxPage) { %>
+            	<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=currentPage + 1 %>'">&gt;</button>
+			<% } %>
+
 	    
     <%@ include file = "./footer.jsp"%>
 	    

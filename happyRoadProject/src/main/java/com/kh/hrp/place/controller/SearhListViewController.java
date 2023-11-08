@@ -34,16 +34,23 @@ public class SearhListViewController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cpage = Integer.parseInt(request.getParameter("cpage"));
+		
 		String placeTitle = request.getParameter("title");
-		if(placeTitle == null){
-			
-		}else {
+		
+		if (placeTitle == null) {
+			System.out.println("111" + placeTitle);
+		} else {
 			int searchCount = new PlaceService().selectSearchCount(placeTitle);
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
-			System.out.println("ㅇㅇㅇ" + searchCount);
+			
+			System.out.println("222" + searchCount);
+			
 			PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
 			ArrayList<Place> list = new PlaceService().selectSearchList(placeTitle, pi);
+			
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
+			
 			request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
 		}
 
