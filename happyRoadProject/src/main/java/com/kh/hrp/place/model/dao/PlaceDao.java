@@ -3,7 +3,6 @@ package com.kh.hrp.place.model.dao;
 import static com.kh.hrp.common.JDBCTemplate.close;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +13,10 @@ import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
-
-import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.vo.Place;
+import com.kh.hrp.place.model.vo.Review;
 
 public class PlaceDao {
    private Properties prop = new Properties();
@@ -156,35 +155,29 @@ public class PlaceDao {
       
    }
    
-	public ArrayList<PlaceImage> selectPlaceImage(Connection conn, int placeNo) {
-		ArrayList<PlaceImage> list = new ArrayList<>();
 
+   public int increaseCount(Connection conn, int placeNo) {
+		int result = 0;
+		
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectPlaceImage");
-
+		String sql = prop.getProperty("increaseCount");
+		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardNo);
-
-			rset = pstmt.executeQuery();
-
-			while (rset.next()) {
-				Attachment at = new Attachment();
-				at.setChangeName(rset.getString("change_name"));
-				at.setFilePath(rset.getString("file_path"));
-
-				list.add(at);
-			}
+			pstmt = conn.prepareStatement(sql); //미완성sql
+			pstmt.setInt(1, placeNo);
+			
+			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(rset);
 			close(pstmt);
 		}
-		return list;
+		
+		return result;
+	   
+   }
 
-	}
 
 	public int selectSearchCount(Connection conn, String keyword) {
 
@@ -254,6 +247,142 @@ public class PlaceDao {
 
 	}
 	
+   
+   public ArrayList<PlaceImage> selectPlaceImageList(Connection conn, int placeNo){
+	   ArrayList<PlaceImage> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectPlaceImage");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				PlaceImage pi = new PlaceImage(
+								rset.getInt("PLACE_IMAGE_NO"),
+								rset.getString("PLACE_IMAGE_CHANGE"),
+								rset.getString("PLACE_IMAGE_PATH")
+						);
+
+				
+				list.add(pi);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;	
+   }
+   
+   
+   public ArrayList<Review> selectReviewList(Connection conn, int placeNo){
+	   ArrayList<Review> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectReviewList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(
+							rset.getString("REVIEW_NO"),
+							rset.getString("USER_NAME"),
+							rset.getString("REVIEW_STAR"),
+							rset.getString("REVIEW_CONTENT"),
+							rset.getString("REVIEW_CREATE_DATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	   
+   }
+   
+   public int reviewListCount(Connection conn, int placeNo) {
+		int reviewListCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewListCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeNo);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				reviewListCount = rset.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return reviewListCount;
+	}
+   
+   public boolean checkLike(Connection conn, int placeNo, int userNo) {
+	   boolean isLike = false;
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   String sql = prop.getProperty("checkLike");
+	   
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeNo);
+			pstmt.setInt(2, userNo);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				isLike = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return isLike; 
+   }
+   
+   
+   public int placeLikeInsertController(Connection conn, int userNo, int placeNo) {
+	   int result = 0;
+	      PreparedStatement pstmt = null;
+	      
+	      String sql = prop.getProperty("placeLikeInsertController");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, placeNo);
+	         pstmt.setInt(2, userNo);
+	         
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt);
+	      }
+	      
+	      return result;
+   }
+   
    
 
 }
