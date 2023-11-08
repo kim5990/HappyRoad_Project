@@ -3,7 +3,7 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Place> list = (ArrayList<Place>)request.getAttribute("list");
-	
+	String listNull = (String)request.getAttribute("listNull");
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
@@ -23,7 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 	
 	<link rel="stylesheet" href="../../resources/css/fonts.css">
-	<link rel="stylesheet" href="../../resources/css/searchresult.css">
+	
 
 </head>
 <body>
@@ -43,7 +43,7 @@
         <div class="serach-result-all">
             <div class="search-info-list">
                 <ul class="ulclass">
-                	<% if (list.isEmpty()) { %>
+                	<% if (listNull.equals("0")) { %>
                 		<li>검색 결과가 없습니다.</li>
                 	<% } else { %>
                 	<% for (Place p : list) { %>

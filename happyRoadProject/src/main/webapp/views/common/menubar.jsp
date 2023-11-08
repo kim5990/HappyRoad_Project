@@ -42,6 +42,7 @@
 	<link rel="stylesheet" href="./resources/css/hotNow.css">
 	<link rel="stylesheet" href="./resources/css/tail.css">
 	<link rel="stylesheet" href="./resources/css/mainboard.css">
+	<link rel="stylesheet" href="./resources/css/searchresult.css">
 	
 	<script type="text/javascript" src="./resources/js/main.js"></script>
     

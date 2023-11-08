@@ -25,6 +25,7 @@ public class SearhListViewController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+
     public SearhListViewController() {
         super();
         // TODO Auto-generated constructor stub
@@ -36,10 +37,15 @@ public class SearhListViewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String placeTitle = request.getParameter("title");
-		
-		if (placeTitle == null) {
-			System.out.println("111" + placeTitle);
+		String listNull;
+		if (placeTitle == "") {
+			listNull = "0";
+			PageInfo pi =  PageInfoController.pageController(0, 1, 10, 5);
+			request.setAttribute("listNull", listNull);
+			request.setAttribute("pi", pi);
+			request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
 		} else {
+			listNull = "1";
 			int searchCount = new PlaceService().selectSearchCount(placeTitle);
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			
@@ -47,7 +53,7 @@ public class SearhListViewController extends HttpServlet {
 			
 			PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
 			ArrayList<Place> list = new PlaceService().selectSearchList(placeTitle, pi);
-			
+			request.setAttribute("listNull", listNull);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			
