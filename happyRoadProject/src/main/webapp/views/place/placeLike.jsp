@@ -106,7 +106,7 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
-                        href="insertform.me">마이페이지</a>
+                        href="myPage.me">마이페이지</a>
                     </li>
                 </div>
               </div>
