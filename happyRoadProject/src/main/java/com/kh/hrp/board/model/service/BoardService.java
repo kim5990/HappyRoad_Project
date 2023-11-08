@@ -84,9 +84,31 @@ public class BoardService {
 		
 	   int result = new BoardDao().updateBoard(conn, b);
 
+	   if (result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
+      
+      close(conn);
+	      
 	   return result;
    }
    
-   
+   public int deleteBoard(int boardNo) { // 게시글 삭제
+	   Connection conn = getConnection();
+		
+	   int result = new BoardDao().deleteBoard(conn, boardNo);
+	   
+	   if (result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
+      
+      close(conn);
+      
+      return result;
+   }
    
 }

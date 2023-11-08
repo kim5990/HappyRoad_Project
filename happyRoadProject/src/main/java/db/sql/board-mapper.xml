@@ -72,4 +72,12 @@
 		     , BOARD_CONTENT = ?
 		 WHERE BOARD_NO = ?
    </entry>
+   
+   <entry key="deleteBoard">
+   		UPDATE BOARD
+		    SET BOARD_STATUS = 'N'
+		   WHERE BOARD_NO = ?
+   </entry>
+   
+   
 </properties>
