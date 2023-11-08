@@ -37,11 +37,11 @@ public class SearhListView extends HttpServlet {
 		int cpage = Integer.parseInt(request.getParameter("cpage"));
 		String title = request.getParameter("keyword");
 
-		int searchCount = new PlaceService().selectSearchCount(keyword);
+		int searchCount = new PlaceService().selectSearchCount(title);
 		int currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
 		PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
-		ArrayList<Place> list = new PlaceService().selectSearchList(keyword, pi);
+		ArrayList<Place> list = new PlaceService().selectSearchList(title, pi);
 		request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
 	}
 
