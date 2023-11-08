@@ -95,9 +95,9 @@ public class PlaceService {
 	   
    }
    
-   public ArrayList<Review> selectReviewList(int placeNo){
+   public ArrayList<Review> selectReviewList(int placeNo, PageInfo pi){
 		Connection conn = getConnection();
-		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, placeNo);
+		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, placeNo, pi);
 		close(conn);
 		return list;
 	   

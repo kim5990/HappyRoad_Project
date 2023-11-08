@@ -35,12 +35,18 @@ public class ReviewListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int PlaceNo = Integer.parseInt(request.getParameter("pno"));
-
-//		int reviewListCount = new PlaceService().reviewListCount(PlaceNo); //현재 총 리뷰 수
-//		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
-//		PageInfo pi = PageInfoController.pageController(reviewListCount, currentPage, 5, 3);
 		
-		ArrayList<Review> list = new PlaceService().selectReviewList(PlaceNo);
+//		System.out.println(PlaceNo);
+//		System.out.println(Integer.parseInt(request.getParameter("cpage")));
+		
+		int reviewListCount = new PlaceService().reviewListCount(PlaceNo);
+//		System.out.println(reviewListCount);
+		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
+//		System.out.println(reviewListCount + currentPage);
+		PageInfo pi = PageInfoController.pageController(reviewListCount, currentPage, 5, 3);
+		
+
+		ArrayList<Review> list = new PlaceService().selectReviewList(PlaceNo, pi);
 		// [{},{},{}]
 		
 		response.setContentType("application/json; charset=utf-8");

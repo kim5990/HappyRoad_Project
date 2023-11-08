@@ -281,7 +281,7 @@ public class PlaceDao {
    }
    
    
-   public ArrayList<Review> selectReviewList(Connection conn, int placeNo){
+   public ArrayList<Review> selectReviewList(Connection conn, int placeNo, PageInfo pi){
 	   ArrayList<Review> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
@@ -291,6 +291,8 @@ public class PlaceDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeNo);
+			pstmt.setInt(2, pi.getStartPage());
+			pstmt.setInt(3, pi.getEndPage());
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -321,14 +323,14 @@ public class PlaceDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeNo);
+			
 			rset = pstmt.executeQuery();
-
+			
 			if (rset.next()) {
-				reviewListCount = rset.getInt("count");
+				reviewListCount = rset.getInt("COUNT");
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);

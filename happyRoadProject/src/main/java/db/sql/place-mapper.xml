@@ -116,15 +116,22 @@
    </entry>
    
    <entry key="selectReviewList">
-		SELECT REVIEW_NO
-		        ,USER_NAME
-		        ,REVIEW_STAR
-		        ,REVIEW_CONTENT
-		        ,REVIEW_CREATE_DATE
-		FROM REVIEW
-		JOIN MEMBER USING (USER_NO)
-		WHERE PLACE_NO = ?
-		ORDER BY REVIEW_CREATE_DATE DESC
+		SELECT *
+		FROM(
+			SELECT ROWNUM RNUM, A.*
+					FROM(
+							SELECT REVIEW_NO
+									,USER_NAME
+									,REVIEW_STAR
+									,REVIEW_CONTENT
+									,REVIEW_CREATE_DATE
+							FROM REVIEW
+							JOIN MEMBER USING (USER_NO)
+							WHERE PLACE_NO = ?
+							ORDER BY REVIEW_CREATE_DATE DESC
+						) A
+			)
+		WHERE RNUM BETWEEN ? AND ?
    </entry>
    
     <entry key="reviewListCount">

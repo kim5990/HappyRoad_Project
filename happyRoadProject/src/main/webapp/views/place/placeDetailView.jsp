@@ -69,11 +69,13 @@
     	 height: 150px;
     }
     
-
     
     .like{
        width: 25px;
     }
+    .like:hover {
+		cursor: pointer;
+	}
     
     .td1{
        max-width: 250px;
@@ -238,7 +240,8 @@
                         $.ajax({
                             url : "rlist.pl",
                             data : {
-                                pno : placeNo
+                                pno : placeNo,
+                                cpage : 1
                             },
                             success: function(res){
                                 // 위에서가 아닌 success에서 그려줘야 화면 새로고침안하고 만들어짐 
