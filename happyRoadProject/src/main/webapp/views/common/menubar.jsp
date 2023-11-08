@@ -17,6 +17,19 @@
 	<!--부트스트랩-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+	<!-- Bootstrap theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+	
+
 	
 	<link rel="stylesheet" href="./resources/css/fonts.css">
 	<link rel="stylesheet" href="./resources/css/header.css">
@@ -52,7 +65,7 @@
              <% if (loginUser == null) { %>
                  <input type="image" onclick="location.href = 'freeboardForm.fb?cpage=1'"
                      src="./resources/logo/header-게시판.png" height="17" width="17">
-                 <input type="image" disable onclick = "alert('즐겨찾기 리스트는 로그인 후 사용가능합니다.')" src="./resources/logo/즐겨찾기모음+즐겨찾기전.png"
+                 <input type="image" onclick = "alertify.alert('에러 메세지', '로그인 후 이용가능 합니다.');" src="./resources/logo/즐겨찾기모음+즐겨찾기전.png"
                      height="17" width="17">
                  <input type="image" onclick="location.href = 'loginForm.me'" src="./resources/logo/로그인-전.png"
                      height="17" width="17">
@@ -63,7 +76,7 @@
 					height="17" width="17">
 					
 			<% if (loginUser.getUser_level().equals("0")) { %>
-				<input type="image" onclick="location.href = ''" src="./resources/logo/관리자.png"
+				<input type="image" onclick="location.href = 'freeboardForm.fb?cpage=1'" src="./resources/logo/관리자.png"
 					height="17" width="17">
 			<% } else { %>
 				<input type="image" onclick="location.href = 'myPage.me'" src="./resources/logo/로그인-후.png"
