@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.hrp.board.model.vo.Board;
+import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
 
 public class BoardDao {
@@ -215,4 +216,38 @@ public class BoardDao {
 		}
 		return result;
    }
+   
+   public ArrayList<BoardComment> selectBoardCommentList(Connection conn, int boardNo){
+	   ArrayList<BoardComment> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardCommentList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new BoardComment(
+							rset.getInt("COMMENT_NO"),
+							rset.getString("BOARD_NO"),
+							rset.getString("COMMENT_USER"),
+							rset.getString("COMMENT_CONTENT"),
+							rset.getString("COMMENT_NEWDATE")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+   }
+   
+   
 }

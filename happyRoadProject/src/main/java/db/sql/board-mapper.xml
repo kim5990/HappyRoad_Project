@@ -79,5 +79,13 @@
 		   WHERE BOARD_NO = ?
    </entry>
    
-   
+   <entry key="selectBoardCommentList">
+   		SELECT COMMENT_NO
+		     , BOARD_NO
+		     , COMMENT_USER
+		     , COMMENT_CONTENT
+		     , COMMENT_NEWDATE
+		   FROM BOARD_COMMENT
+		  WHERE BOARD_NO = ?
+   </entry>
 </properties>

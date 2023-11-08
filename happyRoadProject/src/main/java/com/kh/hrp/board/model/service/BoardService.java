@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.kh.hrp.board.model.dao.BoardDao;
 import com.kh.hrp.board.model.vo.Board;
+import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
 
 public class BoardService {
@@ -109,6 +110,15 @@ public class BoardService {
       close(conn);
       
       return result;
+   }
+   
+   public ArrayList<BoardComment> selectBoardCommentList(int boardNo) {
+	   Connection conn = getConnection();
+		
+		ArrayList<BoardComment> list = new BoardDao().selectBoardCommentList(conn, boardNo);
+		close(conn);
+		
+		return list;
    }
    
 }

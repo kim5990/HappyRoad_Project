@@ -246,6 +246,7 @@
               <%} %>
             </div>
 
+			<!-- 
             <div class="commenttable">
                 <table>
                     <tr>
@@ -261,23 +262,47 @@
                         <td class="tdDate"><button class="tdbtn" type="button" onclick="location.href=''">삭제</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="tdName" rowspan="2" align="center">홍길동</td>
-                        <td class="tdtext" rowspan="2"><input type="text" value="오늘 날씨 좋아요" class="tdtext" disabled
-                                readonly></td>
-                        </td>
-                        <td class="tdDate" colspan="2" align="center">2023-09-25</td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button>
-                        </td>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="location.href=''">삭제</button>
-                        </td>
-                    </tr>
+                   
                 </table>
             </div>
+			 -->
 
+			<script>
+				 window.onload = function(){
+					//댓글 가져와서 그려주기
+					selectBoardCommentList();
+					//setInterval(selectReplyList,2000)
+					}
+				 
+				 function selectBoardCommentList(){
+	            		$.ajax({
+	            			url: "list.fv",
+	            			data : {
+	            				bno: <%=b.getBoardNo()%>
+	            			},
+	            			success: function(res){          
+	            				let str = "";
+	            				for (let BoardComment of res) {
+	            					console.log(BoardComment)
+	            					str += "<tr>"
+	       							+"<td>" + BoardComment.commentUser + "</td>"
+	       							+"<td>" + BoardComment.commentContent + "</td>"
+	       							+"<td>" + BoardComment.commentNewdate + "</td>"
+	       							+"</tr>";
+	            					
+	            				}
+	            				
+	            				document.querySelector("#boardbottom tbody").innerHTML = str;
+	            				
+	            				
+	            			},
+	            			error: function(){
+	            				console.log("댓글목록 조회중 ajax통신실패");
+	            			}
+	            		})
+	            	}
+			</script>
+			
         </div>
     </div>
 
