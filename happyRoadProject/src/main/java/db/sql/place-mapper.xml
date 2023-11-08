@@ -156,6 +156,22 @@
 			)
    </entry>
    
+   <entry key="mainSelectController">
+		SELECT PLACE_NO,
+	        PLACE_TITLE,
+	        PLACE_CONTENT_POINT,
+	        PLACE_THEMA,
+	        PLACE_ADDRESS,
+	        PLACE_TIME,
+	       TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+	       TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+	        PLACE_COUNT,
+	        PLACE_IMAGE_PATH
+		FROM PLACE
+		LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+		WHERE PLACE_STATUS = 'Y'
+   </entry>
+   
    
 
 </properties>

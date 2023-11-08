@@ -24,13 +24,27 @@
 	                <div class="main-section-div-text2">23.10.27 - 23.10.27 </div>
 	            </div>
 	        </div>
+	        
 	        <script>
 	        	window.onload = function(){
-	        		
+	        		$.ajax({
+		   	        	 url : "select.ma",
+		   	        	 type:"post",
+		   	        	 success : function(result){
+		   	        		 let str = "";
+		   	        		 console.log(result);
+		   	        		 for(let r of result){
+		   	        			 str += ""
+		   	        		 }
+		   	        	 },
+		   	        	 error : function(){
+		   	        		 
+		   	        	 }
+		   	         })   
 	        	}
-	        	
-	        
-	        
+	        </script>
+	        <script>
+
 	        	function changeImg(num){
 	        		const mainSectionData = [{
 	        			img : "resources/images/main1.png",
