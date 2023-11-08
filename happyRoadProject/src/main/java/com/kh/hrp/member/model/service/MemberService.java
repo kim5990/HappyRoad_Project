@@ -31,12 +31,9 @@ public class MemberService {
    }
    
    public Member updatePwdMember(String userId,String userPwd,String updatePwd) {
-	    System.out.println(userId);
-	    System.out.println(userPwd);
-	    System.out.println(updatePwd);
 		Connection conn = getConnection();
 		int result = new MemberDao().updatePwdMember(conn, userId, userPwd, updatePwd);
-		System.out.println(result);
+
 		Member updateMem = null;
 		if (result > 0) {
 			commit(conn);
@@ -44,7 +41,7 @@ public class MemberService {
 		} else {
 			rollback(conn);
 		}
-		System.out.println(updateMem);
+
 		close(conn);
 		
 		return updateMem;
@@ -65,4 +62,21 @@ public class MemberService {
 		return result;
 		
 	}
+   
+   public Member updateMember(Member m) {
+	   Connection conn = getConnection();
+	   int result = new MemberDao().updateMember(conn, m);
+	   
+	   Member updateMem = null;
+		if (result > 0) {
+			commit(conn);
+			updateMem = new MemberDao().selectMember(conn, m.getUserId());
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return updateMem;
+   }
 }
