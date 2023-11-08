@@ -2,6 +2,7 @@ package com.kh.hrp.place.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,23 +35,37 @@ public class ReviewListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int PlaceNo = Integer.parseInt(request.getParameter("pno"));
-		
-//		System.out.println(PlaceNo);
-//		System.out.println(Integer.parseInt(request.getParameter("cpage")));
-		
+		int PlaceNo = Integer.parseInt(request.getParameter("pno"));	
 		int reviewListCount = new PlaceService().reviewListCount(PlaceNo);
-//		System.out.println(reviewListCount);
 		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
-//		System.out.println(reviewListCount + currentPage);
+
 		PageInfo pi = PageInfoController.pageController(reviewListCount, currentPage, 5, 3);
 		
-
+		
 		ArrayList<Review> list = new PlaceService().selectReviewList(PlaceNo, pi);
 		// [{},{},{}]
 		
+
+//		response.setContentType("application/json; charset=utf-8");
+//		new Gson().toJson(list, response.getWriter());
+		
+		
+//		// JSON 객체를 생성하고 필드를 추가
+//		JsonObject jsonResponse = new JsonObject();
+//		jsonResponse.addProperty("num", num); // num 변수 추가
+//		jsonResponse.add("list", new Gson().toJsonTree(list)); // list 변수 추가
+//
+//		// JSON 응답을 클라이언트로 보내기
+//		response.setContentType("application/json; charset=utf-8");
+//		response.getWriter().write(jsonResponse.toString());
+		
+		
+		HashMap<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pi", pi);
+		responseMap.put("list", list);
+
 		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(list, response.getWriter());
+		new Gson().toJson(responseMap, response.getWriter());
 		
 		
 

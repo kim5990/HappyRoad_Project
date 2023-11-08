@@ -1,4 +1,4 @@
-package com.kh.hrp.place.model.dao;
+ package com.kh.hrp.place.model.dao;
 
 import static com.kh.hrp.common.JDBCTemplate.close;
 
@@ -289,10 +289,15 @@ public class PlaceDao {
 		String sql = prop.getProperty("selectReviewList");
 		
 		try {
+			
+	        int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	        int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeNo);
-			pstmt.setInt(2, pi.getStartPage());
-			pstmt.setInt(3, pi.getEndPage());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {

@@ -44,9 +44,7 @@
 		cursor: pointer;
 	}
 	
-	
 
-	
 
     #ContentDetail{
         max-width: 680px;
@@ -89,9 +87,29 @@
        /* background-color: rgb(235, 235, 208); */   
     }
     
-    .review-pagebar  a{
+    .review-pagebar a{
     	margin: 0 5px; /* 좌우 여백을 5px로 조정 */
         text-decoration: none;
+        padding: 0 3px;
+        
+    }
+    .review-pagebar a:hover{
+    	cursor: pointer;
+    }
+
+    .cPage{
+        /* border: 1px solid gray; */
+        font-size: 17px;
+        /* color:black; */
+        color: rgb(3, 3, 3);
+        border-radius: 30px;
+        
+    }
+    .notcPage{
+        font-size: 16px;
+        color:rgb(146, 145, 145);
+
+
     }
     
     
@@ -110,24 +128,27 @@
 
         <h3 style="color: rgb(65, 65, 65);">${p.placeContentPoint}</h3>
 
-        <div align="right" style="max-width: 650px;">
+
+        <div id="like-area" align="right" style="max-width: 650px;">
         
 	        <c:choose>
-		        <c:when test="${ userNo == null}">
+		        <c:when test="${ loginUser.userNo == null}">
 					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="alert('즐겨찾기 기능은 로그인 후 사용가능합니다.')">
 		        </c:when>
-
-		        <c:when test="${ userNo != null && like == false }">
-					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="location.href='insert.li?userNo=${userNo}&placeNo=${p.placeNo}'">
-		        </c:when>
-
-		        <c:when test="${ userNo != null && like == true }">
-					<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" class="like" onclick="location.href='delete.li?userNo=${userNo}&placeNo=${p.placeNo}'">
-		        </c:when>
 		    </c:choose>
+            
         </div>
-
         <br>
+        
+
+        <script>
+            
+            
+           
+            
+            
+        </script>
+
         
         
 		<!-- 이미지가 2개 이상일 경우 슬라이드 기능 활성화 -->
@@ -226,44 +247,7 @@
         <table id="review-area" style="padding-right: 20px; width:650px;">              
 			<tbody>
 			
-              	
-                <script>
-                    onload = function(){
-                        // 댓글 가져와서 그려주기
-                        selectReviewList();
-                    }
-          
-            
-                    function selectReviewList(){
-                    	var placeNo = "${p.placeNo}";
 
-                        $.ajax({
-                            url : "rlist.pl",
-                            data : {
-                                pno : placeNo,
-                                cpage : 1
-                            },
-                            success: function(res){
-                                // 위에서가 아닌 success에서 그려줘야 화면 새로고침안하고 만들어짐 
-                                let str = ""
-                                for (let review of res){
-                                    let score = "";
-                                    for (let i = 0; i < review.reviewStar; i++) {
-                                            score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
-                                        }
-                                    str += '<tr><th rowspan="2" style="width:50px;">' + review.userNo + '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score + '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate +'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent +'</td></tr><tr><td colspan="3"><hr style="width:680px;"><td></tr>'
-                                }
-                            document.querySelector("#review-area tbody").innerHTML = str;
-
-
-                            },
-                            error : function(){
-                                console.log("댓글목록 조회 중 ajax 통신 실패");
-                            }
-                        })
-                    }
-                </script>
-                        
 			
 			</tbody>
         </table>
@@ -272,16 +256,18 @@
         <br>
 
         <div class="review-pagebar">
-            <a>&lt;</a>
-            <a>1</a>
-            <a>2</a>
-            <a>3</a>
-            <a>&gt;</a>
+
+	            <!-- <a>&lt;</a>
+	            <a>1</a>
+	            <a>2</a>
+	            <a>3</a>
+	            <a>&gt;</a> -->
 
         </div>
         
         <br><br><br><br>
     </div>
+
 
     <%@ include file = "../common/footer.jsp"%>
     
@@ -291,13 +277,128 @@
 
 
 	<!-- -------------------------- 스크립트 ------------------------------------ -->
-	
-	
+   	
+    <script>
+        onload = function(){
+            selectReviewList(1);
+            checkLike();
 
-	
-	
-	
-	
+        }
+
+
+        // 리뷰 + 페이징바 그려주기
+        function selectReviewList(cp){
+        	var placeNo = "${p.placeNo}";
+
+            $.ajax({
+                url : "rlist.pl",
+                data : {
+                    pno : placeNo,
+                    cpage : cp
+                },
+                success: function(res){
+  					let list = res.list;
+                    let pi = res.pi
+                    
+                    // 리뷰 그려주기
+                    let str1 = ""
+                    for (let review of list){
+                        let score = "";
+                        for (let i = 0; i < review.reviewStar; i++) {
+                                score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
+                            }
+                        str1 += '<tr><th rowspan="2" style="width:50px;">' + review.userNo + '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score + '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate +'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent +'</td></tr><tr><td colspan="3"><hr style="width:680px;"><td></tr>'
+                    }
+                	document.querySelector("#review-area tbody").innerHTML = str1;
+                	
+                	
+                	// 페이징바 그려주기
+                	let str2 = ""
+                	for (let i = pi.startPage; i <= pi.endPage; i++){
+                        if (i === pi.currentPage){
+                            str2 += "<a class='cPage' onclick='selectReviewList("+i+")'>" + i + "</a>"
+                        } else {
+                		    str2 += "<a class='notcPage' onclick='selectReviewList("+i+")'>" + i + "</a>"
+                        }
+                	}
+                	document.querySelector(".review-pagebar").innerHTML = str2;
+
+                },
+                error : function(){
+                    console.log("댓글목록 조회 중 ajax 통신 실패");
+                }
+            })
+        }
+        
+
+
+        // 즐겨찾기 조회
+        function checkLike(){
+            
+            $.ajax({
+                url : "checkLike.pl",
+                data : {
+                    pno : "${p.placeNo}",
+                    mno : "${loginUser.userNo}"
+                },
+                success: function(res){
+                    let str3 = "";
+                    if(res){   // 즐겨찾기 있음
+                        str3 += '<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" class="like" onclick="deleteLike()">'
+                    } else {    // 즐겨찾기 없음
+                        str3 += '<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="insertLike()">'
+                    }
+                    document.querySelector("#like-area").innerHTML = str3;
+
+                },
+                error : function(){
+                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
+                }
+            })
+        }
+
+
+
+        // 즐겨찾기 삭제
+        function deleteLike(){
+            $.ajax({
+                url : "delete.li",
+                data : {
+                    placeNo : "${p.placeNo}",
+                    userNo : "${loginUser.userNo}"
+                },
+                success: function(res){
+                    checkLike();
+                },
+                error : function(){
+                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
+                }
+            })
+        }
+        
+        // 즐겨찾기 추가
+        function insertLike(){
+            $.ajax({
+                url : "insert.li",
+                data : {
+                    placeNo : "${p.placeNo}",
+                    userNo : "${loginUser.userNo}"
+                },
+                success: function(res){
+                    checkLike();
+                },
+                error : function(){
+                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
+                }
+            })
+        }
+
+        
+    
+        
+    </script>
+                        
+
 	
 
 	<!-- 이미지 슬라이드 -->

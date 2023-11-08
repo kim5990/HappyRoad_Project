@@ -227,7 +227,7 @@
             </div>
             <div class="hotNow-list-nodes">
                 <div class="hotNow-image">
-                    <img class=" hotNow-image-thumbnail" onclick="location.href = 'eventdetailView.ed?pno=18&cpage=1'" id="image-thumbnail2" src="resources/images/HOTNOW_3.png">
+                    <img class=" hotNow-image-thumbnail" onclick="location.href = 'eventdetailView.ed?pno=18'" id="image-thumbnail2" src="resources/images/HOTNOW_3.png">
                 </div>
                 <div class="hotNow-list-node1">
                     <div class="hotNow-list-node1-info">
