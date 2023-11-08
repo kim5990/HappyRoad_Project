@@ -6,6 +6,24 @@
 <meta charset="UTF-8">
 <title>myPageForm title here</title>
 <style>
+	.memberMenu {
+              display: flex;
+              width: 100%;
+              justify-content: center;
+              margin-top: 30px;
+            }
+
+    .memberMenuBar {
+      display: flex;
+      width: 770px;
+      height: auto;
+      justify-content: center;
+    }
+
+    .memberMenuBar .btn-active {
+      background-color: #198754;
+      color: white;
+    }
     .myPageForm{
       display: flex;
       width: 100%;
@@ -61,6 +79,21 @@
     	String userEmail = loginUser.getUserEmail();
     	String userPwd = loginUser.getUserPwd();
     %>
+    <div class="memberMenu">
+       <div class="memberMenuBar">
+         <div class="memberMenu">
+           <ul class="nav nav-tabs">
+             <li class="nav-item ">
+               <a class="nav-link active"  style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
+                 aria-current="page" href="list.fa">즐겨찾기 리스트</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" style="background-color: rgb(81, 126, 165); color: white;"
+                 href="myPage.me">마이페이지</a>
+             </li>
+         </div>
+       </div>
+     </div>
 
    <div class="myPageForm">
       <div class = "myPageFormdiv">
