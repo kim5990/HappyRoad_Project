@@ -71,7 +71,7 @@
     
 
     
-    #like{
+    .like{
        width: 25px;
     }
     
@@ -110,25 +110,22 @@
 
         <div align="right" style="max-width: 650px;">
         
-        	<!-- 로그인 정보 없을 때 -->
-        	<!--  
-
-            <img src="../../resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" id="like">
-
-            <img src="../../resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" id="like">
-	         -->
-	            
 	        <c:choose>
-		        <c:when test="${ userNo == null || like == false }">
-					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" id="like" onclick="">
+		        <c:when test="${ userNo == null}">
+					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="alert('즐겨찾기 기능은 로그인 후 사용가능합니다.')">
 		        </c:when>
-		        <c:otherwise>
-					<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" id="like" onclick="">
-				</c:otherwise>
+
+		        <c:when test="${ userNo != null && like == false }">
+					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="location.href='insert.li?userNo=${userNo}&placeNo=${p.placeNo}'">
+		        </c:when>
+
+		        <c:when test="${ userNo != null && like == true }">
+					<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" class="like" onclick="location.href='delete.li?userNo=${userNo}&placeNo=${p.placeNo}'">
+		        </c:when>
 		    </c:choose>
         </div>
 
-        <br><br>
+        <br>
         
         
 		<!-- 이미지가 2개 이상일 경우 슬라이드 기능 활성화 -->

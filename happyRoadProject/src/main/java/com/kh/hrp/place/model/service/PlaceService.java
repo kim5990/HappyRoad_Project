@@ -31,14 +31,6 @@ public class PlaceService {
 		return SearchCount;
 	}
 	
-	public ArrayList<PlaceImage> selectPlaceImage(int placeNo) {
-		
-		Connection conn = getConnection();
-		ArrayList<PlaceImage> list = new PlaceDao().selectPlaceImage(conn, placeNo);
-		
-		close(conn);
-		return list;
-	}
 	
 	public ArrayList<Place> placeLikeSelectList(int userNo, PageInfo pi) {
 		
@@ -75,20 +67,6 @@ public class PlaceService {
 
 
 
-
-
-   public int placeLikeDeleteController(int userNo, int placeNo) {
-      Connection conn = getConnection();
-      int result = new PlaceDao().placeLikeDeleteController(conn, userNo, placeNo);
-      if(result > 0) {
-         commit(conn);
-      }else {
-         rollback(conn);
-      }
-      close(conn);
-      return result;
-   }
-   
    
    public Place increaseCount(int placeNo) {
 	   Connection conn = getConnection();
@@ -137,6 +115,19 @@ public class PlaceService {
 		boolean isLike = new PlaceDao().checkLike(conn, placeNo, userNo);
 		close(conn);
 		return isLike;
+   }
+   
+   public int placeLikeInsertController(int userNo, int placeNo) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().placeLikeInsertController(conn, userNo, placeNo);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
    }
    
 }

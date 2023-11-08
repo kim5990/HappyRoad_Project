@@ -141,6 +141,21 @@
       		AND USER_NO =?
    </entry>
    
+   <entry key="placeLikeInsertController">
+		INSERT INTO PLACE_LIKE
+			(
+			LIKE_NO,
+			PLACE_NO,
+			USER_NO
+			)
+			VALUES
+			(
+			SEQ_PLNO.NEXTVAL,
+			?,
+			?
+			)
+   </entry>
+   
    
 
 </properties>

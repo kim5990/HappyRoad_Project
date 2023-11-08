@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
   <%@ include file = "./views/common/menubar.jsp"%>
 	<main class="main-container">
 	        <div class="main-section1">
-	            <input type="image" src="resources/images/main1.png" height="400" width="940" class="main-section-image" onclick="location.href = 'eventdetailView.ed?pno=18&mno=3&cpage=1'">
+	            <input type="image" src="resources/images/main1.png" height="400" width="940" class="main-section-image" onclick="location.href = 'eventdetailView.ed?pno=1&mno=3&cpage=1'">
 	        </div>
 	        <div class="main-section3">
 	            <input type="button" onclick = "changeImg(1)" class="main-section3-button" value="1" >
@@ -214,7 +214,7 @@ pageEncoding="UTF-8"%>
                 </div>
                 <div class="hotNow-list-node1">
                     <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name" onclick="location.href = 'eventdetailView.ed?pno=18&mno=3&cpage=1'">장소이름3</div>
+                        <div class="hotNow-list-node1-name" onclick="location.href = 'eventdetailView.ed?pno=18&cpage=1'">장소이름3</div>
                         <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
                         <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
                     </div>

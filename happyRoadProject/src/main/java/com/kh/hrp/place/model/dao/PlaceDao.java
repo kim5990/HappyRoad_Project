@@ -178,35 +178,6 @@ public class PlaceDao {
 	   
    }
 
-	public ArrayList<PlaceImage> selectPlaceImage(Connection conn, int placeNo) {
-		ArrayList<PlaceImage> list = new ArrayList<>();
-
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectPlaceImage");
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardNo);
-
-			rset = pstmt.executeQuery();
-
-			while (rset.next()) {
-				Attachment at = new Attachment();
-				at.setChangeName(rset.getString("change_name"));
-				at.setFilePath(rset.getString("file_path"));
-
-				list.add(at);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-
-	}
 
 	public int selectSearchCount(Connection conn, String keyword) {
 
@@ -391,6 +362,26 @@ public class PlaceDao {
 		return isLike; 
    }
    
+   
+   public int placeLikeInsertController(Connection conn, int userNo, int placeNo) {
+	   int result = 0;
+	      PreparedStatement pstmt = null;
+	      
+	      String sql = prop.getProperty("placeLikeInsertController");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, placeNo);
+	         pstmt.setInt(2, userNo);
+	         
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt);
+	      }
+	      
+	      return result;
+   }
    
    
 
