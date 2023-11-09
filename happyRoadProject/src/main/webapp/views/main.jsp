@@ -24,25 +24,7 @@
 	                <div class="main-section-div-text2">23.10.27 - 23.10.27 </div>
 	            </div>
 	        </div>
-	        
-	        <script>
-	        	window.onload = function(){
-	        		$.ajax({
-		   	        	 url : "select.ma",
-		   	        	 type:"post",
-		   	        	 success : function(result){
-		   	        		 let str = "";
-		   	        		 console.log(result);
-		   	        		 for(let r of result){
-		   	        			 str += ""
-		   	        		 }
-		   	        	 },
-		   	        	 error : function(){
-		   	        		 
-		   	        	 }
-		   	         })   
-	        	}
-	        </script>
+
 	        <script>
 
 	        	function changeImg(num){
@@ -254,5 +236,55 @@
             </div>
         </div>
     </div>
+       <script>
+              window.onload = function(){
+                 countOfSelect();
+              }
+              
+              function countOfSelect(){
+                 $.ajax({
+                        url : "countSearch.ma",
+                        type:"post",
+                        success : function(result){
+                          console.log(result);
+                          let str = ""
+                          for(let r of result){
+                             str += '<div class="hotNow-list-nodes">'
+                                      + '<div class="hotNow-image">'
+                                         + '<img class="hotNow-image-thumbnail" onclick = "location.href = '
+                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "&cpage=1'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
+                                      + '</div>'
+                                      + '<div class="hotNow-list-node1">'
+                                         + '<div class="hotNow-list-node1-info">'
+                                            + '<div class="hotNow-list-node1-name">' + r.placeTitle + '</div>'
+                                            + '<textarea class="hotNow-list-node1-Info1" readonly>' + r.placeContentPoint + '</textarea>'
+                                            + '<div class="hotNow-list-node1-Info2">' + r.placeAddress +'</div>'
+                                         + '</div>'
+                                      + '</div>'
+                                      +'<div class= "hotNow-list-node2"></div>'
+                                   +'</div>';
+                          }
+                          document.querySelector(".hotNow-list").innerHTML = str;
+                        },
+                        error : function(){
+                          console.log("인기게시글조회실패");
+                        }
+                     }) 
+              }
+              
+              function allOfSelect(){
+                 $.ajax({
+                        url : "select.ma",
+                        type:"post",
+                        success : function(result){
+                           console.log(result);
+                        },
+                        error : function(){
+                           
+                        }
+                     }) 
+              }
+           </script>
+    
 </body>
 </html>

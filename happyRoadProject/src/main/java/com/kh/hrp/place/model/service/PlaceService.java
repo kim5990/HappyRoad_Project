@@ -137,6 +137,14 @@ public ArrayList<PlaceSelect> mainSelectController() {
 	close(conn);
 	return list;
 }
+
+public ArrayList<PlaceSelect> mainCountSearch() {
+	   Connection conn = getConnection();
+	   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
+	   close(conn);
+	   return list;
+
+}
    
 }
    

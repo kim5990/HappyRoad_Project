@@ -384,39 +384,76 @@ public class PlaceDao {
       return result;
    }
 
-	public ArrayList<PlaceSelect> mainSelectController(Connection conn) {
-		ArrayList<PlaceSelect> plist = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("mainSelectController");
-		 try {
-			pstmt = conn.prepareStatement(sql);
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				plist.add(new PlaceSelect(rset.getInt("PLACE_NO"),
-						rset.getString("PLACE_TITLE"),
-						rset.getString("PLACE_CONTENT_POINT"),
-						rset.getString("PLACE_THEMA"),
-						rset.getString("PLACE_ADDRESS"),
-						rset.getString("PLACE_TIME"),
-						rset.getString("PLACE_START"),
-						rset.getString("PLACE_END"),
-						rset.getInt("PLACE_COUNT"),
-						rset.getString("PLACE_IMAGE_PATH")));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return plist;
-	}
-   
+   public ArrayList<PlaceSelect> mainSelectController(Connection conn) {
+      ArrayList<PlaceSelect> plist = new ArrayList<>();
+      PreparedStatement pstmt = null;
+      ResultSet rset = null;
+      
+      String sql = prop.getProperty("mainSelectController");
+       try {
+         pstmt = conn.prepareStatement(sql);
+         rset = pstmt.executeQuery();
+         
+         while(rset.next()) {
+            plist.add(new PlaceSelect(rset.getInt("PLACE_NO"),
+                  rset.getString("PLACE_TITLE"),
+                  rset.getString("PLACE_CONTENT_POINT"),
+                  rset.getString("PLACE_THEMA"),
+                  rset.getString("PLACE_ADDRESS"),
+                  rset.getString("PLACE_TIME"),
+                  rset.getString("PLACE_START"),
+                  rset.getString("PLACE_END"),
+                  rset.getInt("PLACE_COUNT"),
+                  rset.getString("PLACE_IMAGE_PATH"),
+                  rset.getString("PLACE_IMAGE_CHANGE")
+                  ));
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }finally {
+         close(rset);
+         close(pstmt);
+      }
+      
+      return plist;
+   }
+
+   public ArrayList<PlaceSelect> mainCountSearch(Connection conn) {
+      ArrayList<PlaceSelect> plist = new ArrayList<>();
+      PreparedStatement pstmt = null;
+      ResultSet rset = null;
+      
+      String sql = prop.getProperty("mainCountSearch");
+      try {
+         pstmt = conn.prepareStatement(sql);
+         rset = pstmt.executeQuery();
+         
+         while(rset.next()) {
+            plist.add(new PlaceSelect(rset.getInt("PLACE_NO"),
+                  rset.getString("PLACE_TITLE"),
+                  rset.getString("PLACE_CONTENT_POINT"),
+                  rset.getString("PLACE_THEMA"),
+                  rset.getString("PLACE_ADDRESS"),
+                  rset.getString("PLACE_TIME"),
+                  rset.getString("PLACE_START"),
+                  rset.getString("PLACE_END"),
+                  rset.getInt("PLACE_COUNT"),
+                  rset.getString("PLACE_IMAGE_PATH"),
+                  rset.getString("PLACE_IMAGE_CHANGE")
+                  ));
+         }
+      } catch (SQLException e) {
+         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      
+	      return plist;
+   }
+
    
 
 }
