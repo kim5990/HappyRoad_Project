@@ -102,7 +102,7 @@
                   <ul class="nav nav-tabs">
                     <li class="nav-item ">
                       <a class="nav-link active" style="background-color: rgb(81, 126, 165); color: white;"
-                        aria-current="page" href="list.fa">즐겨찾기 리스트</a>
+                        aria-current="page" href="list.fa?cpage=1&userNo=<%=loginUser.getUserNo() %>">즐겨찾기 리스트</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
@@ -183,7 +183,7 @@
                 </div>
               </div>
             </div>
-
+			<%@ include file = "../common/footer.jsp"%>
         </body>
 
         </html>

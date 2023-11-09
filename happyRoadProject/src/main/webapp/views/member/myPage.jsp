@@ -27,7 +27,7 @@
     .myPageForm{
       display: flex;
       width: 100%;
-      height: 1000px;
+      height: auto;
       justify-content: center;
       
     }
@@ -84,11 +84,11 @@
          <div class="memberMenu">
            <ul class="nav nav-tabs">
              <li class="nav-item ">
-               <a class="nav-link active"  style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
-                 aria-current="page" href="list.fa">즐겨찾기 리스트</a>
+               <a class="nav-link"  style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
+                 aria-current="page" href="list.fa?cpage=1&userNo=<%=loginUser.getUserNo() %>">즐겨찾기 리스트</a>
              </li>
              <li class="nav-item">
-               <a class="nav-link" style="background-color: rgb(81, 126, 165); color: white;"
+               <a class="nav-link active" style="background-color: rgb(81, 126, 165); color: white;"
                  href="myPage.me">마이페이지</a>
              </li>     
              <%if (loginUser.getUser_level().equals("0")){ %>
@@ -101,10 +101,10 @@
          </div>
        </div>
      </div>
-
    <div class="myPageForm">
       <div class = "myPageFormdiv">
           <div class="myPageFormHeader">
+          <br><br>
               <div class="myPageTitle"><h2>마이페이지</h2></div>
               <form action="<%=contextPath %>/update.me" method="post" class="row g-3 needs-validation" novalidate>
               <div class="form-floating">
@@ -157,7 +157,7 @@
             </div>
         </div>
     </div>
-    
+    <%@ include file = "../common/footer.jsp"%>
     <!-- 비밀번호 변경용 Modal -->
     <div class="modal" id="updatePwdModal">
         <div class="modal-dialog">

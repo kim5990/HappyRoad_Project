@@ -216,6 +216,7 @@
 
                     <button type="submit" class="btn btn-success">게시물 추가</button>
                 </form>
+                <%@ include file = "../common/footer.jsp"%>
             </div>
         </div>
     </div>
