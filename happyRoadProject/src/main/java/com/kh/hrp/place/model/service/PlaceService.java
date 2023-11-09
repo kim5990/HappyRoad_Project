@@ -9,6 +9,7 @@ import com.kh.hrp.common.PageInfo;
 import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.dao.PlaceDao;
 import com.kh.hrp.place.model.vo.Place;
+import com.kh.hrp.place.model.vo.PlaceSelect;
 import com.kh.hrp.place.model.vo.Review;
 
 public class PlaceService {
@@ -129,6 +130,21 @@ public class PlaceService {
 		close(conn);
 		return result;
    }
+
+public ArrayList<PlaceSelect> mainSelectController() {
+	Connection conn = getConnection();
+	ArrayList<PlaceSelect> list = new PlaceDao().mainSelectController(conn);
+	close(conn);
+	return list;
+}
+
+public ArrayList<PlaceSelect> mainCountSearch() {
+	   Connection conn = getConnection();
+	   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
+	   close(conn);
+	   return list;
+
+}
    
 }
    
