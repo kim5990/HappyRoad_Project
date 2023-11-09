@@ -68,4 +68,12 @@
 	   WHERE USER_ID = ?
 		 AND USER_PWD = ?
 	</entry>
+	<entry key="updateMember">
+		UPDATE MEMBER
+	   SET USER_NAME = ?
+	     , USER_PHONE = ?
+	     , USER_EMAIL = ?
+	     , USER_MODIFY_DATE = SYSDATE
+	 	WHERE USER_ID = ?
+	</entry>
 </properties>

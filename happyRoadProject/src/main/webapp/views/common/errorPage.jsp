@@ -9,5 +9,6 @@
 <body>
 	<%@ include file = "./menubar.jsp"%>
 	<h1 align = "center" style = "color : red;">errorPage</h1>
+	<%@ include file = "../common/footer.jsp"%>
 </body>
 </html>
