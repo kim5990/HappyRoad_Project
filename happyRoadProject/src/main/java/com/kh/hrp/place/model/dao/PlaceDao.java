@@ -188,6 +188,7 @@ public class PlaceDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, placeTitle);
+			pstmt.setString(1, "%" + placeTitle + "%");
 			
 			rset = pstmt.executeQuery();
 
@@ -207,7 +208,7 @@ public class PlaceDao {
 
 	public ArrayList<Place> selectSearchList(Connection conn, String placeTitle, PageInfo pi) {
 
-		ArrayList<Place> list = new ArrayList<>();
+		ArrayList<Place> plist = new ArrayList<>();
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -221,19 +222,19 @@ public class PlaceDao {
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			System.out.println(startRow);
 			System.out.println(endRow);
-			pstmt.setString(1, placeTitle);
+			pstmt.setString(1, "%" + placeTitle + "%");
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Place(rset.getInt("PLACE_NO"), 
+				plist.add(new Place(rset.getInt("PLACE_NO"), 
 		                           rset.getString("PLACE_TITLE"), 
 		                           rset.getString("PLACE_ADDRESS"), 
 		                           rset.getString("PLACE_IMAGE_PATH"))
 									);
-		      }
+  				}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -241,7 +242,7 @@ public class PlaceDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return plist;
 
 	}
 	

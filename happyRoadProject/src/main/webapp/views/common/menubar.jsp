@@ -5,6 +5,7 @@
 <%
 	String contextPath=request.getContextPath(); 
 	Member loginUser=(Member)session.getAttribute("loginUser"); 
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
 
 <!DOCTYPE html>
@@ -45,9 +46,18 @@
 	<link rel="stylesheet" href="./resources/css/searchresult.css">
 	
 	<script type="text/javascript" src="./resources/js/main.js"></script>
-    
+	<!-- bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
+	<% if(alertMsg != null) { %>
+		<script>
+			alert("<%=alertMsg%>");
+		</script>
+		<% session.removeAttribute("alertMsg"); %>
+	<% } %>
 	<header class="header-container">
 		<div class="header-section">
 		

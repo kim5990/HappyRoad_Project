@@ -13,16 +13,16 @@ import com.kh.hrp.member.model.service.MemberService;
 import com.kh.hrp.member.model.vo.Member;
 
 /**
- * Servlet implementation class UpdatePwd
+ * Servlet implementation class MemberUpdateController
  */
-@WebServlet("/updatePwd.me")
-public class UpdatePwdController extends HttpServlet {
+@WebServlet("/update.me")
+public class MemberUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePwdController() {
+    public MemberUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,19 +34,22 @@ public class UpdatePwdController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		String updatePwd = request.getParameter("updatePwd");
+		String userName = request.getParameter("userName");
+		String userEmail = request.getParameter("userEmail");
+		String userPhone = request.getParameter("userPhone");
 		
-		Member updateMem = new MemberService().updatePwdMember(userId, userPwd, updatePwd);
-
-		if (updateMem == null) {
-			request.setAttribute("errorMsg", "비밀번호 수정에 실패하였습니다.");
+		Member m = new Member(userId, userEmail, userName, userPhone);
+		
+		Member updateMem = new MemberService().updateMember(m);
+		
+		if (updateMem == null) { 
+			request.setAttribute("errorMsg", "회원정보 수정에 실패하였습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		} else {
+		} else { 
 			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "성공적으로 수정하였습니다.");
 			session.setAttribute("loginUser", updateMem);
-			
+			session.setAttribute("alertMsg", "성공적으로 수정하였습니다.");
+
 			response.sendRedirect(request.getContextPath() + "/myPage.me");
 		}
 	}

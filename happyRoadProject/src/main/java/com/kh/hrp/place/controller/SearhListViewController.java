@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.hrp.common.PageInfo;
 import com.kh.hrp.common.PageInfoController;
+import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.Place;
 
@@ -36,26 +37,35 @@ public class SearhListViewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int placeNo = Integer.parseInt(request.getParameter("pno"));
 		String placeTitle = request.getParameter("title");
 		String listNull;
-		if (placeTitle == "") {
+		PlaceService pService = new PlaceService();
+		
+		
+		if (placeTitle == "") { // 검색어 입력 없을시
 			listNull = "0";
-			PageInfo pi =  PageInfoController.pageController(0, 1, 10, 5);
+			PageInfo pi =  PageInfoController.pageController(0, 1, 5, 5);
+			
 			request.setAttribute("listNull", listNull);
 			request.setAttribute("pi", pi);
+			request.setAttribute("title", placeTitle);
+			
 			request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
 		} else {
 			listNull = "1";
-			int searchCount = new PlaceService().selectSearchCount(placeTitle);
+			int searchCount = pService.selectSearchCount(placeTitle);
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			
-			System.out.println("222" + searchCount);
+			PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 5, 5);
+			ArrayList<Place> plist = pService.selectSearchList(placeTitle, pi);
+			ArrayList<PlaceImage> list = pService.selectPlaceImageList(placeNo);
 			
-			PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 10, 5);
-			ArrayList<Place> list = new PlaceService().selectSearchList(placeTitle, pi);
 			request.setAttribute("listNull", listNull);
+			request.setAttribute("plist", plist);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("title", placeTitle);
 			
 			request.getRequestDispatcher("views/common/searchListView.jsp").forward(request, response);
 		}

@@ -134,7 +134,7 @@
    <entry key="selectSearchCount">
 		SELECT COUNT(*) COUNT
 		FROM PLACE
-		WHERE PLACE_TITLE LIKE '%?%'
+		WHERE PLACE_TITLE LIKE ?
 			AND PLACE_STATUS = 'Y'
 	</entry>
 	
@@ -147,8 +147,8 @@
 				       , PLACE_IMAGE_PATH
 			      FROM PLACE P
 			      LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
-			      WHERE P.PLACE_STATUS = 'Y'
-			      AND PLACE_TITLE LIKE '%?%'
+			      WHERE PLACE_STATUS = 'Y'
+			      AND PLACE_TITLE LIKE ?
 			      ORDER BY PLACE_NO DESC
 		        ) A
 		    )
