@@ -292,7 +292,7 @@
 	            					
 	            				}
 	            				
-	            				document.querySelector("#boardbottom tbody").innerHTML = str;
+	            				document.querySelector("#commenttable tbody").innerHTML = str;
 	            				
 	            				
 	            			},
