@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.hrp.common.PageInfo, java.util.ArrayList, com.kh.hrp.place.model.vo.Place"%>
+    pageEncoding="UTF-8"
+    import="com.kh.hrp.common.PageInfo,
+    		java.util.ArrayList,
+    		com.kh.hrp.place.model.vo.Place,
+    		com.kh.hrp.common.model.vo.PlaceImage"%>
+<%
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Place> plist = (ArrayList<Place>)request.getAttribute("plist");
+	ArrayList<PlaceImage> list = (ArrayList<PlaceImage>)request.getAttribute("list");
+	
+	String placeTitle = (String)request.getAttribute("title");
+	String listNull = (String)request.getAttribute("listNull");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 	
 	<link rel="stylesheet" href="../../resources/css/fonts.css">
-	<link rel="stylesheet" href="../../resources/css/searchresult.css">
+	
 
 </head>
 <body>
@@ -34,65 +51,63 @@
         <div class="serach-result-all">
             <div class="search-info-list">
                 <ul class="ulclass">
-                	<li>(검색어)검색 결과가 없습니다.</li>
-                	<li>
-                        <a href="">
-                            <img src="" alt="검색결과이미지">
-                        </a>
+                	<% if (listNull.equals("0")) { %>
+                		<li>검색 결과가 없습니다.</li>
+                	<% } else { %>
+                	<!-- 일치하지 않는 검색어에도 검색결과가 없습니다 띄우기 -->
+                	<% for (PlaceImage pimg : list) { %>
+	                	<li>
+	                        <a href="">
+	                            <img src="./resources/images/<%=pimg.getPlaceImageChange() %>" alt="검색결과이미지">
+	                        </a>
+                    <% } %>
+                    <% for (Place p : plist) { %>
                         <div class="result-content">
                             <div class="">
-                                <div class="result-title"><a href="">sdfaf</a></div>
-                                <div class="result-area"><span>asdfasdfsadfasf</span></div>
+                                <div class="result-title"><a href=""><%= p.getPlaceTitle() %></a></div>
+                                <div class="result-area"><span><%= p.getPlaceAddress() %></span></div>
                             </div>
                         </div>
                     </li>
+                    <% } %>
+				<% } %>
+			
                 </ul>
             </div>
         </div>
 
         <!-- 페이지네이션 -->
         <ul class="pagination justify-content-center" id="search-pagination">
-            <li class="page-item"><a class="page-link" href="">&lt;</a></li>
-            <li class="page-item"><a class="page-link" href="">1</a></li>
-            <li class="page-item"><a class="page-link" href="">2</a></li>
-            <li class="page-item"><a class="page-link" href="">3</a></li>
-            <li class="page-item"><a class="page-link" href="">&gt;</a></li>
+        	<% if (currentPage != 1) { %>
+        		<li class="page-item"><a class="page-link" href="<%=contextPath %>/search.sc?cpage=<%=currentPage - 1 %>&title=<%=placeTitle %>">&lt;</a></li>
+        	<% } %>
+        	<% for(int p = startPage; p <= endPage; p++) { %>
+        		<% if (p == currentPage) { %>
+        		<li class="page-item"><a class="page-link" href="" disabled><%=p %></a></li>
+        		<% } else { %>
+        		<li class="page-item"><a class="page-link" href="<%=contextPath %>/search.sc?cpage=<%=p %>&title=<%=placeTitle %>"><%=p %></a></li>
+        		<% } %>
+       		<% } %>
+            <% if (currentPage != maxPage) { %>
+            	<li class="page-item"><a class="page-link" href="<%=contextPath %>/search.sc?cpage=<%=currentPage + 1 %>&title=<%=placeTitle %>">&gt;</a></li>
+            <% } %>
         </ul>
         
-	<%-- <div id="paging-area">
-        <c:if test="${ pi.currentPage ne 1 }">
-       	<c:choose>
-            <c:when test="${empty condition }">
-            <a href="list.bo?cpage=${ pi.currentPage - 1}">[이전]</a>
-            </c:when>
-            <c:otherwise>
-            <a href="search.bo?cpage=${ pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">[이전]</a>
-            </c:otherwise>
-        </c:choose>
-        </c:if>
-            
-        <c:forEach var="i" begin="${pi.startPage}" end="${ pi.endPage }">
-        <c:choose>
-            <c:when test="${empty condition }">
-            <a href="list.bo?cpage=${ i }">${ i }</a>
-            </c:when>
-            <c:otherwise>
-            <a href="search.bo?cpage=${ i }&condition=${condition}&keyword=${keyword}">${ i }</a>
-            </c:otherwise>
-        </c:choose>
-        </c:forEach>
-            
-        <c:if test="${ pi.currentPage ne pi.maxPage }">
-       	<c:choose>
-            <c:when test="${empty condition }">
-            <a href="list.bo?cpage=${ pi.currentPage + 1}">[다음]</a>
-            </c:when>
-            <c:otherwise>
-            <a href="search.bo?cpage=${ pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">[다음]</a>
-            </c:otherwise>
-        </c:choose>
-        </c:if>
-	</div> --%>
+		<%-- <% if (currentPage != 1) { %>
+			<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=currentPage - 1 %>'">&lt;</button>
+        <% } %>
+			<% for(int p = startPage; p <= endPage; p++) { %>
+				<% if (p == currentPage) { %>
+					<button disabled><%=p %></button>
+            	<% } else { %>
+            		<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=p %>'"><%=p %></button>
+           		<% } %>
+           	<% } %>
+           
+            <% if (currentPage != maxPage) { %>
+            	<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=currentPage + 1 %>'">&gt;</button>
+			<% } %> --%>
+
 	    
     <%@ include file = "./footer.jsp"%>
 	    

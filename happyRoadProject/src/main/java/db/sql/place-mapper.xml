@@ -6,19 +6,25 @@
    <entry key="selectSearchCount">
       SELECT COUNT(*) COUNT
       FROM PLACE
-      PLACE_TITLE PLACE_ADDRESS
-      
-      WHERE PLACE_STATUS = 'Y'
+      WHERE PLACE_TITLE LIKE ?
+			AND PLACE_STATUS = 'Y'
    </entry>
 
    <entry key="selectSearchList">
-      SELECT PLACE_NO
-           , PLACE_TITLE
-           , PLACE_ADDRESS
-           , PLACE_IMAGE_PATH
-       FROM PLACE P
-        JOIN PLACE_IMAGE USING (PLACE_NO)
-         WHERE P.PLACE_STATUS = 'Y'
+      SELECT *        
+		FROM(SELECT ROWNUM RNUM, A.* 
+		    FROM (SELECT PLACE_NO
+				       , PLACE_TITLE
+				       , PLACE_ADDRESS
+				       , PLACE_IMAGE_PATH
+			      FROM PLACE P
+			      LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+			      WHERE PLACE_STATUS = 'Y'
+			      AND PLACE_TITLE LIKE ?
+			      ORDER BY PLACE_NO DESC
+		        ) A
+		    )
+		WHERE RNUM BETWEEN ? AND ?
    </entry>
 
 

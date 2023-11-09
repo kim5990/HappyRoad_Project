@@ -23,10 +23,10 @@ public class PlaceService {
 		return listCount;
 	}
 	
-	public int selectSearchCount(String keyword) {
+	public int selectSearchCount(String placeTitle) {
 		
 		Connection conn = getConnection();
-		int SearchCount = new PlaceDao().selectSearchCount(conn, keyword);
+		int SearchCount = new PlaceDao().selectSearchCount(conn, placeTitle);
 
 		close(conn);
 		return SearchCount;
@@ -57,13 +57,13 @@ public class PlaceService {
 		return result;
 	}
 
-	public ArrayList<Place> selectSearchList(String keyword, PageInfo pi) {
+	public ArrayList<Place> selectSearchList(String placeTitle, PageInfo pi) {
 		
 		Connection conn = getConnection();
-		ArrayList<Place> list = new PlaceDao().selectSearchList(conn, keyword, pi);
+		ArrayList<Place> plist = new PlaceDao().selectSearchList(conn, placeTitle, pi);
 		
 		close(conn);
-		return list;
+		return plist;
 	}
 
 
@@ -88,13 +88,13 @@ public class PlaceService {
 		return p;
    }
    
-   public ArrayList<PlaceImage> selectPlaceImageList(int placeNo){
-	   Connection conn = getConnection();
+	public ArrayList<PlaceImage> selectPlaceImageList(int placeNo) {
+		Connection conn = getConnection();
 		ArrayList<PlaceImage> list = new PlaceDao().selectPlaceImageList(conn, placeNo);
 		close(conn);
 		return list;
-	   
-   }
+
+	}
    
    public ArrayList<Review> selectReviewList(int placeNo, PageInfo pi){
 		Connection conn = getConnection();

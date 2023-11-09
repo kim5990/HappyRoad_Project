@@ -77,19 +77,18 @@ public class PlaceDao {
          pstmt.setInt(3, endRow);
          
          rset = pstmt.executeQuery();
-      while(rset.next()) {
-         placeList.add(new Place(rset.getInt("PLACE_NO"), 
-                           rset.getString("PLACE_TITLE"), 
-                           rset.getString("PLACE_CONTENT_POINT"), 
-                           rset.getString("PLACE_CONTENT_DETAIL"),  
-                           rset.getString("PLACE_IMAGE_PATH"))
-               );
-      }
+         while (rset.next()) {
+	         placeList.add(new Place(rset.getInt("PLACE_NO"), 
+		                           rset.getString("PLACE_TITLE"), 
+		                           rset.getString("PLACE_CONTENT_POINT"), 
+		                           rset.getString("PLACE_CONTENT_DETAIL"),  
+		                           rset.getString("PLACE_IMAGE_PATH"))
+		               );
+		      }
          
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
-      }finally {
+      } finally {
          close(rset);
          close(pstmt);
       }
@@ -108,9 +107,8 @@ public class PlaceDao {
          
          result = pstmt.executeUpdate();
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
-      }finally {
+      } finally {
          close(pstmt);
       }
       
@@ -180,7 +178,7 @@ public class PlaceDao {
    }
 
 
-	public int selectSearchCount(Connection conn, String keyword) {
+	public int selectSearchCount(Connection conn, String placeTitle) {
 
 		int SearchCount = 0;
 		PreparedStatement pstmt = null;
@@ -190,15 +188,16 @@ public class PlaceDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, keyword);
+			pstmt.setString(1, placeTitle);
+			pstmt.setString(1, "%" + placeTitle + "%");
+			
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
 				SearchCount = rset.getInt("count");
 			}
-
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -208,9 +207,9 @@ public class PlaceDao {
 		return SearchCount;
 	}
 
-	public ArrayList<Place> selectSearchList(Connection conn, String keyword, PageInfo pi) {
+	public ArrayList<Place> selectSearchList(Connection conn, String placeTitle, PageInfo pi) {
 
-		ArrayList<Place> list = new ArrayList<>();
+		ArrayList<Place> plist = new ArrayList<>();
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -224,19 +223,19 @@ public class PlaceDao {
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			System.out.println(startRow);
 			System.out.println(endRow);
-			pstmt.setInt(1, );
+			pstmt.setString(1, "%" + placeTitle + "%");
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Place(rset.getInt("PLACE_NO"), 
+				plist.add(new Place(rset.getInt("PLACE_NO"), 
 		                           rset.getString("PLACE_TITLE"), 
 		                           rset.getString("PLACE_ADDRESS"), 
 		                           rset.getString("PLACE_IMAGE_PATH"))
 									);
-		      }
+  				}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -244,7 +243,7 @@ public class PlaceDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return plist;
 
 	}
 	
