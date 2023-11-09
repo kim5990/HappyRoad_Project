@@ -17,13 +17,13 @@ import com.kh.hrp.board.model.vo.BoardComment;
  * Servlet implementation class BoardReplyInsertConroller
  */
 @WebServlet("/list.fv")
-public class BoardReplyInsertConroller extends HttpServlet {
+public class BoardReplyListConroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardReplyInsertConroller() {
+    public BoardReplyListConroller() {
         super();
         // TODO Auto-generated constructor stub
     }

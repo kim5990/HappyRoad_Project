@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <style>
@@ -239,15 +242,15 @@
             <div class=commentdiv>
              <%if (loginUser != null) { %>
                 <input type="text" class="comment" placeholder="댓글을 작성하세요">
-                <button type="button" class="btn btn-light">작성</button>
+                <button type="button" class="btn btn-light" onclick="insertComment()">작성</button>
               <%} else { %>
               	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
-                <button type="button" class="btn btn-light">작성</button>
+                <button type="button" class="btn btn-light" >작성</button>
               <%} %>
             </div>
 
-			<!-- 
-            <div class="commenttable">
+			
+            <div class="commenttable" id="commenttable">
                 <table>
                     <tr>
                         <td class="tdName" rowspan="2" align="center">홍길동</td>
@@ -256,6 +259,7 @@
                         <td class="tdDate" colspan="2" align="center">2023-09-25</td>
 
                     </tr>
+                    
                     <tr>
                         <td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button>
                         </td>
@@ -265,7 +269,7 @@
                    
                 </table>
             </div>
-			 -->
+
 
 			<script>
 				 window.onload = function(){
@@ -285,7 +289,7 @@
 	            				for (let BoardComment of res) {
 	            					console.log(BoardComment)
 	            					str += "<tr>"
-	       							+"<td>" + BoardComment.commentUser + "</td>"
+	       							+"<td>" + BoardComment.userName + "</td>"
 	       							+"<td>" + BoardComment.commentContent + "</td>"
 	       							+"<td>" + BoardComment.commentNewdate + "</td>"
 	       							+"</tr>";
@@ -301,9 +305,29 @@
 	            			}
 	            		})
 	            	}
+				 
+				 	function insertComment(){
+	                    $.ajax({
+	                        url : "insert.fv",
+	                        data : {
+	                            content: document.getElementBy("tdtext").value,
+	                            bno: <%=b.getBoardNo()%>
+	                        },
+	                        type:"post",
+	                        success:function(res){
+	                            if (res > 0) {//댓글작성 성공
+	                            	document.getElementByName("tdtext").value = "";
+	                            	selectBoardCommentList();
+	                            }
+	                        },
+	                        error:function(){
+								console.log("댓글 작성중 ajax통신 실패")
+	                        }
+	                    })
+	                }
 			</script>
-			
-        </div>
+
+		</div>
     </div>
 	<%@ include file = "../common/footer.jsp"%>
 </body>

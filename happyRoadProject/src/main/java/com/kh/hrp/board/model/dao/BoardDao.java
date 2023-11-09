@@ -236,7 +236,8 @@ public class BoardDao {
 							rset.getString("BOARD_NO"),
 							rset.getString("COMMENT_USER"),
 							rset.getString("COMMENT_CONTENT"),
-							rset.getString("COMMENT_NEWDATE")
+							rset.getString("COMMENT_NEWDATE"),
+							rset.getString("USER_NAME")
 						));
 			}
 		} catch (SQLException e) {
@@ -249,5 +250,29 @@ public class BoardDao {
 		return list;
    }
    
+   public int insertComment(Connection conn, BoardComment c) {
+	   int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getCommentNo());
+			pstmt.setString(2, c.getCommentContent());
+			pstmt.setString(3, c.getCommentUser());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	   
+   }
    
 }

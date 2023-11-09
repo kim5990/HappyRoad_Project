@@ -6,19 +6,36 @@ public class BoardComment {
 	private String commentUser; //외래키
 	private String commentContent;
 	private String commentNewdate;
+	  private String userName;
 	
 	public BoardComment() {
 		super();
 	}
 
-	public BoardComment(int commentNo, String boardBo, String commentUser, String commentContent,
-			String commentNewdate) {
+	
+
+
+
+	// 기본생성자
+	public BoardComment(int commentNo, String boardBo, String commentUser, String commentContent, String commentNewdate,
+			String userName) {
 		super();
 		this.commentNo = commentNo;
 		this.boardBo = boardBo;
 		this.commentUser = commentUser;
 		this.commentContent = commentContent;
 		this.commentNewdate = commentNewdate;
+		this.userName = userName;
+	}
+	
+	
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public int getCommentNo() {
