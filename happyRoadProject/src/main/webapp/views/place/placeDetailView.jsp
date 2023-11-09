@@ -246,9 +246,7 @@
 
         <table id="review-area" style="padding-right: 20px; width:650px;">              
 			<tbody>
-			
-
-			
+		
 			</tbody>
         </table>
 
