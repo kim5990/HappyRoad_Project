@@ -19,25 +19,6 @@ public class Place {
    private String placeStatus;
    private String imagePath;
    
-   
-   
-   public Place(String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
-		String placeAddress, String placeHomepage, String placeContact, String placeTime, Date placeStart,
-		Date placeEnd) {
-	super();
-	this.placeTitle = placeTitle;
-	this.placeContentPoint = placeContentPoint;
-	this.placeContentDetail = placeContentDetail;
-	this.placeThema = placeThema;
-	this.placeAddress = placeAddress;
-	this.placeHomepage = placeHomepage;
-	this.placeContact = placeContact;
-	this.placeTime = placeTime;
-	this.placeStart = placeStart;
-	this.placeEnd = placeEnd;
-}
-
-
 public Place() {
       super();
    }
@@ -93,8 +74,7 @@ public Place() {
 		this.placeStart = placeStart;
 		this.placeEnd = placeEnd;
 	}
-	
-
+   
 	// selectSearchList 에서 사용하는 생성자
 	public Place(int placeNo, String placeTitle, String placeAddress) {
 		super();
