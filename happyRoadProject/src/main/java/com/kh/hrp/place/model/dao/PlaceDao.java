@@ -459,6 +459,29 @@ public class PlaceDao {
 	      
 	      return plist;
    }
+   
+   public int insertReview(Connection conn, int placeNo, int userNo, int star, String reviewContent) {
+	   	  int result = 0;
+	      PreparedStatement pstmt = null;
+	      
+	      String sql = prop.getProperty("insertReview");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, placeNo);
+	         pstmt.setInt(2, userNo);
+	         pstmt.setInt(3, star);
+	         pstmt.setString(4, reviewContent);
+	         
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt);
+	      }
+	      
+	      return result;
+	      
+   }
 
    
 

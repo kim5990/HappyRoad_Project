@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 	<!-- jQuery 3.7.1 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	
+	<!-- 부트스트랩 -->
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <style>
 
@@ -121,13 +129,21 @@
 </head>
 <body>
     <%@ include file = "../common/menubar.jsp"%>
+    
+    
+    
  
    <div id="outer" align="center">
-        <br>
-        <br>
+   
+
+        <br><br><br>
+        
         <h1>${p.placeTitle}</h1>
 
         <h3 style="color: rgb(65, 65, 65);">${p.placeContentPoint}</h3>
+        
+        
+
 
 
         <div id="like-area" align="right" style="max-width: 650px;">
@@ -232,11 +248,13 @@
         <div class="review-title">
        		<h2>후기</h2>
        		<c:choose>
-       			<c:when test="${ loginUser.userNo != null}">
-        			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+       			<c:when test="${ loginUser.userNo == null}">
+        			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+					<button type="button" data-bs-toggle="modal" data-bs-target="#myModal"> 버튼 </button>
         		</c:when>
         		<c:otherwise>
-        			<div onclick="createReview()" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+        			<div onclick="createReview()" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+        			
         		</c:otherwise>
         	</c:choose>
         </div>
@@ -288,8 +306,63 @@
 
     <%@ include file = "../common/footer.jsp"%>
     
+    
+    
+    
+    <!-- -------------------------- 모달 ------------------------------------ -->
 
 
+	<!-- Button to Open the Modal -->
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal"data-bs-target="#myModal">
+		Open modal
+	</button>
+
+
+	<!-- The Modal -->
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">리뷰 작성</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+                <form action="createReview()" method="post"> 
+                    <div class="modal-body">
+                        <h6>평점</h6>
+                    
+                        <div class="input-group mb-3 input-group-lg">  
+                            <select class="form-select" name="star">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h6>내용</h6>
+                            <textarea name="reviewContent" class="form-control" style="height: 200px;"></textarea>
+                        </div>
+                    </div>
+                    <!--
+                    <input type="hidden" name="placeNo" value="${p.placeNo}">
+                    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+                    -->
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">등록</button>
+                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </form>
+
+			</div>
+		</div>
+	</div>
 
 
 
@@ -434,7 +507,25 @@
         
         // 리뷰 추가
         function createReview(){
-        	
+
+            console.log($("select[name='star']").val());
+            console.log($("textarea[name='reviewContent']").val());
+
+        	$.ajax({
+                url : "create.re",
+                data : {
+                    placeNo : "${p.placeNo}",
+                    userNo : "${loginUser.userNo}",
+                    star : $("select[name='star']").val(),
+                    reviewContent : $("textarea[name='reviewContent']").val()
+                },
+                success: function(res){
+                    selectReviewList(1);
+                },
+                error : function(){
+                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
+                }
+            })
         }
 
         
