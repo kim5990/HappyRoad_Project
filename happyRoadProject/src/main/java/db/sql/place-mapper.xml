@@ -186,7 +186,7 @@
       WHERE PLACE_STATUS = 'Y'
    </entry>
    
-      <entry key="mainCountSearch">
+     <entry key="mainCountSearch">
       SELECT ROWNUM, A.*
       FROM (SELECT PLACE_NO,
                  PLACE_TITLE,
@@ -204,6 +204,25 @@
             WHERE PLACE_STATUS = 'Y'
               ORDER BY PLACE_COUNT DESC) A
       WHERE 4 > ROWNUM
+   </entry>
+   
+   <entry key="insertReview">
+   		INSERT INTO REVIEW(
+   						REVIEW_NO,
+						PLACE_NO,
+						USER_NO,
+						REVIEW_STAR,
+						REVIEW_CONTENT
+   						)
+   					VALUES (
+   						SEQ_RNO.NEXTVAL,
+   						?,
+   						?,
+   						?,
+   						?
+   						)
+   	
+   
    </entry>
 
 </properties>

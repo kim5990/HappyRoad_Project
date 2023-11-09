@@ -131,20 +131,33 @@ public class PlaceService {
 		return result;
    }
 
-public ArrayList<PlaceSelect> mainSelectController() {
-	Connection conn = getConnection();
-	ArrayList<PlaceSelect> list = new PlaceDao().mainSelectController(conn);
-	close(conn);
-	return list;
-}
-
-public ArrayList<PlaceSelect> mainCountSearch() {
-	   Connection conn = getConnection();
-	   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
-	   close(conn);
-	   return list;
-
-}
+	public ArrayList<PlaceSelect> mainSelectController() {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> list = new PlaceDao().mainSelectController(conn);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<PlaceSelect> mainCountSearch() {
+		   Connection conn = getConnection();
+		   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
+		   close(conn);
+		   return list;
+	
+	}
+	
+	public int insertReview(int placeNo, int userNo, int star, String reviewContent) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().insertReview(conn, placeNo, userNo, star, reviewContent);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
    
 }
    
