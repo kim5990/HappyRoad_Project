@@ -11,6 +11,9 @@
 
 <style>
 
+    .hover:hover{
+        cursor: pointer;
+    }
 
     .place-image{
         width: 700px;
@@ -18,8 +21,6 @@
         overflow: hidden; /* 내부 내용을 잘라내는 설정 */
         /* background-color: beige;*/
         position: relative;
-
-        
     }
     
     .place-image img {
@@ -45,7 +46,6 @@
 	}
 	
 
-
     #ContentDetail{
         max-width: 680px;
         text-align: left;
@@ -66,8 +66,7 @@
     .table-height{
     	 height: 150px;
     }
-    
-    
+       
     .like{
        width: 25px;
     }
@@ -78,8 +77,7 @@
     .td1{
        max-width: 250px;
     }
-    
-    
+      
     .review-area{
        /* border: 1px solid black; */
        max-width: 680px;
@@ -90,9 +88,9 @@
     .review-pagebar a{
     	margin: 0 5px; /* 좌우 여백을 5px로 조정 */
         text-decoration: none;
-        padding: 0 3px;
-        
+        padding: 0 3px;      
     }
+    
     .review-pagebar a:hover{
     	cursor: pointer;
     }
@@ -108,8 +106,11 @@
     .notcPage{
         font-size: 16px;
         color:rgb(146, 145, 145);
-
-
+    }
+    .review-title{
+    	display: flex;
+        justify-content: space-between; 
+        max-width: 680px;
     }
     
     
@@ -175,7 +176,7 @@
 
         <br><br><br>
 
-        <h2 style="margin-right: 600px">상세정보</h2>
+        <h2 style="margin-right: 570px">상세정보</h2>
         <hr width="700">
 
         <br>
@@ -228,7 +229,17 @@
     
   	    <br><br><br><br><br>
         
-        <h2 style="margin-right: 600px">후기</h2>
+        <div class="review-title">
+       		<h2>후기</h2>
+       		<c:choose>
+       			<c:when test="${ loginUser.userNo != null}">
+        			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+        		</c:when>
+        		<c:otherwise>
+        			<div onclick="createReview()" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+        		</c:otherwise>
+        	</c:choose>
+        </div>
         <hr width="700">
         <br>
 
@@ -249,6 +260,9 @@
 		
 			</tbody>
         </table>
+        
+        
+      
 
 
         <br>
@@ -263,9 +277,14 @@
 
         </div>
         
-        <br><br><br><br>
-    </div>
+        <br><br><br>
 
+        
+    </div>
+    
+    
+
+        
 
     <%@ include file = "../common/footer.jsp"%>
     
@@ -287,6 +306,7 @@
         // 리뷰 + 페이징바 그려주기
         function selectReviewList(cp){
         	var placeNo = "${p.placeNo}";
+        	var loginUser= "${loginUser.userName}"
 
             $.ajax({
                 url : "rlist.pl",
@@ -305,7 +325,27 @@
                         for (let i = 0; i < review.reviewStar; i++) {
                                 score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
                             }
-                        str1 += '<tr><th rowspan="2" style="width:50px;">' + review.userNo + '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score + '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate +'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent +'</td></tr><tr><td colspan="3"><hr style="width:680px;"><td></tr>'
+                       // str1 += '<tr><th rowspan="2" style="width:50px;">' + review.userNo
+                        //		+ '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score 
+                        //		+ '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate 
+                        //		+'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent 
+                        //		+'</td></tr><tr><td colspan="3"><hr style="width:680px;"></td></tr>'
+                        
+
+						if (loginUser == review.userNo){
+							str1 +='<tr><td rowspan="2" style="width:80px; text-align: center;">' + review.userNo
+	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score
+	                    	+ '</td><td align="right" class="hover" style="width:40px; text-align: center;">수정</td><td align="right" class="hover" style="width:40px; text-align: center;">삭제</td><td style="padding-right: 20px; width:160px; text-align: center;">' + review.reviewCreateDate
+	                    	+ '</td></tr><tr><td colspan="5" style="padding: 20px;">' + review.reviewContent
+	                    	+ '</td></tr><tr><td colspan="5"><hr style="width:680px;"></td></tr>'
+						} else {
+							str1 +='<tr><td rowspan="2" style="width:80px; text-align: center;">' + review.userNo
+	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score
+	                    	+ '</td><td align="right" style="width:40px; text-align: center;"></td><td align="right" style="width:40px; text-align: center;"></td><td style="padding-right: 20px; width:160px; text-align: center;">' + review.reviewCreateDate
+	                    	+ '</td></tr><tr><td colspan="5" style="padding: 20px;">' + review.reviewContent
+	                    	+ '</td></tr><tr><td colspan="5"><hr style="width:680px;"></td></tr>'
+						}
+
                     }
                 	document.querySelector("#review-area tbody").innerHTML = str1;
                 	
@@ -389,6 +429,12 @@
                     console.log("즐겨찾기 조회 중 ajax 통신 실패");
                 }
             })
+        }
+        
+        
+        // 리뷰 추가
+        function createReview(){
+        	
         }
 
         

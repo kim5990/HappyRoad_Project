@@ -214,7 +214,7 @@
                              str += '<div class="hotNow-list-nodes">'
                                       + '<div class="hotNow-image">'
                                          + '<img class="hotNow-image-thumbnail" onclick = "location.href = '
-                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "&cpage=1'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
+                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
                                       + '</div>'
                                       + '<div class="hotNow-list-node1">'
                                          + '<div class="hotNow-list-node1-info">'
