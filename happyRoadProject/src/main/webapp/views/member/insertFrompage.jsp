@@ -155,6 +155,7 @@
           </div>
       </div>
    </div>
+   <%@ include file = "../common/footer.jsp"%>
    <script>
      // Example starter JavaScript for disabling form submissions if there are invalid fields
      (() => {
