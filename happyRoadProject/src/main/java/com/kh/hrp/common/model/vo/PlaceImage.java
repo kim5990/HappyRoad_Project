@@ -25,7 +25,6 @@ public class PlaceImage {
 	}
 	
 	
-	
 	// selectImage 용 생성자
 	public PlaceImage(int placeImageNo, String placeImageChange, String placeImagePath) {
 		super();

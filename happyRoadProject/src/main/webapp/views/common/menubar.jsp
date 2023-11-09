@@ -43,6 +43,7 @@
 	<link rel="stylesheet" href="./resources/css/hotNow.css">
 	<link rel="stylesheet" href="./resources/css/tail.css">
 	<link rel="stylesheet" href="./resources/css/mainboard.css">
+	<link rel="stylesheet" href="./resources/css/searchresult.css">
 	
 	<script type="text/javascript" src="./resources/js/main.js"></script>
 	<!-- bootstrap JS -->
@@ -61,8 +62,8 @@
 		<div class="header-section">
 		
 			<div class="left-section">
-				<input type="text" class="left-section_input">
-				<input type="image" src="./resources/logo/free-icon-magnifier-2319177.png" height="17" width="17">
+				<input type="text" class="left-section_input" name="title" onkeyup="enterkey()">
+				<input type="image" onclick = "searchOn()" src="./resources/logo/free-icon-magnifier-2319177.png" height="17" width="17">
 			</div>
 
 			<div class="middle-section">
@@ -101,8 +102,15 @@
 	
     <script>
     	function searchOn(){
-    		let searchText = document.querySelector("input[name='keyword']").value;
-    		location.href = 'search.sc?cpage=1&keyword='+ searchText;
+    		let searchText = document.querySelector("input[name='title']").value;
+    		location.href = 'search.sc?cpage=1&title='+ searchText;
+    	}
+    	
+    	function enterkey() {
+    		if (window.event.keyCode == 13) {
+    			let searchText = document.querySelector("input[name='title']").value;
+    			location.href = 'search.sc?cpage=1&title='+ searchText;
+    	    }
     	}
     </script>
     
