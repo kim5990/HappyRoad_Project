@@ -120,13 +120,13 @@
                   <div class="insertTitle">
                     <h2>즐겨찾기</h2>
                   </div>
-					<%if (list.isEmpty()) {%>
+               <%if (list.isEmpty()) {%>
                         <div class=favortiesNone>
                           즐겨찾기 목록이 비었습니다.
                         </div>
                    <%}else{%>
                   <div class=favortiesList>
-                  	 <%for(Place p : list) {%>
+                      <%for(Place p : list) {%>
                     <div class="favorites">
                             <div class="card" aria-hidden="true">
                               <img src="<%=p.getImagePath() %>" class="card-img-top">
@@ -161,11 +161,11 @@
                                 </a>
                               </li>
                               <%}else{ %>
-	                              <li class="page-item">
-	                                <a class="page-link" href="list.fa?cpage=<%=p %>&userNo=3">
-	                                  <%=p %>
-	                                </a>
-	                              </li>
+                                 <li class="page-item">
+                                   <a class="page-link" href="list.fa?cpage=<%=p %>&userNo=3">
+                                     <%=p %>
+                                   </a>
+                                 </li>
                               <%} %>
                          <%} %>
 
@@ -183,7 +183,11 @@
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
+         <%@ include file = "../common/footer.jsp"%>
+=======
 			<%@ include file = "../common/footer.jsp"%>
+>>>>>>> feb96a0d81dfa7e7e878cdb5d079d7886bb32c87
         </body>
 
         </html>

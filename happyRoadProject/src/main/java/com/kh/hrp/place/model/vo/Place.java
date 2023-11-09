@@ -77,14 +77,15 @@ public class Place {
 	
 
 	// selectSearchList 에서 사용하는 생성자
-	public Place(int placeNo, String placeTitle, String placeAddress) {
+	public Place(int placeNo, String placeTitle, String placeAddress, String imagePath) {
 		super();
 		this.placeNo = placeNo;
 		this.placeTitle = placeTitle;
 		this.placeAddress = placeAddress;
+		this.imagePath = imagePath;
 	}
-	
-	
+
+
 	public int getPlaceNo() {
 		return placeNo;
 	}
