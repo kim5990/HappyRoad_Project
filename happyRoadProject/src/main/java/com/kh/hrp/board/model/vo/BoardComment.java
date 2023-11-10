@@ -6,7 +6,7 @@ public class BoardComment {
 	private String commentUser; //외래키
 	private String commentContent;
 	private String commentNewdate;
-	  private String userName;
+	private String userName;
 	
 	public BoardComment() {
 		super();

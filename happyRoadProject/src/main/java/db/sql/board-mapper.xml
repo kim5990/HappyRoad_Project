@@ -104,19 +104,19 @@
    
    <entry key="insertComment">
    		INSERT
-	  INTO REPLY
-	  (
-	    COMMENT_NO
-       ,BOARD_NO
-	   ,COMMENT_CONTENT
-	   ,USER_NAME
-	  )
-	  VALUES
-	  (
-	    SEQ_CNO.NEXTVAL
-	   , ?
-	   , ?
-	   , ?
-	  )
+			  INTO BOARD_COMMENT
+			  (
+			    COMMENT_NO
+		       ,BOARD_NO
+			   ,COMMENT_CONTENT
+			   ,COMMENT_USER
+			  )
+			  VALUES
+			  (
+			    SEQ_CNO.NEXTVAL
+			   , ?
+			   , ?
+			   , ?
+			  )
    </entry>
 </properties>

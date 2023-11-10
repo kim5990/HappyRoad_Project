@@ -32,17 +32,22 @@ public class BoardReplyInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-		String CommentContent = request.getParameter("content");
+		String CommentContent1 = request.getParameter("content");
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		int userNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo();
 		
+		System.out.println(CommentContent1);
+		System.out.println(boardNo);
+		System.out.println(userNo);
+		
 		BoardComment c = new BoardComment();
-		c.setCommentContent(CommentContent);
+		c.setCommentContent(CommentContent1);
 		c.setCommentNo(boardNo);
 		c.setCommentUser(String.valueOf(userNo));
 		
+		System.out.println(c);
 		int result = new BoardService().insertComment(c);
+		System.out.println(result);
 		
 		response.getWriter().print(result);
 	}

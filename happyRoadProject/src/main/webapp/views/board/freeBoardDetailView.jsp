@@ -241,7 +241,7 @@
             </diV>
             <div class=commentdiv>
              <%if (loginUser != null) { %>
-                <input type="text" class="comment" placeholder="댓글을 작성하세요">
+                <input type="text" id="reply-content" class="comment" placeholder="댓글을 작성하세요">
                 <button type="button" class="btn btn-light" onclick="insertComment()">작성</button>
               <%} else { %>
               	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
@@ -252,20 +252,14 @@
 			
             <div class="commenttable" id="commenttable">
                 <table>
+               
                     <tr>
-                        <td class="tdName" rowspan="2" align="center">홍길동</td>
-                        <td class="tdtext" rowspan="2"><input type="text" value="오늘 날씨 좋아요" class="tdtext" disabled
-                                readonly></td>
-                        <td class="tdDate" colspan="2" align="center">2023-09-25</td>
-
+                    	<td class="tdName" rowspan="2" align="center"> </td>
+                    	<td class="tdtext" rowspan="2"><input type="text" value="aa" class="tdtext" disabled readonly> </td>
+                        <td class="tdDate" colspan="2" align="center"> </td>
                     </tr>
-                    
-                    <tr>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button>
-                        </td>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="location.href=''">삭제</button>
-                        </td>
-                    </tr>
+                        
+                   
                    
                 </table>
             </div>
@@ -289,10 +283,15 @@
 	            				for (let BoardComment of res) {
 	            					console.log(BoardComment)
 	            					str += "<tr>"
-	       							+"<td>" + BoardComment.userName + "</td>"
-	       							+"<td>" + BoardComment.commentContent + "</td>"
-	       							+"<td>" + BoardComment.commentNewdate + "</td>"
-	       							+"</tr>";
+	       							+'<td class="tdName" rowspan="2" align="center">' + BoardComment.userName + "</td>"
+	       							+'<td class="tdtext" rowspan="2">' + BoardComment.commentContent + "</td>"
+	       							+'<td class = "tdDate" colspan="2" align="center">' + BoardComment.commentNewdate + "</td>"
+	       							+"</tr>"
+	       							+"<tr>"
+	       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button> </td>'
+	       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="location.href=' + "''"
+	       	                        +'">삭제</button>' + ' </td>'
+	       	                        + '</tr>';
 	            					
 	            				}
 	            				
@@ -307,16 +306,17 @@
 	            	}
 				 
 				 	function insertComment(){
-	                    $.ajax({
+					
+				 	 $.ajax({
 	                        url : "insert.fv",
 	                        data : {
-	                            content: document.getElementBy("tdtext").value,
+	                            content: document.getElementById("reply-content").value,
 	                            bno: <%=b.getBoardNo()%>
 	                        },
 	                        type:"post",
 	                        success:function(res){
 	                            if (res > 0) {//댓글작성 성공
-	                            	document.getElementByName("tdtext").value = "";
+	                            	document.getElementById("reply-content").value = "";
 	                            	selectBoardCommentList();
 	                            }
 	                        },
