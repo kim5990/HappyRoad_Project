@@ -90,7 +90,14 @@
              <li class="nav-item">
                <a class="nav-link active" style="background-color: rgb(81, 126, 165); color: white;"
                  href="myPage.me">마이페이지</a>
-             </li>
+             </li>     
+             <%if (loginUser.getUser_level().equals("0")){ %>
+	             <li>
+	             	<a class="nav-link active" style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
+	                 href="place.ma">장소 추가</a>
+	             </li>
+             <%} %>
+           </ul>
          </div>
        </div>
      </div>

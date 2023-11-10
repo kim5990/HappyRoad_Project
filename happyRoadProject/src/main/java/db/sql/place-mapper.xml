@@ -212,6 +212,57 @@
 		WHERE 4 > ROWNUM
 
    </entry>
+<<<<<<< HEAD
+	<entry key="insertManagerPlace">
+      INSERT INTO PLACE
+         (
+	         PLACE_NO,
+	         PLACE_TITLE,
+	         PLACE_CONTENT_POINT,
+	         PLACE_CONTENT_DETAIL,
+			 PLACE_THEMA,
+			 PLACE_ADDRESS,
+			 PLACE_HOMEPAGE,
+			 PLACE_CONTACT,
+			 PLACE_TIME,
+			 PLACE_START,
+			 PLACE_END
+	         )
+	  VALUES
+	         (
+	         SEQ_PLNO.NEXTVAL,
+	         ?,
+	         ?,
+	         ?,
+	         ?,
+	         ?,
+	         ?,
+	         ?,
+	         ?,
+	         ?,
+	         ?
+         )
+   </entry>
+   <entry key="insertPlaceImage">
+      INSERT INTO PLACE_IMAGE
+         (
+	        PLACE_IMAGE_NO,
+			PLACE_NO,
+			PLACE_IMAGE_ORIGIN,
+			PLACE_IMAGE_CHANGE,
+			PLACE_IMAGE_PATH,
+			PLACE_IMAGE_DATE
+	         )
+	  VALUES
+	     (
+	        SEQ_PLNO.NEXTVAL,
+	        ?,
+	        ?,
+	        ?,
+	        ?,
+	        ?   
+         )
+   </entry>
    
    <entry key="insertReview">
    		INSERT INTO REVIEW(

@@ -5,12 +5,13 @@ import static com.kh.hrp.common.JDBCTemplate.close;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import com.kh.hrp.common.PageInfo;
@@ -504,6 +505,41 @@ public class PlaceDao {
 	   
    }
 
+   public int insertManagerPlace(Connection conn, PlaceSelect ps) {
+	   int result = 0;
+	   PreparedStatement pstmt = null;
+	   String sql = prop.getProperty("insertManagerPlace");
+	   
+	  try {
+	     pstmt = conn.prepareStatement(sql);
+	     SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd");
+	     Date placeStart = (Date)formatter.parse(ps.getPlaceStart());
+	     Date placeEnd = (Date)formatter.parse(ps.getPlaceEnd());
+	     System.out.println(placeStart);
+	     System.out.println(placeEnd);
+	     pstmt.setString(1, ps.getPlaceTitle());
+	     pstmt.setString(2, ps.getPlaceContentPoint());
+	     pstmt.setString(3, ps.getPlaceContentDetail());
+	     pstmt.setString(4, ps.getPlaceThema());
+	     pstmt.setString(5, ps.getPlaceAddress());
+	     pstmt.setString(6, ps.getPlaceHomepage());
+	     pstmt.setString(7, ps.getPlaceContact());
+	     pstmt.setString(8, ps.getPlaceTime());
+	     pstmt.setDate(9, placeStart);
+	     pstmt.setDate(10, placeEnd);
+
+	     result = pstmt.executeUpdate();
+	  } catch (SQLException e) {
+	     e.printStackTrace();
+	  } catch (ParseException e) {
+		e.printStackTrace();
+	} finally {
+	     close(pstmt);
+	  }
+	  
+	  return result;
+   }
+
 	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, String placeThema) {
 		ArrayList<PlaceSelect> pslist = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -537,5 +573,29 @@ public class PlaceDao {
 	}
 
    
+   public int insertPlaceImage(Connection conn, ArrayList<PlaceImage> list, PlaceSelect ps) {
+	   int result = 0;
+	   PreparedStatement pstmt = null;
+	   String sql = prop.getProperty("insertPlaceImage");
+	   
+	   try {
+		   for (PlaceImage pi : list) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, ps.getPlaceNo());
+				pstmt.setString(2, pi.getPlaceImageOrigin());
+				pstmt.setString(3, pi.getPlaceImageChange());
+				pstmt.setString(4, pi.getPlaceImagePath());
+				pstmt.setString(5, pi.getPlaceImageDate());
+				
+				result = pstmt.executeUpdate();
+		   }
+	   } catch (SQLException e) {
+			 e.printStackTrace();
+		 } finally {
+			 close(pstmt);
+		 }
+	   
+	   return result;
+   }
 
 }

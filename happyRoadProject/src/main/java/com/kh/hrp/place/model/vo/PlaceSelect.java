@@ -24,6 +24,23 @@ public class PlaceSelect {
       super();
    }
 
+   //관리자페이지 장소 추가
+   public PlaceSelect(String placeTitle, String placeContentPoint, String placeContentDetail, String placeThema,
+			String placeAddress, String placeHomepage, String placeContact, String placeTime, String placeStart,
+			String placeEnd) {
+		super();
+		this.placeTitle = placeTitle;
+		this.placeContentPoint = placeContentPoint;
+		this.placeContentDetail = placeContentDetail;
+		this.placeThema = placeThema;
+		this.placeAddress = placeAddress;
+		this.placeHomepage = placeHomepage;
+		this.placeContact = placeContact;
+		this.placeTime = placeTime;
+		this.placeStart = placeStart;
+		this.placeEnd = placeEnd;
+	}
+   
    public PlaceSelect(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail,
          String placeThema, String placeAddress, String placeHomepage, String placeContact, String placeTime,
          String placeStart, String placeEnd, int placeCount, Date placeCreateDate, String placeStatus,
@@ -47,7 +64,7 @@ public class PlaceSelect {
       this.imageChange = imageChange;
    }
 
-   public PlaceSelect(int placeNo, String placeTitle, String placeContentPoint, String placeThema, String placeAddress,
+public PlaceSelect(int placeNo, String placeTitle, String placeContentPoint, String placeThema, String placeAddress,
          String placeTime, String placeStart, String placeEnd, int placeCount, String imagePath , String imageChange) {
       super();
       this.placeNo = placeNo;

@@ -78,17 +78,17 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
-                            href="insertform.me">마이페이지</a>
+                            href="myPage.me">마이페이지</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link  active" style="background-color: rgb(81, 126, 165); color: white;"
                             href="">장소 추가</a>
                     </li>
+                </ul>
             </div>
         </div>
     </div>
 
-    </div>
     <div class="insertForm">
         <div class="text-bg-light p-3 insertFormdiv">
             <div class="insertFormHeader">
@@ -97,15 +97,16 @@
                     <h2>장소 게시물 추가</h2>
                 </div>
                 <br>
-                <form action="">
+                <form action="<%=contextPath%>/placeInsert.ma" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="userNo" value="<%=loginUser.getUserNo()%>">
                     <div class="insertPlace">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" name="placeTitle"
+                            <input type="text" class="form-control" id="floatingInput" name="placeTitle"
                                 placeholder="방문지를 쓰세요">
                             <label for="floatingInput">방문지</label>
                             <div class="form-floating">
                                 <select class="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example">
+                                    aria-label="Floating label select example" name="placeThema">
                                     <option selected>테마</option>
                                     <option value="season">계절</option>
                                     <option value="downtown">도심</option>
@@ -119,7 +120,7 @@
 
                     <div class="insertPlace">
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="placeContentPoint"
+                            <input type="text" class="form-control" name="placeContentPoint"
                                 id="exampleFormControlInput1" placeholder="한줄 설명">
                         </div>
                     </div>
@@ -133,7 +134,7 @@
 
                     <div class="insertPlace">
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="placeAddress" id="exampleFormControlInput1"
+                            <input type="text" class="form-control" name="placeAddress" id="exampleFormControlInput1"
                                 placeholder="예시)서울특별시 강남구 테헤란로14길 6">
                         </div>
                     </div>
@@ -142,12 +143,12 @@
 
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon3">홈페이지 url</span>
-                                <input type="text" class="form-control" name="placeHomePage" id="basic-url"
+                                <input type="text" class="form-control" name="placeHomepage" id="basic-url"
                                     aria-describedby="basic-addon3 basic-addon4">
                             </div>
                             <div class="input-group input-group-sm mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-sm">전화번호</span>
-                                <input type="text" name="phone" class="form-control" aria-label="Sizing example input"
+                                <input type="text" name="placeContact" class="form-control" aria-label="Sizing example input"
                                     aria-describedby="inputGroup-sizing-sm">
                             </div>
                         </div>
@@ -157,14 +158,14 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="date" name="startDate" class="form-control" id="floatingInputGrid"
+                                    <input type="date" name="placeStart" class="form-control" id="floatingInputGrid"
                                         placeholder="2023-10-01" value="">
                                     <label for="floatingInputGrid">행사시작일</label>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="date" name="endDate" class="form-control" id="floatingInputGrid"
+                                    <input type="date" name="placeEnd" class="form-control" id="floatingInputGrid"
                                         placeholder="2023-10-01" value="">
                                     <label for="floatingInputGrid">행사종료일</label>
                                 </div>
@@ -191,25 +192,25 @@
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file1">
                         </div>
                     </div>
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file2">
                         </div>
                     </div>
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file3"> 
                         </div>
                     </div>
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file4">
                         </div>
                     </div>
                     <br>

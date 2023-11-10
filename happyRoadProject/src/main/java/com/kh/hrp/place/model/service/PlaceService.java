@@ -139,6 +139,31 @@ public class PlaceService {
 	}
 	
 	public ArrayList<PlaceSelect> mainCountSearch() {
+
+	   Connection conn = getConnection();
+	   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
+	   close(conn);
+	   return list;
+	
+	}
+	
+	public int insertManagerPlace(PlaceSelect ps, ArrayList<PlaceImage> list) {
+		Connection conn = getConnection();
+		System.out.println("서비스");
+		int result1 = new PlaceDao().insertManagerPlace(conn, ps);
+		System.out.println("서비스1후");
+		int result2 = new PlaceDao().insertPlaceImage(conn, list, ps);
+		
+		if (result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+
 		   Connection conn = getConnection();
 		   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
 		   close(conn);

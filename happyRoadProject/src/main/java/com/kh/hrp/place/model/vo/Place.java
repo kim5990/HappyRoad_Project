@@ -19,7 +19,7 @@ public class Place {
    private String placeStatus;
    private String imagePath;
    
-   public Place() {
+public Place() {
       super();
    }
    
@@ -74,8 +74,7 @@ public class Place {
 		this.placeStart = placeStart;
 		this.placeEnd = placeEnd;
 	}
-	
-
+   
 	// selectSearchList 에서 사용하는 생성자
 	public Place(int placeNo, String placeTitle, String placeAddress, String imagePath) {
 		super();
