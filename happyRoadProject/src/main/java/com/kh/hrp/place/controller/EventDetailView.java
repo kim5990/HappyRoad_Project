@@ -45,13 +45,13 @@ public class EventDetailView extends HttpServlet {
 	   Member m = (Member)session.getAttribute("loginUser");
 	
 	   
-	   // 로그인 중인지 + 즐겨찾기에 있는지 확인
-	   if (m != null) {
-		   int userNo = m.getUserNo();
-		   boolean like = pService.checkLike(placeNo, userNo);
-	       request.setAttribute("userNo", userNo);
-	       request.setAttribute("like", like);
-	   }
+//	   // 로그인+즐겨찾기에 있는지 확인
+//	   if (m != null) {
+//		   int userNo = m.getUserNo();
+//		   boolean like = pService.checkLike(placeNo, userNo);
+//	       request.setAttribute("userNo", userNo);
+//	       request.setAttribute("like", like);
+//	   }
 	   
 
       // 1. 조회수 1 증가시키고 보여줄 place 객체 가져오기
@@ -62,7 +62,6 @@ public class EventDetailView extends HttpServlet {
       if (p != null) {
          ArrayList<PlaceImage> list = pService.selectPlaceImageList(placeNo);
          
-
 		 request.setAttribute("p", p);
          request.setAttribute("list", list);
          request.setAttribute("listSize", list.size());
