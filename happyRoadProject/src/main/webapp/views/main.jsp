@@ -7,50 +7,50 @@
 <title>Insert title here</title>
 </head>
 <body>
-		<main class="main-container">
-	        <div class="main-section1">
-	            <input type="image" src="resources/images/main1.png" height="400" width="940" class="main-section-image">
-	        </div>
-	        <div class="main-section3">
-	            <input type="button" onclick = "changeImg(0)" class="main-section3-button" value="1" >
-	            <input type="button" onclick = "changeImg(1)" class="main-section3-button" value="2">
-	            <input type="button" onclick = "changeImg(2)" class="main-section3-button" value="3">
-	            <input type="button" onclick = "changeImg(3)" class="main-section3-button" value="4">
-	            <input type="button" onclick = "changeImg(4)" class="main-section3-button" value="5">
-	        </div>
-	        <div class="main-section2">
-	            <div class="main-section-div">
-	                <div class="main-section-div-text1">서울개나리축제 </div>
-	                <div class="main-section-div-text2">23.10.27 - 23.10.27 </div>
-	            </div>
-	        </div>
+      <main class="main-container">
+           <div class="main-section1">
+               <input type="image" src="resources/images/main1.png" height="400" width="940" class="main-section-image">
+           </div>
+           <div class="main-section3">
+               <input type="button" onclick = "changeImg(0)" class="main-section3-button" value="1" >
+               <input type="button" onclick = "changeImg(1)" class="main-section3-button" value="2">
+               <input type="button" onclick = "changeImg(2)" class="main-section3-button" value="3">
+               <input type="button" onclick = "changeImg(3)" class="main-section3-button" value="4">
+               <input type="button" onclick = "changeImg(4)" class="main-section3-button" value="5">
+           </div>
+           <div class="main-section2">
+               <div class="main-section-div">
+                   <div class="main-section-div-text1">서울개나리축제 </div>
+                   <div class="main-section-div-text2">23.10.27 - 23.10.27 </div>
+               </div>
+           </div>
 
-	        <script>
+           <script>
 
-	        	function changeImg(num){
-	        		const mainSectionData = [{
-	        			img : "resources/images/main1.png",
-	        			text : '<div class="main-section-div-text1">서울개나리축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
-	        		},{
-	        			img : "resources/images/main2.png",
-	        			text : '<div class="main-section-div-text1">최지원축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
-	        		},{
-	        			img : "resources/images/main3.png",
-	        			text : '<div class="main-section-div-text1">지원이축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
-	        		},{
-	        			img : "resources/images/main4.png",
-	        			text : '<div class="main-section-div-text1">원이대축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
-	        		},{
-	        			img : "resources/images/main5.png",
-	        			text : '<div class="main-section-div-text1">종강파티 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
-	        		}]
-	        		
-	        		
+              function changeImg(num){
+                 const mainSectionData = [{
+                    img : "resources/images/main1.png",
+                    text : '<div class="main-section-div-text1">서울개나리축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
+                 },{
+                    img : "resources/images/main2.png",
+                    text : '<div class="main-section-div-text1">최지원축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
+                 },{
+                    img : "resources/images/main3.png",
+                    text : '<div class="main-section-div-text1">지원이축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
+                 },{
+                    img : "resources/images/main4.png",
+                    text : '<div class="main-section-div-text1">원이대축제 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
+                 },{
+                    img : "resources/images/main5.png",
+                    text : '<div class="main-section-div-text1">종강파티 </div><div class="main-section-div-text2">23.10.27 - 23.10.27 </div>'
+                 }]
+                 
+                 
                     document.querySelector(".main-container > .main-section1 > input[type='image']").src = mainSectionData[num].img;
-	        		document.querySelector(".main-container > .main-section2 > div.main-section-div").innerHTML = mainSectionData[num].text;
-	        	}
-	        </script>
-	</main>
+                 document.querySelector(".main-container > .main-section2 > div.main-section-div").innerHTML = mainSectionData[num].text;
+              }
+           </script>
+   </main>
     <div class="place-section">
         <div class="place-section-title">
             <div class="place-section-place-category">
@@ -195,45 +195,7 @@
     </div>
     <div class="hotNow">
         <div class="hotNow-list">
-            <div class="hotNow-list-nodes">
-                <div class="hotNow-image">
-                    <img class="hotNow-image-thumbnail" onclick = "location.href = 'eventdetailView.ed'" id="image-thumbnail2" src="resources/images/HOTNOW_1.png">
-                </div>
-                <div class="hotNow-list-node1">
-                    <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name">장소이름</div>
-                        <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
-                        <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
-                    </div>
-                </div>
-                <div class="hotNow-list-node2"></div>
-            </div>
-            <div class="hotNow-list-nodes">
-                <div class="hotNow-image">
-                    <img class="hotNow-image-thumbnail" onclick = "location.href = 'eventdetailView.ed'" id="image-thumbnail2" src="resources/images/HOTNOW_2.png">
-                </div>
-                <div class="hotNow-list-node1">
-                    <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name">장소이름</div>
-                        <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
-                        <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
-                    </div>
-                </div>
-                <div class="hotNow-list-node2"></div>
-            </div>
-            <div class="hotNow-list-nodes">
-                <div class="hotNow-image">
-                    <img class=" hotNow-image-thumbnail" onclick="location.href = 'eventdetailView.ed?pno=18&cpage=1'" id="image-thumbnail2" src="resources/images/HOTNOW_3.png">
-                </div>
-                <div class="hotNow-list-node1">
-                    <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name">장소이름</div>
-                        <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
-                        <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
-                    </div>
-                </div>
-                <div class="hotNow-list-node2"></div>
-            </div>
+            
         </div>
     </div>
        <script>
@@ -252,7 +214,7 @@
                              str += '<div class="hotNow-list-nodes">'
                                       + '<div class="hotNow-image">'
                                          + '<img class="hotNow-image-thumbnail" onclick = "location.href = '
-                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "&cpage=1'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
+                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
                                       + '</div>'
                                       + '<div class="hotNow-list-node1">'
                                          + '<div class="hotNow-list-node1-info">'
