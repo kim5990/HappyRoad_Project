@@ -96,9 +96,9 @@ public class PlaceService {
 
 	}
    
-   public ArrayList<Review> selectReviewList(int placeNo){
+   public ArrayList<Review> selectReviewList(int placeNo, PageInfo pi){
 		Connection conn = getConnection();
-		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, placeNo);
+		ArrayList<Review> list = new PlaceDao().selectReviewList(conn, placeNo, pi);
 		close(conn);
 		return list;
 	   
@@ -171,11 +171,39 @@ public class PlaceService {
 	
 	}
 
+	
+	public int insertReview(int placeNo, int userNo, int star, String reviewContent) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().insertReview(conn, placeNo, userNo, star, reviewContent);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int deleteReview(int userNo, int reviewNo) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().deleteReview(conn, userNo, reviewNo);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
 	public ArrayList<PlaceSelect> selectPlaceBoardList(String placeThema) {
 		Connection conn = getConnection();
 		ArrayList<PlaceSelect> pslist = new PlaceDao().selectPlaceBoardList(conn, placeThema);
 		close(conn);
 		return pslist;
+
 	}
    
 }

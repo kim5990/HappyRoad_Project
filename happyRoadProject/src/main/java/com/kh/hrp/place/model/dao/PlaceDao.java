@@ -1,4 +1,4 @@
-package com.kh.hrp.place.model.dao;
+ package com.kh.hrp.place.model.dao;
 
 import static com.kh.hrp.common.JDBCTemplate.close;
 
@@ -283,7 +283,7 @@ public class PlaceDao {
    }
    
    
-   public ArrayList<Review> selectReviewList(Connection conn, int placeNo){
+   public ArrayList<Review> selectReviewList(Connection conn, int placeNo, PageInfo pi){
 	   ArrayList<Review> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
@@ -291,8 +291,15 @@ public class PlaceDao {
 		String sql = prop.getProperty("selectReviewList");
 		
 		try {
+			
+	        int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	        int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -323,14 +330,14 @@ public class PlaceDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeNo);
+			
 			rset = pstmt.executeQuery();
-
+			
 			if (rset.next()) {
-				reviewListCount = rset.getInt("count");
+				reviewListCount = rset.getInt("COUNT");
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -453,6 +460,49 @@ public class PlaceDao {
 	      }
 	      
 	      return plist;
+   }
+   
+   public int insertReview(Connection conn, int placeNo, int userNo, int star, String reviewContent) {
+	   	  int result = 0;
+	      PreparedStatement pstmt = null;
+	      
+	      String sql = prop.getProperty("insertReview");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1, placeNo);
+	         pstmt.setInt(2, userNo);
+	         pstmt.setInt(3, star);
+	         pstmt.setString(4, reviewContent);
+	         
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt);
+	      }
+	      
+	      return result;
+   }
+   
+   public int deleteReview(Connection conn, int userNo, int reviewNo) {
+	   int result = 0;
+	      PreparedStatement pstmt = null;
+	      String sql = prop.getProperty("deleteReview");
+	      try {
+		         pstmt = conn.prepareStatement(sql);
+		         pstmt.setInt(1, reviewNo);
+		         pstmt.setInt(2, userNo);
+		         
+		         result = pstmt.executeUpdate();
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }finally {
+		         close(pstmt);
+		      }
+		      
+		      return result;
+	      
+	   
    }
 
    public int insertManagerPlace(Connection conn, PlaceSelect ps) {
