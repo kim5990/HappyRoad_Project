@@ -103,13 +103,13 @@
     <script>
     	function searchOn(){
     		let searchText = document.querySelector("input[name='title']").value;
-    		location.href = 'search.sc?cpage=1&title='+ searchText;
+    		location.href = 'search.sc?cpage=1&title='+ encodeURIComponent(searchText);
     	}
     	
     	function enterkey() {
     		if (window.event.keyCode == 13) {
     			let searchText = document.querySelector("input[name='title']").value;
-    			location.href = 'search.sc?cpage=1&title='+ searchText;
+    			location.href = 'search.sc?cpage=1&title='+ encodeURIComponent(searchText);
     	    }
     	}
     </script>
