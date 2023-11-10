@@ -32,12 +32,13 @@ public class EventDetailLikeInsert extends HttpServlet {
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		
 		int result = new PlaceService().placeLikeInsertController(userNo, placeNo);
-		if(result > 0 ) {
-			response.sendRedirect(request.getContextPath() + "/eventdetailView.ed?pno="+placeNo+"&cpage=1");
-	      }else {
-	    	  request.setAttribute("errorMsg", "즐겨찾기 추가 실패");
-	          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-	      }
+		response.getWriter().print(result);
+//		if(result > 0 ) {
+//			response.sendRedirect(request.getContextPath() + "/eventdetailView.ed?pno="+placeNo);
+//	     }else {
+//	    	  request.setAttribute("errorMsg", "즐겨찾기 추가 실패");
+//	          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+//	     }
 	}
 
 	/**

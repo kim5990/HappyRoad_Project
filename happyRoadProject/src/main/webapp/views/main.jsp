@@ -195,45 +195,7 @@
     </div>
     <div class="hotNow">
         <div class="hotNow-list">
-            <div class="hotNow-list-nodes">
-                <div class="hotNow-image">
-                    <img class="hotNow-image-thumbnail" onclick = "location.href = 'eventdetailView.ed'" id="image-thumbnail2" src="resources/images/HOTNOW_1.png">
-                </div>
-                <div class="hotNow-list-node1">
-                    <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name">장소이름</div>
-                        <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
-                        <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
-                    </div>
-                </div>
-                <div class="hotNow-list-node2"></div>
-            </div>
-            <div class="hotNow-list-nodes">
-                <div class="hotNow-image">
-                    <img class="hotNow-image-thumbnail" onclick = "location.href = 'eventdetailView.ed'" id="image-thumbnail2" src="resources/images/HOTNOW_2.png">
-                </div>
-                <div class="hotNow-list-node1">
-                    <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name">장소이름</div>
-                        <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
-                        <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
-                    </div>
-                </div>
-                <div class="hotNow-list-node2"></div>
-            </div>
-            <div class="hotNow-list-nodes">
-                <div class="hotNow-image">
-                    <img class=" hotNow-image-thumbnail" onclick="location.href = 'eventdetailView.ed?pno=18&cpage=1'" id="image-thumbnail2" src="resources/images/HOTNOW_3.png">
-                </div>
-                <div class="hotNow-list-node1">
-                    <div class="hotNow-list-node1-info">
-                        <div class="hotNow-list-node1-name">장소이름</div>
-                        <textarea class="hotNow-list-node1-Info1" readonly>간단설명간단설명간단설명간단설명간단간단설명간단설명</textarea>
-                        <div class="hotNow-list-node1-Info2">위치 링크 등 정보</div>
-                    </div>
-                </div>
-                <div class="hotNow-list-node2"></div>
-            </div>
+            
         </div>
     </div>
        <script>
@@ -252,7 +214,7 @@
                              str += '<div class="hotNow-list-nodes">'
                                       + '<div class="hotNow-image">'
                                          + '<img class="hotNow-image-thumbnail" onclick = "location.href = '
-                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "&cpage=1'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
+                                         + "'eventdetailView.ed" + "?pno="+ r.placeNo + "'" + '" id="image-thumbnail2" src="' + r.imagePath + r.imageChange + '">'
                                       + '</div>'
                                       + '<div class="hotNow-list-node1">'
                                          + '<div class="hotNow-list-node1-info">'

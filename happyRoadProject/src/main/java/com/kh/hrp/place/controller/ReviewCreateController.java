@@ -1,6 +1,7 @@
 package com.kh.hrp.place.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.hrp.place.model.service.PlaceService;
 
 /**
- * Servlet implementation class EventDetailLikeDelete
+ * Servlet implementation class ReviewCreateController
  */
-@WebServlet("/delete.li")
-public class EventDetailLikeDelete extends HttpServlet {
+@WebServlet("/create.re")
+public class ReviewCreateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EventDetailLikeDelete() {
+    public ReviewCreateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,19 +29,18 @@ public class EventDetailLikeDelete extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		int placeNo = Integer.parseInt(request.getParameter("placeNo"));
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		int star = Integer.parseInt(request.getParameter("star"));
+		String reviewContent = request.getParameter("reviewContent");
 		
-		int result = new PlaceService().placeLikeDeleteController(userNo, placeNo);
+//		System.out.println(reviewContent + " " + star + " " + userNo + " " + placeNo);
+		
+		int result = new PlaceService().insertReview(placeNo, userNo, star, reviewContent);
 		response.getWriter().print(result);
-		
-//		if(result > 0 ) {
-//			response.sendRedirect(request.getContextPath() + "/eventdetailView.ed?pno="+placeNo);
-//	      }else {
-//	    	  request.setAttribute("errorMsg", "즐겨찾기 삭제 실패");
-//	          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-//	      }
-	
+
 	}
 
 	/**
