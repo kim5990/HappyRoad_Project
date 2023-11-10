@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member, com.kh.hrp.board.model.vo.BoardComment"%>
 <%
    //글번호, 작성자, 카테고리명, 제목, 내용, 작성일
    Board b = (Board)request.getAttribute("b");
+   BoardComment c = (BoardComment)request.getAttribute("c");
 %>
 <!DOCTYPE html>
 <html>
@@ -185,6 +186,7 @@
             border: none;
             background-color: rgb(224, 224, 224);
         }
+      
     </style>
 </head>
 
@@ -234,7 +236,7 @@
         <div class="boardbottomcomment">
             <div class=commentTitle>
                 <div>댓글</div>
-                <div>(2)</div>
+                <div></div>
             </div>
             <diV class="freeBoardTitleLine">
                 <div class="titleLine"></div>
@@ -258,8 +260,16 @@
                     	<td class="tdtext" rowspan="2"><input type="text" value="aa" class="tdtext" disabled readonly> </td>
                         <td class="tdDate" colspan="2" align="center"> </td>
                     </tr>
-                        
-                   
+                       
+                   <!--   
+                   <div align="center">
+			               <button id="num-btn"><a href="" id="text">&lt;</a></button>
+	
+			               <button id="num-btn"><a href="" id="text">1</a></button>
+			           
+			               <button id="num-btn"><a href="" id="text">&gt;</a></button>  
+			        </div>
+                   -->
                    
                 </table>
             </div>
@@ -325,6 +335,23 @@
 	                        }
 	                    })
 	                }
+				 	
+				 	function deleteComment(){
+						
+					 	 $.ajax({
+		                        url : "commentdelete.fv",
+		                        data : {
+		                            cno: BoardComment.commentNo
+		                        },
+		                        success:function(res){
+		                            
+		                            
+		                        },
+		                        error:function(){
+									console.log("댓글 작성중 ajax통신 실패")
+		                        }
+		                    })
+		                }
 			</script>
 
 		</div>
