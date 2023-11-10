@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.hrp.board.model.service.BoardService;
-import com.kh.hrp.board.model.vo.Board;
 
 /**
- * Servlet implementation class FreeBoardDetailView
+ * Servlet implementation class FreeBoardDelete
  */
-@WebServlet("/detail.fv")
-public class FreeBoardDetailView extends HttpServlet {
+@WebServlet("/delete.fv")
+public class FreeBoardDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FreeBoardDetailView() {
+    public FreeBoardDelete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,21 +29,19 @@ public class FreeBoardDetailView extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		// 조회수 1증가 시키고 데티일 페이지 가져오는 객체
-		Board b = new BoardService().increaseCount(boardNo);
+		int result = new BoardService().deleteBoard(boardNo);
 		
-		
-		if (b != null) {
-			request.setAttribute("b", b);
+		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "일반게시글 작성 성공");
 			
-			request.getRequestDispatcher("views/board/freeBoardDetailView.jsp").forward(request, response);
-		} else {
-			request.setAttribute("errorMsg", "게시글 조회 실패");
+			response.sendRedirect(request.getContextPath() + "/freeboardForm.fb?cpage=1");
+		}else {
+			request.setAttribute("errorMsg", "일반게시글 작성 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
+			
 	}
 
 	/**

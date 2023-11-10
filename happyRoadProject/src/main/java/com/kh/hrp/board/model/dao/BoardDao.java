@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.hrp.board.model.vo.Board;
+import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
 
 public class BoardDao {
@@ -175,4 +176,103 @@ public class BoardDao {
       
       return result;
    }
+   
+   public int updateBoard(Connection conn, Board b) { // 게시글 수정
+	   int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setInt(3, b.getBoardNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+   }
+   
+   public int deleteBoard(Connection conn, int boardNo) { // 게시글 삭제
+   		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteBoard");
+	   
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+   }
+   
+   public ArrayList<BoardComment> selectBoardCommentList(Connection conn, int boardNo){
+	   ArrayList<BoardComment> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardCommentList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new BoardComment(
+							rset.getInt("COMMENT_NO"),
+							rset.getString("BOARD_NO"),
+							rset.getString("COMMENT_USER"),
+							rset.getString("COMMENT_CONTENT"),
+							rset.getString("COMMENT_NEWDATE"),
+							rset.getString("USER_NAME")
+						));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+   }
+   
+   public int insertComment(Connection conn, BoardComment c) {
+	   int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c.getCommentNo());
+			pstmt.setString(2, c.getCommentContent());
+			pstmt.setString(3, c.getCommentUser());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	   
+   }
+   
 }

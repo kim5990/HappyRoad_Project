@@ -37,7 +37,7 @@ public class FreeBoardUpdate extends HttpServlet {
 		
 		request.setAttribute("b", b);
 		
-		request.getRequestDispatcher("views/board/freeBoardEnroll.jsp").forward(request, response);
+		request.getRequestDispatcher("views/board/freeBoardUpdate.jsp").forward(request, response);
 	}
 
 	/**

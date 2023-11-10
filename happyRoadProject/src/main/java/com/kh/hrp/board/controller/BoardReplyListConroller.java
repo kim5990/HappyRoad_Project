@@ -1,6 +1,7 @@
 package com.kh.hrp.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.kh.hrp.board.model.service.BoardService;
-import com.kh.hrp.board.model.vo.Board;
+import com.kh.hrp.board.model.vo.BoardComment;
 
 /**
- * Servlet implementation class FreeBoardDetailView
+ * Servlet implementation class BoardReplyInsertConroller
  */
-@WebServlet("/detail.fv")
-public class FreeBoardDetailView extends HttpServlet {
+@WebServlet("/list.fv")
+public class BoardReplyListConroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FreeBoardDetailView() {
+    public BoardReplyListConroller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,18 +35,10 @@ public class FreeBoardDetailView extends HttpServlet {
 		
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		// 조회수 1증가 시키고 데티일 페이지 가져오는 객체
-		Board b = new BoardService().increaseCount(boardNo);
+		ArrayList<BoardComment> list = new BoardService().selectBoardCommentList(boardNo);
 		
-		
-		if (b != null) {
-			request.setAttribute("b", b);
-			
-			request.getRequestDispatcher("views/board/freeBoardDetailView.jsp").forward(request, response);
-		} else {
-			request.setAttribute("errorMsg", "게시글 조회 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	/**

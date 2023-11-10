@@ -66,4 +66,57 @@
 				  )
    </entry>
    
+   <entry key="updateBoard">
+   		UPDATE BOARD
+		   SET BOARD_TITLE = ?
+		     , BOARD_CONTENT = ?
+		 WHERE BOARD_NO = ?
+   </entry>
+   
+   <entry key="deleteBoard">
+   		UPDATE BOARD
+		    SET BOARD_STATUS = 'N'
+		   WHERE BOARD_NO = ?
+   </entry>
+   
+   <entry key="selectBoardCommentList">
+   		<!--  
+   		SELECT COMMENT_NO
+		     , BOARD_NO
+		     , COMMENT_USER
+		     , COMMENT_CONTENT
+		     , COMMENT_NEWDATE
+		  FROM BOARD_COMMENT
+		   JOIN MEMBER ON (COMMENT_USER = USER_NO)
+		  WHERE BOARD_NO = ?
+		  -->
+		  
+		  SELECT COMMENT_NO
+			       , BOARD_NO
+			       , COMMENT_USER
+			       , COMMENT_CONTENT
+			       , COMMENT_NEWDATE
+			       , USER_NAME
+		      FROM BOARD_COMMENT
+		        JOIN MEMBER ON (COMMENT_USER = USER_NO)
+	        WHERE BOARD_NO = ?
+   </entry>
+   
+   <entry key="insertComment">
+   		INSERT
+			  INTO BOARD_COMMENT
+			  (
+			    COMMENT_NO
+		       ,BOARD_NO
+			   ,COMMENT_CONTENT
+			   ,COMMENT_USER
+			  )
+			  VALUES
+			  (
+			    SEQ_CNO.NEXTVAL
+			   , ?
+			   , ?
+			   , ?
+			  )
+   </entry>
 </properties>

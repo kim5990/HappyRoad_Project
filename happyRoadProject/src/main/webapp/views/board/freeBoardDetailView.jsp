@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member, com.kh.hrp.board.model.vo.BoardComment"%>
 <%
    //글번호, 작성자, 카테고리명, 제목, 내용, 작성일
    Board b = (Board)request.getAttribute("b");
+   BoardComment c = (BoardComment)request.getAttribute("c");
 %>
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,9 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <style>
@@ -182,6 +186,7 @@
             border: none;
             background-color: rgb(224, 224, 224);
         }
+      
     </style>
 </head>
 
@@ -220,6 +225,7 @@
         
         <%if (loginUser != null && loginUser.getUserName().equals(b.getBoardUser())) {%>
             <button type="button" class="btn btn-dark" onclick="location.href='<%=contextPath %>/updateForm.fv?bno=<%=b.getBoardNo() %>'">수정하기</button>
+            <button type="button" class="btn btn-dark" onclick="location.href='<%=contextPath %>/delete.fv?bno=<%=b.getBoardNo() %>'">삭제하기</button>
         <%} %>
         
             <button type="button" class="btn btn-secondary" onclick="location.href='freeboardForm.fb?cpage=1'">돌아가기</button>
@@ -230,49 +236,125 @@
         <div class="boardbottomcomment">
             <div class=commentTitle>
                 <div>댓글</div>
-                <div>(2)</div>
+                <div></div>
             </div>
             <diV class="freeBoardTitleLine">
                 <div class="titleLine"></div>
             </diV>
             <div class=commentdiv>
-                <input type="text" class="comment" placeholder="댓글을 작성하세요">
-                <button type="button" class="btn btn-light">작성</button>
+             <%if (loginUser != null) { %>
+                <input type="text" id="reply-content" class="comment" placeholder="댓글을 작성하세요">
+                <button type="button" class="btn btn-light" onclick="insertComment()">작성</button>
+              <%} else { %>
+              	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
+                <button type="button" class="btn btn-light" >작성</button>
+              <%} %>
             </div>
 
-            <div class="commenttable">
+			
+            <div class="commenttable" id="commenttable">
                 <table>
+               
                     <tr>
-                        <td class="tdName" rowspan="2" align="center">홍길동</td>
-                        <td class="tdtext" rowspan="2"><input type="text" value="오늘 날씨 좋아요" class="tdtext" disabled
-                                readonly></td>
-                        <td class="tdDate" colspan="2" align="center">2023-09-25</td>
-
+                    	<td class="tdName" rowspan="2" align="center"> </td>
+                    	<td class="tdtext" rowspan="2"><input type="text" value="aa" class="tdtext" disabled readonly> </td>
+                        <td class="tdDate" colspan="2" align="center"> </td>
                     </tr>
-                    <tr>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button>
-                        </td>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="location.href=''">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tdName" rowspan="2" align="center">홍길동</td>
-                        <td class="tdtext" rowspan="2"><input type="text" value="오늘 날씨 좋아요" class="tdtext" disabled
-                                readonly></td>
-                        </td>
-                        <td class="tdDate" colspan="2" align="center">2023-09-25</td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button>
-                        </td>
-                        <td class="tdDate"><button class="tdbtn" type="button" onclick="location.href=''">삭제</button>
-                        </td>
-                    </tr>
+                       
+                   <!--   
+                   <div align="center">
+			               <button id="num-btn"><a href="" id="text">&lt;</a></button>
+	
+			               <button id="num-btn"><a href="" id="text">1</a></button>
+			           
+			               <button id="num-btn"><a href="" id="text">&gt;</a></button>  
+			        </div>
+                   -->
+                   
                 </table>
             </div>
 
-        </div>
+
+			<script>
+				 window.onload = function(){
+					//댓글 가져와서 그려주기
+					selectBoardCommentList();
+					//setInterval(selectReplyList,2000)
+					}
+				 
+				 function selectBoardCommentList(){
+	            		$.ajax({
+	            			url: "list.fv",
+	            			data : {
+	            				bno: <%=b.getBoardNo()%>
+	            			},
+	            			success: function(res){          
+	            				let str = "";
+	            				for (let BoardComment of res) {
+	            					console.log(BoardComment)
+	            					str += "<tr>"
+	       							+'<td class="tdName" rowspan="2" align="center">' + BoardComment.userName + "</td>"
+	       							+'<td class="tdtext" rowspan="2">' + BoardComment.commentContent + "</td>"
+	       							+'<td class = "tdDate" colspan="2" align="center">' + BoardComment.commentNewdate + "</td>"
+	       							+"</tr>"
+	       							+"<tr>"
+	       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button> </td>'
+	       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="location.href=' + "''"
+	       	                        +'">삭제</button>' + ' </td>'
+	       	                        + '</tr>';
+	            					
+	            				}
+	            				
+	            				document.querySelector("#commenttable tbody").innerHTML = str;
+	            				
+	            				
+	            			},
+	            			error: function(){
+	            				console.log("댓글목록 조회중 ajax통신실패");
+	            			}
+	            		})
+	            	}
+				 
+				 	function insertComment(){
+					
+				 	 $.ajax({
+	                        url : "insert.fv",
+	                        data : {
+	                            content: document.getElementById("reply-content").value,
+	                            bno: <%=b.getBoardNo()%>
+	                        },
+	                        type:"post",
+	                        success:function(res){
+	                            if (res > 0) {//댓글작성 성공
+	                            	document.getElementById("reply-content").value = "";
+	                            	selectBoardCommentList();
+	                            }
+	                        },
+	                        error:function(){
+								console.log("댓글 작성중 ajax통신 실패")
+	                        }
+	                    })
+	                }
+				 	
+				 	function deleteComment(){
+						
+					 	 $.ajax({
+		                        url : "commentdelete.fv",
+		                        data : {
+		                            cno: BoardComment.commentNo
+		                        },
+		                        success:function(res){
+		                            
+		                            
+		                        },
+		                        error:function(){
+									console.log("댓글 작성중 ajax통신 실패")
+		                        }
+		                    })
+		                }
+			</script>
+
+		</div>
     </div>
 	<%@ include file = "../common/footer.jsp"%>
 </body>
