@@ -158,6 +158,19 @@ public class PlaceService {
 		close(conn);
 		return result;
 	}
+	
+	public int deleteReview(int userNo, int reviewNo) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().deleteReview(conn, userNo, reviewNo);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
    
 }
    

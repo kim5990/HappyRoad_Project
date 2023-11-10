@@ -36,17 +36,11 @@ public class ReviewCreateController extends HttpServlet {
 		int star = Integer.parseInt(request.getParameter("star"));
 		String reviewContent = request.getParameter("reviewContent");
 		
-		System.out.println(reviewContent + star);
+//		System.out.println(reviewContent + " " + star + " " + userNo + " " + placeNo);
 		
 		int result = new PlaceService().insertReview(placeNo, userNo, star, reviewContent);
-		
-		if(result > 0) {
-			
-		} else {
-			
-		}
-		
-		
+		response.getWriter().print(result);
+
 	}
 
 	/**

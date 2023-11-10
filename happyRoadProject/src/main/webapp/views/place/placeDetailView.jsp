@@ -53,7 +53,6 @@
 		cursor: pointer;
 	}
 	
-
     #ContentDetail{
         max-width: 680px;
         text-align: left;
@@ -130,44 +129,24 @@
 <body>
     <%@ include file = "../common/menubar.jsp"%>
     
-    
-    
+
  
    <div id="outer" align="center">
-   
-
         <br><br><br>
         
         <h1>${p.placeTitle}</h1>
-
         <h3 style="color: rgb(65, 65, 65);">${p.placeContentPoint}</h3>
         
-        
-
-
-
-        <div id="like-area" align="right" style="max-width: 650px;">
-        
+        <div id="like-area" align="right" style="max-width: 650px;"> 
 	        <c:choose>
 		        <c:when test="${ loginUser.userNo == null}">
 					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="alert('즐겨찾기 기능은 로그인 후 사용가능합니다.')">
 		        </c:when>
-		    </c:choose>
-            
+		    </c:choose>            
         </div>
         <br>
-        
 
-        <script>
-            
-            
-           
-            
-            
-        </script>
 
-        
-        
 		<!-- 이미지가 2개 이상일 경우 슬라이드 기능 활성화 -->
 		<div class="image-all">
 		    <c:choose>
@@ -187,9 +166,6 @@
 		    </c:choose>
 		</div>
 
-    	
-
-
         <br><br><br>
 
         <h2 style="margin-right: 570px">상세정보</h2>
@@ -202,7 +178,6 @@
         </div>
 
         <br><br>
-
 
         <div id="map">
         </div>
@@ -229,7 +204,7 @@
                     <th style="height:30px"><li>이용시간</li></th>
                     <td>${p.placeTime}</td>
                     <th><li>행사기간</li></th>
-                    
+                 
                     <c:choose>
                     	<c:when test="${p.placeStart != null}">
                             <td>${p.placeStart} ~ ${p.placeEnd}</td>
@@ -241,8 +216,7 @@
                 </tr>
             </table>
         </div>
-
-    
+  
   	    <br><br><br><br><br>
         
         <div class="review-title">
@@ -250,11 +224,10 @@
        		<c:choose>
        			<c:when test="${ loginUser.userNo == null}">
         			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
-					<button type="button" data-bs-toggle="modal" data-bs-target="#myModal"> 버튼 </button>
+					<button type="button" data-bs-toggle="modal"data-bs-target="#myModal"> 버튼 </button>
         		</c:when>
         		<c:otherwise>
-        			<div onclick="createReview()" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
-        			
+        			<div  data-bs-toggle="modal"data-bs-target="#myModal" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>       			
         		</c:otherwise>
         	</c:choose>
         </div>
@@ -262,60 +235,35 @@
         <br>
 
 
-        
-
-
         <!-- 로그인 정보 없을 경우 -->
 
         <!-- 리뷰 없을 경우 -->
 
-
         <!-- 로그인 정보 + 리뷰 있을 경우 -->
         
-
         <table id="review-area" style="padding-right: 20px; width:650px;">              
 			<tbody>
 		
 			</tbody>
         </table>
         
-        
-      
-
-
         <br>
 
         <div class="review-pagebar">
-
-	            <!-- <a>&lt;</a>
-	            <a>1</a>
-	            <a>2</a>
-	            <a>3</a>
-	            <a>&gt;</a> -->
-
         </div>
         
         <br><br><br>
-
-        
+     
     </div>
     
-    
-
-        
-
     <%@ include file = "../common/footer.jsp"%>
     
-    
-    
-    
-    <!-- -------------------------- 모달 ------------------------------------ -->
 
 
-	<!-- Button to Open the Modal -->
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal"data-bs-target="#myModal">
-		Open modal
-	</button>
+
+
+    <!-- ------------------------------- 모달 --------------------------------------- -->
+
 
 
 	<!-- The Modal -->
@@ -364,15 +312,13 @@
 
 
 
-	<!-- -------------------------- 스크립트 ------------------------------------ -->
+	<!-- --------------------------------- 스크립트 ------------------------------------------ -->
    	
     <script>
         onload = function(){
             selectReviewList(1);
             checkLike();
-
         }
-
 
         // 리뷰 + 페이징바 그려주기
         function selectReviewList(cp){
@@ -396,22 +342,17 @@
                         for (let i = 0; i < review.reviewStar; i++) {
                                 score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
                             }
-                       // str1 += '<tr><th rowspan="2" style="width:50px;">' + review.userNo
-                        //		+ '</th><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score 
-                        //		+ '</td><td align="right" style="padding-right: 50px;">'+ review.reviewCreateDate 
-                        //		+'</td></tr><tr><td colspan="3" style="padding: 20px;">'+ review.reviewContent 
-                        //		+'</td></tr><tr><td colspan="3"><hr style="width:680px;"></td></tr>'
-                        
 
 						if (loginUser == review.userNo){
 							str1 +='<tr><td rowspan="2" style="width:80px; text-align: center;">' + review.userNo
-	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score
-	                    	+ '</td><td align="right" class="hover" style="width:40px; text-align: center;">수정</td><td align="right" class="hover" style="width:40px; text-align: center;">삭제</td><td style="padding-right: 20px; width:160px; text-align: center;">' + review.reviewCreateDate
+	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 23px;">' + score
+	                    	+ '</td><td align="right" style="width:40px; text-align: center;"></td><td align="right" class="hover" onclick="deleteReview(' + review.reviewNo + ',' + pi.currentPage
+                            + ')" style="width:40px; text-align: center;">삭제</td><td style="padding-right: 20px; width:160px; text-align: center;">' + review.reviewCreateDate
 	                    	+ '</td></tr><tr><td colspan="5" style="padding: 20px;">' + review.reviewContent
 	                    	+ '</td></tr><tr><td colspan="5"><hr style="width:680px;"></td></tr>'
 						} else {
 							str1 +='<tr><td rowspan="2" style="width:80px; text-align: center;">' + review.userNo
-	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 30px;">' + score
+	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 23px;">' + score
 	                    	+ '</td><td align="right" style="width:40px; text-align: center;"></td><td align="right" style="width:40px; text-align: center;"></td><td style="padding-right: 20px; width:160px; text-align: center;">' + review.reviewCreateDate
 	                    	+ '</td></tr><tr><td colspan="5" style="padding: 20px;">' + review.reviewContent
 	                    	+ '</td></tr><tr><td colspan="5"><hr style="width:680px;"></td></tr>'
@@ -437,8 +378,7 @@
                     console.log("댓글목록 조회 중 ajax 통신 실패");
                 }
             })
-        }
-        
+        }       
 
 
         // 즐겨찾기 조회
@@ -466,8 +406,6 @@
             })
         }
 
-
-
         // 즐겨찾기 삭제
         function deleteLike(){
             $.ajax({
@@ -477,7 +415,12 @@
                     userNo : "${loginUser.userNo}"
                 },
                 success: function(res){
-                    checkLike();
+                    if(res > 0){
+                   	    checkLike();
+                    } else {
+                		alert('삭제실패');
+                    }
+
                 },
                 error : function(){
                     console.log("즐겨찾기 조회 중 ajax 통신 실패");
@@ -494,21 +437,20 @@
                     userNo : "${loginUser.userNo}"
                 },
                 success: function(res){
-                    checkLike();
+                    if(res > 0){
+                   	    checkLike();
+                    } else {
+                		alert('추가실패');
+                    }
                 },
                 error : function(){
                     console.log("즐겨찾기 조회 중 ajax 통신 실패");
                 }
             })
         }
-        
-        
+               
         // 리뷰 추가
         function createReview(){
-
-            console.log($("#starval").val());
-            console.log($("#contentval").val());
-
         	$.ajax({
                 url : "create.re",
                 method: "post",
@@ -519,22 +461,46 @@
                     reviewContent : $("#contentval").val()
                 },
                 success: function(res){
-                	alert('등록완료');
-                    selectReviewList(1);
+                	if(res > 0){
+	                    selectReviewList(1);
+                	} else {
+            			alert('등록실패');
+                	}
+
                 },
                 error : function(){
                     console.log("즐겨찾기 조회 중 ajax 통신 실패");
                 }
             })
         }
-
         
+        // 리뷰 삭제
+        function deleteReview(rno, cpage){
+        	$.ajax({
+                url : "delete.re",
+                data : {
+                    reviewNo : rno,
+                    userNo : "${loginUser.userNo}"
+                },
+                success: function(res){
+                	if(res > 0){
+	                    selectReviewList(cpage);
+                	} else {
+            			alert('삭제실패');
+                	}
+                },
+                error : function(){
+                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
+                }
+            })
+        }
+        
+    
     </script>
-                        
-
 	
 
-	<!-- 이미지 슬라이드 -->
+	<!--------------------------- 이미지 슬라이드 ------------------------------->
+	
  	<script>
         const images = document.querySelectorAll(".place-image img");
         const prev = document.getElementById("prev");
@@ -572,7 +538,8 @@
     
     
     
-    <!-- 카카오맵 -->
+    <!---------------------------- 카카오맵 -------------------------------->
+    
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=abd7155d789dd6d2c34f07d821c4bc64&libraries=services"></script>
 	<script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
