@@ -17,6 +17,7 @@
 				       , PLACE_TITLE
 				       , PLACE_ADDRESS
 				       , PLACE_IMAGE_PATH
+				       , PLACE_IMAGE_CHANGE
 			      FROM PLACE P
 			      LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
 			      WHERE PLACE_STATUS = 'Y'
@@ -227,5 +228,21 @@
    		DELETE FROM REVIEW
         WHERE REVIEW_NO = ? AND USER_NO = ?
     </entry>
+
+	<entry key="selectPlaceBoardList">
+		SELECT PLACE_NO,
+				PLACE_TITLE,
+				PLACE_CONTENT_POINT,
+				PLACE_THEMA,
+				PLACE_ADDRESS,
+				PLACE_COUNT,
+				PLACE_IMAGE_PATH,
+				PLACE_IMAGE_CHANGE
+			FROM PLACE
+			LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+			WHERE PLACE_STATUS = 'Y'
+			ORDER BY PLACE_NO DESC
+	</entry>
+
 
 </properties>
