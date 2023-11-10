@@ -57,10 +57,10 @@ public class PlaceService {
 		return result;
 	}
 
-	public ArrayList<Place> selectSearchList(String placeTitle, PageInfo pi) {
+	public ArrayList<PlaceSelect> selectSearchList(String placeTitle, PageInfo pi) {
 		
 		Connection conn = getConnection();
-		ArrayList<Place> plist = new PlaceDao().selectSearchList(conn, placeTitle, pi);
+		ArrayList<PlaceSelect> plist = new PlaceDao().selectSearchList(conn, placeTitle, pi);
 		
 		close(conn);
 		return plist;
@@ -139,6 +139,7 @@ public class PlaceService {
 	}
 	
 	public ArrayList<PlaceSelect> mainCountSearch() {
+
 	   Connection conn = getConnection();
 	   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
 	   close(conn);
@@ -162,6 +163,19 @@ public class PlaceService {
 		close(conn);
 		
 		return result1 * result2;
+
+		   Connection conn = getConnection();
+		   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
+		   close(conn);
+		   return list;
+	
+	}
+
+	public ArrayList<PlaceSelect> selectPlaceBoardList(String placeThema) {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> pslist = new PlaceDao().selectPlaceBoardList(conn, placeThema);
+		close(conn);
+		return pslist;
 	}
    
 }

@@ -208,9 +208,9 @@ public class PlaceDao {
 		return SearchCount;
 	}
 
-	public ArrayList<Place> selectSearchList(Connection conn, String placeTitle, PageInfo pi) {
+	public ArrayList<PlaceSelect> selectSearchList(Connection conn, String placeTitle, PageInfo pi) {
 
-		ArrayList<Place> plist = new ArrayList<>();
+		ArrayList<PlaceSelect> plist = new ArrayList<>();
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -231,13 +231,14 @@ public class PlaceDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				plist.add(new Place(rset.getInt("PLACE_NO"), 
-		                           rset.getString("PLACE_TITLE"), 
-		                           rset.getString("PLACE_ADDRESS"), 
-		                           rset.getString("PLACE_IMAGE_PATH"))
-									);
+				plist.add(new PlaceSelect(rset.getInt("PLACE_NO"), 
+			                           rset.getString("PLACE_TITLE"), 
+			                           rset.getString("PLACE_ADDRESS"), 
+			                           rset.getString("PLACE_IMAGE_PATH"),
+									   rset.getString("PLACE_IMAGE_CHANGE")
+									));
   				}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -488,6 +489,39 @@ public class PlaceDao {
 	  
 	  return result;
    }
+
+	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, String placeThema) {
+		ArrayList<PlaceSelect> pslist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectPlaceBoardList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+				pslist.add(new PlaceSelect(rset.getInt("PLACE_NO"),
+						                  rset.getString("PLACE_TITLE"),
+						                  rset.getString("PLACE_CONTENT_POINT"),
+						                  rset.getString("PLACE_THEMA"),
+						                  rset.getString("PLACE_ADDRESS"),
+						                  rset.getInt("PLACE_COUNT"),
+						                  rset.getString("PLACE_IMAGE_PATH"),
+						                  rset.getString("PLACE_IMAGE_CHANGE")
+						                  ));
+						         }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pslist;
+	}
+
    
    public int insertPlaceImage(Connection conn, ArrayList<PlaceImage> list, PlaceSelect ps) {
 	   int result = 0;

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.hrp.place.model.vo.PlaceSelect, java.util.ArrayList"%>
+<%
+	ArrayList<PlaceSelect> pslist = (ArrayList<PlaceSelect>)request.getAttribute("pslist");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,12 +83,10 @@
 <body>
 	<%@ include file = "../common/menubar.jsp"%>
 	<div class="tage">
-        <div class="shop"><a href="">#철원으로 떠나자</a></div>
-        <div class="shop"><a href="">#철원으로 떠나자</a></div>
-        <div class="shop"><a href="">#철원으로 떠나자</a></div>
-        <div class="shop"><a href="">#철원으로 떠나자</a></div>
-        <div class="shop"><a href="">#철원으로 떠나자</a></div>
-        <div class="shop"><a href="">#철원으로 떠나자</a></div>
+        <div class="shop"><a href="">#도시</a></div>
+        <div class="shop"><a href="">#계절</a></div>
+        <div class="shop"><a href="">#축제</a></div>
+        <div class="shop"><a href="">#힐링</a></div>
     </div>
 
     <hr>
@@ -95,10 +96,10 @@
         <div class="left-btn">
             <input type="button"value="&lt" onclick="">
         </div>
-
+		<!-- 즐겨찾기 많은순 -->
         <div class="dog-titl">
             <img src="/ONe/imgs/202212008462_500.jpg" alt="" class="dog" onclick="">
-            <input type="text" value="벼랑에 걸린 하늘 길을 걷다">
+            <input type="text" value="">
         </div>
         <div class="dog-titl">
             <img src="/ONe/imgs/202212008462_500.jpg" alt="" class="dog" onclick="">
@@ -119,7 +120,8 @@
     </div>
 
     <br><br><br><br><br>
-
+	
+	<!-- 최신순 -->
     <div class="sumbnail-title">
         <div class="sumbnail">
             <img src="/ONe/imgs/202212008462_500.jpg" alt="" class="photo-sub" onclick="">
@@ -149,6 +151,7 @@
             <img src="/ONe/imgs/202212008462_500.jpg" alt="" class="photo-sub" onclick="">
         </div>
     </div>
+    
     <%@ include file = "../common/footer.jsp"%>
     
 </body>
