@@ -187,24 +187,30 @@
       WHERE PLACE_STATUS = 'Y'
    </entry>
    
-     <entry key="mainCountSearch">
-      SELECT ROWNUM, A.*
-      FROM (SELECT PLACE_NO,
-                 PLACE_TITLE,
-                 PLACE_CONTENT_POINT,
-                 PLACE_THEMA,
-                 PLACE_ADDRESS,
-                 PLACE_TIME,
-                TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
-                TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
-                 PLACE_COUNT,
-                 PLACE_IMAGE_PATH,
-                 PLACE_IMAGE_CHANGE
-            FROM PLACE
-            RIGHT JOIN PLACE_IMAGE USING (PLACE_NO)
-            WHERE PLACE_STATUS = 'Y'
-              ORDER BY PLACE_COUNT DESC) A
-      WHERE 4 > ROWNUM
+   <entry key="mainCountSearch">
+		SELECT ROWNUM, A.*
+		FROM (SELECT PLACE.PLACE_NO,
+		         PLACE_TITLE,
+		         PLACE_CONTENT_POINT,
+		         PLACE_THEMA,
+		         PLACE_ADDRESS,
+		         PLACE_TIME,
+		        TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+		        TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+		         PLACE_COUNT,
+		         PLACE_IMAGE_PATH,
+		         PLACE_IMAGE_CHANGE
+		    FROM PLACE
+		    left JOIN (select max(PLACE_NO) as "PLACE_NO", 
+		                        max(PLACE_IMAGE_PATH) PLACE_IMAGE_PATH, 
+		                        max(PLACE_IMAGE_CHANGE) PLACE_IMAGE_CHANGE
+		                  from PLACE_IMAGE 
+		              GROUP by place_no) pi 
+		          on (pi.place_no = PLACE.place_no)
+		    WHERE PLACE_STATUS = 'Y'
+		      ORDER BY PLACE_COUNT DESC)A
+		WHERE 4 > ROWNUM
+
    </entry>
    
    <entry key="insertReview">
