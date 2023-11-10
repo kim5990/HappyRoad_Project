@@ -3,11 +3,11 @@
     import="com.kh.hrp.common.PageInfo,
     		java.util.ArrayList,
     		com.kh.hrp.place.model.vo.Place,
-    		com.kh.hrp.common.model.vo.PlaceImage"%>
+    		com.kh.hrp.place.model.vo.PlaceSelect"%>
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	ArrayList<Place> plist = (ArrayList<Place>)request.getAttribute("plist");
-	ArrayList<PlaceImage> list = (ArrayList<PlaceImage>)request.getAttribute("list");
+
+	ArrayList<PlaceSelect> plist = (ArrayList<PlaceSelect>)request.getAttribute("plist");
 	
 	String placeTitle = (String)request.getAttribute("title");
 	String listNull = (String)request.getAttribute("listNull");
@@ -42,8 +42,8 @@
         <section id="search-content">
             <div class="search-result-area">
                 <div class="search-result-area-div">
-                    <button type="button" class="btn btn-secondary" id="btn-order">최신순</button>
-                    <button type="button" class="btn btn-secondary" id="btn-order">관련도순</button>
+                    <button type="button" id="btn-order">최신순</button>
+                    <button type="button" id="btn-order">인기순</button>
                 </div>
             </div>
         </section>
@@ -55,23 +55,20 @@
                 		<li>검색 결과가 없습니다.</li>
                 	<% } else { %>
                 	<!-- 일치하지 않는 검색어에도 검색결과가 없습니다 띄우기 -->
-                	<% for (PlaceImage pimg : list) { %>
+                	<% for (PlaceSelect p : plist) { %>
 	                	<li>
-	                        <a href="">
-	                            <img src="./resources/images/<%=pimg.getPlaceImageChange() %>" alt="검색결과이미지">
+	                        <a href="eventdetailView.ed?pno=<%=p.getPlaceNo() %>">
+	                            <img src="./resources/images/<%=p.getImageChange() %>" alt="검색결과이미지">
 	                        </a>
-                    <% } %>
-                    <% for (Place p : plist) { %>
                         <div class="result-content">
                             <div class="">
-                                <div class="result-title"><a href=""><%= p.getPlaceTitle() %></a></div>
+                                <div class="result-title"><a href="eventdetailView.ed?pno=<%=p.getPlaceNo() %>"><%= p.getPlaceTitle() %></a></div>
                                 <div class="result-area"><span><%= p.getPlaceAddress() %></span></div>
                             </div>
                         </div>
                     </li>
                     <% } %>
 				<% } %>
-			
                 </ul>
             </div>
         </div>
@@ -93,20 +90,12 @@
             <% } %>
         </ul>
         
-		<%-- <% if (currentPage != 1) { %>
-			<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=currentPage - 1 %>'">&lt;</button>
-        <% } %>
-			<% for(int p = startPage; p <= endPage; p++) { %>
-				<% if (p == currentPage) { %>
-					<button disabled><%=p %></button>
-            	<% } else { %>
-            		<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=p %>'"><%=p %></button>
-           		<% } %>
-           	<% } %>
-           
-            <% if (currentPage != maxPage) { %>
-            	<button onclick="location.href='<%=contextPath %>/search.sc?cpage=<%=currentPage + 1 %>'">&gt;</button>
-			<% } %> --%>
+        <script>
+	         window.onload = function() {
+	             let searchText = '<%=placeTitle%>';
+	            document.querySelector("input[name='title']").value = searchText;
+	            }
+	      </script>
 
 	    
     <%@ include file = "./footer.jsp"%>
