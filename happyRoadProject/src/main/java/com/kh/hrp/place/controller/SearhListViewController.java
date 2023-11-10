@@ -2,7 +2,6 @@ package com.kh.hrp.place.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.hrp.common.PageInfo;
 import com.kh.hrp.common.PageInfoController;
-import com.kh.hrp.common.model.vo.PlaceImage;
 import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.Place;
+import com.kh.hrp.place.model.vo.PlaceSelect;
 
 /**
  * Servlet implementation class SearhListView
@@ -36,8 +35,7 @@ public class SearhListViewController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int placeNo = Integer.parseInt(request.getParameter("pno"));
+
 		String placeTitle = request.getParameter("title");
 		String listNull;
 		PlaceService pService = new PlaceService();
@@ -58,12 +56,10 @@ public class SearhListViewController extends HttpServlet {
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			
 			PageInfo pi = PageInfoController.pageController(searchCount, currentPage, 5, 5);
-			ArrayList<Place> plist = pService.selectSearchList(placeTitle, pi);
-			ArrayList<PlaceImage> list = pService.selectPlaceImageList(placeNo);
+			ArrayList<PlaceSelect> plist = pService.selectSearchList(placeTitle, pi);
 			
 			request.setAttribute("listNull", listNull);
 			request.setAttribute("plist", plist);
-			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("title", placeTitle);
 			
