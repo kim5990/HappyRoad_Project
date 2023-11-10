@@ -11,8 +11,13 @@ public class Board {
    private int boardCount;
    private String boardEnrollDate;
    private String boardStatus;
+ 
 
+   
    public Board() {}
+   
+   
+   // 기본 생성자
    public Board(int boardNo, String boardUser, String boardCategory, String boardTitle, String boardContent,
          int boardCount, String boardEnrollDate) {
       super();
@@ -37,7 +42,8 @@ public class Board {
 	      this.boardEnrollDate = boardEnrollDate;
 	   }
 
-   public Board(int boardNo, String boardUser, String boardCategory, String boardTitle, String boardContent,
+	
+public Board(int boardNo, String boardUser, String boardCategory, String boardTitle, String boardContent,
          int boardCount, String boardEnrollDate, String boardStatus) {
       super();
       this.boardNo = boardNo;

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.kh.hrp.board.model.dao.BoardDao;
 import com.kh.hrp.board.model.vo.Board;
+import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
 
 public class BoardService {
@@ -39,8 +40,6 @@ public class BoardService {
       Connection conn = getConnection();
 
       int result = new BoardDao().increaseCount(conn, boardNo);
-      
-      System.out.println(result);
       
       Board b = null;
       if (result > 0) {
@@ -79,5 +78,62 @@ public class BoardService {
       close(conn);
       
       return result;
+   }
+   
+   public int updateBoard(Board b) { // 게시글 수정
+	   Connection conn = getConnection();
+		
+	   int result = new BoardDao().updateBoard(conn, b);
+
+	   if (result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
+      
+      close(conn);
+	      
+	   return result;
+   }
+   
+   public int deleteBoard(int boardNo) { // 게시글 삭제
+	   Connection conn = getConnection();
+		
+	   int result = new BoardDao().deleteBoard(conn, boardNo);
+	   
+	   if (result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
+      
+      close(conn);
+      
+      return result;
+   }
+   
+   public ArrayList<BoardComment> selectBoardCommentList(int boardNo) {
+	   Connection conn = getConnection();
+		
+		ArrayList<BoardComment> list = new BoardDao().selectBoardCommentList(conn, boardNo);
+		close(conn);
+		
+		return list;
+   }
+   
+   public int insertComment(BoardComment c) {
+	   
+	   Connection conn = getConnection();
+		int result = new BoardDao().insertComment(conn, c);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
    }
 }
