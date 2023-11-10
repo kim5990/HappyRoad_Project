@@ -183,11 +183,9 @@
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
+
          <%@ include file = "../common/footer.jsp"%>
-=======
-			<%@ include file = "../common/footer.jsp"%>
->>>>>>> feb96a0d81dfa7e7e878cdb5d079d7886bb32c87
+
         </body>
 
         </html>
