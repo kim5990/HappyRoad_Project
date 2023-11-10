@@ -97,10 +97,11 @@
                     <h2>장소 게시물 추가</h2>
                 </div>
                 <br>
-                <form action="placeInsert.ma" method="post">
+                <form action="<%=contextPath%>/placeInsert.ma" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="userNo" value="<%=loginUser.getUserNo()%>">
                     <div class="insertPlace">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" name="placeTitle"
+                            <input type="text" class="form-control" id="floatingInput" name="placeTitle"
                                 placeholder="방문지를 쓰세요">
                             <label for="floatingInput">방문지</label>
                             <div class="form-floating">
@@ -119,7 +120,7 @@
 
                     <div class="insertPlace">
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="placeContentPoint"
+                            <input type="text" class="form-control" name="placeContentPoint"
                                 id="exampleFormControlInput1" placeholder="한줄 설명">
                         </div>
                     </div>
@@ -133,7 +134,7 @@
 
                     <div class="insertPlace">
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="placeAddress" id="exampleFormControlInput1"
+                            <input type="text" class="form-control" name="placeAddress" id="exampleFormControlInput1"
                                 placeholder="예시)서울특별시 강남구 테헤란로14길 6">
                         </div>
                     </div>
@@ -191,25 +192,25 @@
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file1">
                         </div>
                     </div>
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file2">
                         </div>
                     </div>
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file3"> 
                         </div>
                     </div>
                     <div class="insertPlace">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                            <input type="file" class="form-control" id="inputGroupFile01">
+                            <input type="file" class="form-control" id="inputGroupFile01" name="file4">
                         </div>
                     </div>
                     <br>

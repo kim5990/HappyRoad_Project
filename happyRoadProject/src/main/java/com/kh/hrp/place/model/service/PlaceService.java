@@ -131,20 +131,38 @@ public class PlaceService {
 		return result;
    }
 
-public ArrayList<PlaceSelect> mainSelectController() {
-	Connection conn = getConnection();
-	ArrayList<PlaceSelect> list = new PlaceDao().mainSelectController(conn);
-	close(conn);
-	return list;
-}
-
-public ArrayList<PlaceSelect> mainCountSearch() {
+	public ArrayList<PlaceSelect> mainSelectController() {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> list = new PlaceDao().mainSelectController(conn);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<PlaceSelect> mainCountSearch() {
 	   Connection conn = getConnection();
 	   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
 	   close(conn);
 	   return list;
-
-}
+	
+	}
+	
+	public int insertManagerPlace(PlaceSelect ps, ArrayList<PlaceImage> list) {
+		Connection conn = getConnection();
+		System.out.println("서비스");
+		int result1 = new PlaceDao().insertManagerPlace(conn, ps);
+		System.out.println("서비스1후");
+		int result2 = new PlaceDao().insertPlaceImage(conn, list, ps);
+		
+		if (result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+	}
    
 }
    
