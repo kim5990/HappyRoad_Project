@@ -330,12 +330,11 @@
 				</div>
 
 				<!-- Modal body -->
-                <form action="createReview()" method="post"> 
                     <div class="modal-body">
                         <h6>평점</h6>
                     
                         <div class="input-group mb-3 input-group-lg">  
-                            <select class="form-select" name="star">
+                            <select class="form-select" name="star" id="starval">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -345,7 +344,7 @@
                         </div>
                         <div>
                             <h6>내용</h6>
-                            <textarea name="reviewContent" class="form-control" style="height: 200px;"></textarea>
+                            <textarea id="contentval" name="reviewContent" class="form-control" style="height: 200px;"></textarea>
                         </div>
                     </div>
                     <!--
@@ -355,10 +354,9 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">등록</button>
+                        <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal" onclick="createReview()">등록</button>
                         <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
                     </div>
-                </form>
 
 			</div>
 		</div>
@@ -508,18 +506,20 @@
         // 리뷰 추가
         function createReview(){
 
-            console.log($("select[name='star']").val());
-            console.log($("textarea[name='reviewContent']").val());
+            console.log($("#starval").val());
+            console.log($("#contentval").val());
 
         	$.ajax({
                 url : "create.re",
+                method: "post",
                 data : {
                     placeNo : "${p.placeNo}",
                     userNo : "${loginUser.userNo}",
-                    star : $("select[name='star']").val(),
-                    reviewContent : $("textarea[name='reviewContent']").val()
+                    star : $("#starval").val(),
+                    reviewContent : $("#contentval").val()
                 },
                 success: function(res){
+                	alert('등록완료');
                     selectReviewList(1);
                 },
                 error : function(){
@@ -528,8 +528,6 @@
             })
         }
 
-        
-    
         
     </script>
                         
