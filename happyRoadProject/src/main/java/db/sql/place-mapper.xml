@@ -212,7 +212,7 @@
 		WHERE 4 > ROWNUM
 
    </entry>
-<<<<<<< HEAD
+   
 	<entry key="insertManagerPlace">
       INSERT INTO PLACE
          (
