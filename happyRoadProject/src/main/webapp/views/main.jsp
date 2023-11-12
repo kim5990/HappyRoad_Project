@@ -101,41 +101,48 @@
     </div>
 
     <div class="calender">
-        <div class="event-calenderTitleText">2023년 10월</div>
+        <div class="event-calenderTitleText"></div>
         <div class="event-section-calender">
             <div class="event-section-calender-div">
                 <div class="event-calenderLists">
-                    <div class="event-calenderList" style="background-color: rgb(135, 205, 252);">
-                        <div class="event-calender-day">23</div>
-                        <div class="event-calender-month">월</div>
-                    </div>
-                    <div class="event-calenderList">
-                        <div class="event-calender-day">24</div>
-                        <div class="event-calender-month">화</div>
-                    </div>
-                    <div class="event-calenderList">
-                        <div class="event-calender-day">25</div>
-                        <div class="event-calender-month">수</div>
-                    </div>
-                    <div class="event-calenderList">
-                        <div class="event-calender-day">26</div>
-                        <div class="event-calender-month">목</div>
-                    </div>
-                    <div class="event-calenderList">
-                        <div class="event-calender-day">27</div>
-                        <div class="event-calender-month">금</div>
-                    </div>
-                    <div class="event-calenderList">
-                        <div class="event-calender-day" style="color: rgb(103, 103, 253);">28</div>
-                        <div class="event-calender-month" style="color: rgb(130, 130, 252);">토</div>
-                    </div>
-                    <div class="event-calenderList">
-                        <div class="event-calender-day" style="color: rgb(255, 103, 141);">29</div>
-                        <div class="event-calender-month" style="color: rgb(253, 128, 159);">일</div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
+
+        <script>
+            function getTodayLabel() {
+                let now = new Date();
+                let week = new Array('일','토','금','목','수','화','월')
+
+                let today = now.getDay();
+                let todayLabel = week[today-1];
+                let str = "";
+
+                for(let i = 1; i <= 7 ; i++){
+                    let day1 = now.getDate() + i
+                    let todayLabel = week[today + i];
+                    if(i == 7){
+                        
+                    }
+                    str += '<div class="event-calenderList" style="background-color: rgb(135, 205, 252);">'
+                        + '<div class="event-calender-day">'+ day1 +'</div>'
+                        + '<div class="event-calender-month">'+ todayLabel + '</div>'
+                    + '</div>'
+                }
+                console.log(str)
+                return str;
+            }   
+            
+           	// 현재 날짜 및 시간
+               let now = new Date();
+                let year = now.getFullYear();
+                let month = now.getMonth() + 1;
+
+            document.querySelector('.event-calenderTitleText').innerText = year + "년" + " " + month +"월"
+            document.querySelector(".event-calenderLists").innerHTML = getTodayLabel();
+
+        </script>
         <div class="event-calender-eventlist">
             <div class="event-calender-eventlist-container">
                 <div class="event-calender-list">
@@ -233,7 +240,7 @@
                         }
                      }) 
               }
-              
+
               function allOfSelect(){
                  $.ajax({
                         url : "select.ma",
