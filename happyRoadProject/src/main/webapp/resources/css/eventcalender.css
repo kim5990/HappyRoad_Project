@@ -40,28 +40,43 @@
     justify-content: space-between;
 }
 
-.event-calenderList {
+ .calendar2 {
+    display: flex;
+    width: 800px;
+    height: 70px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.day {
     width: 60px;
     height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 30%;
     font-size: 17px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.event-calender-day {
-    padding-top: 7px;
-    display: flex;
-    align-items: start;
-    justify-content: space-around;
-    color: rgb(46, 46, 46);
+.day:hover {
+    background-color: #e0e0e0;
 }
 
-.event-calender-month {
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    color: rgb(46, 46, 46);
-    font-weight: 900;
+.current-day {
+    background-color: #87ceeb;
+}
+
+.sunday {
+    color: red;
+}
+
+.saturday {
+    color: blue;
 }
 
 .event-calender-eventlist {
