@@ -224,7 +224,7 @@
        		<c:choose>
        			<c:when test="${ loginUser.userNo == null}">
         			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
-					<button type="button" data-bs-toggle="modal"data-bs-target="#myModal"> 버튼 </button>
+
         		</c:when>
         		<c:otherwise>
         			<div  data-bs-toggle="modal"data-bs-target="#myModal" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>       			
