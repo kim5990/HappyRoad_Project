@@ -25,6 +25,8 @@ public class BoardService {
       return listCount;
    }
    
+  
+   
    public ArrayList<Board> selectList(PageInfo pi){ // 게시물 리스트 가져오기
       
       Connection conn = getConnection();
@@ -34,6 +36,25 @@ public class BoardService {
       
       return list;
    }
+   
+   public int selectCommentCount() { // 댓글 총 갯수 가져오기
+	   Connection conn = getConnection();
+	      
+       int CommentlistCount = new BoardDao().selectCommentCount(conn);
+      
+       close(conn);
+       return CommentlistCount;
+   }
+   
+   public ArrayList<BoardComment> commentSelectList(PageInfo pi){ // 댓글 리스트 가져오기
+	      
+	      Connection conn = getConnection();
+	      ArrayList<BoardComment> list = new BoardDao().commentSelectList(conn, pi);
+	      
+	      close(conn);
+	      
+	      return list;
+	   }
    
    public Board increaseCount(int boardNo) { // 카운터 올려주고 게시물 조회
       
@@ -125,6 +146,22 @@ public class BoardService {
 	   
 	   Connection conn = getConnection();
 		int result = new BoardDao().insertComment(conn, c);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+   }
+   
+   public int deleteComment(int cno) {
+	   
+	   Connection conn = getConnection();
+		int result = new BoardDao().deleteComment(conn, cno);
 		
 		if (result > 0) {
 			commit(conn);

@@ -55,6 +55,29 @@ public class BoardDao {
       return listCount;
    }
    
+   public int selectCommentCount(Connection conn) { // 댓글 총 갯수
+	   int CommentlistCount = 0;
+	      
+       PreparedStatement pstmt = null;
+       ResultSet rset = null;
+      
+       String sql = prop.getProperty("selectListCount");
+       
+       try {
+           pstmt = conn.prepareStatement(sql);
+           rset = pstmt.executeQuery();
+           
+           if(rset.next()) {
+        	   CommentlistCount = rset.getInt("count");
+           }
+        } catch (SQLException e) {
+           e.printStackTrace();
+        } finally {
+           close(rset);
+           close(pstmt);
+        }
+       return CommentlistCount;
+   }
    
    public ArrayList<Board> selectList(Connection conn, PageInfo pi){ // 보여질 게시물
       
@@ -97,6 +120,47 @@ public class BoardDao {
       }
       
       return list;
+   }
+   
+   public ArrayList<BoardComment> commentSelectList(Connection conn, PageInfo pi) {
+	   ArrayList<BoardComment> list = new ArrayList<>();
+	      
+       PreparedStatement pstmt = null;
+       ResultSet rset = null;
+      
+       String sql = prop.getProperty("commentSelectList");
+       
+       try {
+           pstmt = conn.prepareStatement(sql);
+           // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
+           int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+           int endRow = startRow + pi.getBoardLimit() - 1;
+           
+           pstmt.setInt(1, startRow);
+           pstmt.setInt(2, endRow);
+           
+           rset = pstmt.executeQuery();
+           
+           while(rset.next()) {
+              list.add(new BoardComment(
+                    rset.getInt("COMMENT_NO"),
+                    rset.getString("BOARD_NO"),
+                    rset.getString("USER_NAME"),
+                    rset.getString("COMMENT_USER"),
+                    rset.getString("COMMENT_CONTENT"),
+                    rset.getString("COMMENT_NEWDATE")
+                    
+                    ));
+           }
+           
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }finally {
+           close(rset);
+           close(pstmt);
+        }
+        
+        return list;
    }
    
    public int increaseCount(Connection conn, int boardNo) { // 게시물 조회수 올려주고 디테일 페이지 가져오기
@@ -273,6 +337,25 @@ public class BoardDao {
 		
 		return result;
 	   
+   }
+   
+   public int deleteComment(Connection conn, int cno) {
+	   int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
    }
    
 }

@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member, com.kh.hrp.board.model.vo.BoardComment"%>
+    pageEncoding="UTF-8"%>
+
+<%@ page import="com.kh.hrp.common.PageInfo, java.util.ArrayList, com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member, com.kh.hrp.board.model.vo.BoardComment" %>
 <%
    //글번호, 작성자, 카테고리명, 제목, 내용, 작성일
    Board b = (Board)request.getAttribute("b");
    BoardComment c = (BoardComment)request.getAttribute("c");
+   
+   PageInfo pi = (PageInfo)request.getAttribute("pi");
+   ArrayList<BoardComment> list = (ArrayList<BoardComment>)request.getAttribute("list");
+   
+   int currentPage = pi.getCurrentPage();
+   int startPage = pi.getStartPage();
+   int endPage = pi.getEndPage();
+   int maxPage = pi.getMaxPage();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -261,15 +272,26 @@
                         <td class="tdDate" colspan="2" align="center"> </td>
                     </tr>
                        
-                   <!--   
+                   
                    <div align="center">
-			               <button id="num-btn"><a href="" id="text">&lt;</a></button>
+                   		 <%if(currentPage != 1){ %>
+			               <button id="num-btn"><a href="<%=contextPath%>/commentList.cm?cpage=<%=currentPage - 1%>" id="text">&lt;</a></button>
+						 <%} %>
 	
-			               <button id="num-btn"><a href="" id="text">1</a></button>
-			           
-			               <button id="num-btn"><a href="" id="text">&gt;</a></button>  
+						 <%for(int p = startPage; p <= endPage; p++) { %>
+             				 <%if(p == currentPage) { %>
+             				 	<button id="num-btn"><a id="text"><%=p %></a></button>
+             				 <%} else { %>
+			               		<button id="num-btn"><a href="<%=contextPath%>/commentList.cm?cpage=<%=p %>" id="text"><%=p %></a></button>
+			          	 	 <%} %>
+            			<%} %>
+            			
+            			<% if(currentPage != maxPage){ %>
+			               <button id="num-btn"><a href="<%=contextPath%>/commentList.cm?cpage=<%=currentPage + 1%>" id="text">&gt;</a></button>  
+			       		<%} %>
+			       		
 			        </div>
-                   -->
+                   
                    
                 </table>
             </div>
@@ -299,10 +321,13 @@
 	       							+"</tr>"
 	       							+"<tr>"
 	       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button> </td>'
-	       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="location.href=' + "''"
+	       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick=' + "''"
 	       	                        +'">삭제</button>' + ' </td>'
 	       	                        + '</tr>';
 	            					
+	        //+'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="'deleteComment()'"
+	       // +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="location.href=' + "'deleteComment()'"
+                   	                     
 	            				}
 	            				
 	            				document.querySelector("#commenttable tbody").innerHTML = str;
@@ -344,8 +369,10 @@
 		                            cno: BoardComment.commentNo
 		                        },
 		                        success:function(res){
-		                            
-		                            
+		                        	if (res > 0) {//댓글삭제 성공
+		                            	selectBoardCommentList();
+		                            }
+		        					
 		                        },
 		                        error:function(){
 									console.log("댓글 작성중 ajax통신 실패")

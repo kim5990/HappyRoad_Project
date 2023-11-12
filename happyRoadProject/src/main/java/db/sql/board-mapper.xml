@@ -8,6 +8,11 @@
       WHERE BOARD_STATUS = 'Y'
    </entry>
    
+   <entry key="selectCommentCount">
+      SELECT COUNT(*) COUNT
+      FROM BOARD_COMMENT
+   </entry>
+   
    <entry key="selectList">
             SELECT *
          FROM(
@@ -27,6 +32,25 @@
                  ) A
               )
               WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="commentSelectList">
+          SELECT *
+	         FROM(
+	            SELECT ROWNUM RNUM, A.*
+	                   FROM (
+	                       SELECT COMMENT_NO
+	                                ,BOARD_NO
+	                                ,USER_NAME
+	                                ,COMMENT_USER
+	                                ,COMMENT_CONTENT
+	                               ,TO_CHAR(COMMENT_NEWDATE, 'YYYY/MM/DD') AS "COMMENT_NEWDATE"
+	                           FROM BOARD_COMMENT B
+	                           JOIN MEMBER ON (COMMENT_USER = USER_NO)
+	                             ORDER BY BOARD_NO DESC
+	                 ) A
+	              )
+	              WHERE RNUM BETWEEN ? AND ?
    </entry>
    
    <entry key="increaseCount">
@@ -118,5 +142,11 @@
 			   , ?
 			   , ?
 			  )
+   </entry>
+   
+   <entry key="deleteComment">
+   		DELETE 
+		    FROM BOARD_COMMENT
+		    WHERE COMMENT_NO = ?
    </entry>
 </properties>

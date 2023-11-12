@@ -1,11 +1,14 @@
 package com.kh.hrp.board.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.kh.hrp.board.model.service.BoardService;
 
 /**
  * Servlet implementation class CommentDeleteController
@@ -27,11 +30,13 @@ public class CommentDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String cNo = request.getParameter("cno");
+		int cno = Integer.parseInt(request.getParameter("cno"));
 		
-		System.out.println(cNo);
+		System.out.println(cno);
 		
-		response.getWriter().print(cNo);
+		int result = new BoardService().deleteComment(cno);
+
+		response.getWriter().print(result);
 	}
 
 	/**
