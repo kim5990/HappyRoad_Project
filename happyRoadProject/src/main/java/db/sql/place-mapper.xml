@@ -212,7 +212,7 @@
 		WHERE 4 > ROWNUM
 
    </entry>
-   
+
 	<entry key="insertManagerPlace">
       INSERT INTO PLACE
          (
@@ -222,7 +222,7 @@
 	         PLACE_CONTENT_DETAIL,
 			 PLACE_THEMA,
 			 PLACE_ADDRESS,
-			 PLACE_HOMEPAGE,
+			 PnLACE_HOMEPAGE,
 			 PLACE_CONTACT,
 			 PLACE_TIME,
 			 PLACE_START,
