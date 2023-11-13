@@ -197,7 +197,8 @@
                             document.querySelector('.current-day').classList.remove('current-day');
                             dayElement.classList.add('current-day');
                             selectedDay = day;
-                            ajaxEventCalenderImage(day.getFullYear(), day.getMonth(), day.getDate(), 1);
+                            
+                            ajaxEventCalenderImage(day.getFullYear(), day.getMonth()+1, day.getDate(), 1);
                         });
 
                         calendarContainer.appendChild(dayElement);
@@ -230,14 +231,14 @@
                     },
                     type: "post",
                     success: function (result) {
-                        console.log(result)
                         let str = "";
 
-                        if (result[0] === []) {
+                        if (result[0] !== []) {
                             for (let r of result[0]) {
                                 str += '<div class="event-calender-list">'
                                     + '<div class="event-calender-list">'
-                                    + '<img class="event-calender-image-thumbnail"  onclick = "location.href = ' + "'eventdetailView.ed" + "?pno=" + r.placeNo + "'" + '" src="">'
+                                    + '<img class="event-calender-image-thumbnail"  onclick = "location.href = ' + "'eventdetailView.ed" + "?pno=" + r.placeNo 
+                                          + "'" + '" src="./'+ r.imagePath + r.imageChange + '">'
                                     + '</div>'
                                     + ' <div class="eventName">' + r.placeTitle + '</div>'
                                     + '<div class="eventDay">' + r.placeStart + " ~ " + r.placeEnd + '</div>'
@@ -315,7 +316,6 @@
                     url: "countSearch.ma",
                     type: "post",
                     success: function (result) {
-                        console.log(result);
                         let str = ""
                         for (let r of result) {
                             str += '<div class="hotNow-list-nodes">'

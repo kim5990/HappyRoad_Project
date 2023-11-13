@@ -59,8 +59,8 @@ public class PlaceDao {
       return listCount;
    }
 
-   public ArrayList<Place> placeLikeSelectList(Connection conn, int userNo, PageInfo pi) {
-      ArrayList<Place>  placeList = new ArrayList<>();
+   public ArrayList<PlaceSelect> placeLikeSelectList(Connection conn, int userNo, PageInfo pi) {
+      ArrayList<PlaceSelect>  placeList = new ArrayList<>();
       
       PreparedStatement pstmt = null;
       ResultSet rset = null;
@@ -79,11 +79,13 @@ public class PlaceDao {
          
          rset = pstmt.executeQuery();
          while (rset.next()) {
-	         placeList.add(new Place(rset.getInt("PLACE_NO"), 
+	         placeList.add(new PlaceSelect(rset.getInt("PLACE_NO"), 
 		                           rset.getString("PLACE_TITLE"), 
 		                           rset.getString("PLACE_CONTENT_POINT"), 
-		                           rset.getString("PLACE_CONTENT_DETAIL"),  
-		                           rset.getString("PLACE_IMAGE_PATH"))
+		                           rset.getString("PLACE_CONTENT_DETAIL"),
+		                           rset.getInt("PLACE_COUNT"),
+					                  rset.getString("PLACE_IMAGE_PATH"),
+					                  rset.getString("PLACE_IMAGE_CHANGE"))
 		               );
 		      }
          
@@ -505,6 +507,7 @@ public class PlaceDao {
 	   
    }
 
+<<<<<<< HEAD
    public int insertManagerPlace(Connection conn, PlaceSelect ps) {
 	   int result = 0;
 	   PreparedStatement pstmt = null;
@@ -534,6 +537,8 @@ public class PlaceDao {
 	  return result;
    }
 
+=======
+>>>>>>> f0f44f27eeae36ba6ed4db5857fb47dccd00d196
 	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, String placeThema) {
 		ArrayList<PlaceSelect> pslist = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -555,7 +560,7 @@ public class PlaceDao {
 						                  rset.getString("PLACE_IMAGE_PATH"),
 						                  rset.getString("PLACE_IMAGE_CHANGE")
 						                  ));
-						         }
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -591,5 +596,147 @@ public class PlaceDao {
 	   
 	   return result;
    }
+   
+	public int selectEventListCount(Connection conn, Date sqlDate, String thema) {
+		 int listCount = 0;
+	     PreparedStatement pstmt = null;
+	     ResultSet rset = null;
+	     String sql = prop.getProperty("selectEventListCount");
+	     
+	     try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, thema);
+			pstmt.setDate(2, sqlDate);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	public ArrayList<PlaceSelect> mainEventListSearch(Connection conn, String thema, Date sqlDate, PageInfo pi) {
+		ArrayList<PlaceSelect> pslist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("mainEventListSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+	         int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	         int endRow = startRow + pi.getBoardLimit() - 1;
+			System.out.println(sqlDate);
+			pstmt.setString(1, thema);
+			pstmt.setDate(2, sqlDate);
+	         pstmt.setInt(3, startRow);
+	         pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				pslist.add(new PlaceSelect(rset.getInt("PLACE_NO"),
+						                  rset.getString("PLACE_TITLE"),
+						                  rset.getString("PLACE_START"),
+						                  rset.getString("PLACE_END"),
+						                  rset.getString("PLACE_IMAGE_PATH"),
+						                  rset.getString("PLACE_IMAGE_CHANGE")
+						                  ));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+	
+		return pslist;
+	}
+
+	public int insertManagerPlace(Connection conn, Place p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertManagerPlace");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getPlaceTitle());
+			pstmt.setString(2, p.getPlaceContentPoint());
+			pstmt.setString(3, p.getPlaceContentDetail());
+			pstmt.setString(4, p.getPlaceThema());
+			pstmt.setString(5, p.getPlaceAddress());
+			pstmt.setString(6, p.getPlaceHomepage());
+			pstmt.setString(7, p.getPlaceContact());
+			pstmt.setString(8, p.getPlaceTime());
+			pstmt.setDate(9, p.getPlaceStart());
+			pstmt.setDate(10, p.getPlaceEnd());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectManagerPlace(Connection conn, String placeTitle) {
+		int pno = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectManagerPlace");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, placeTitle);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				pno = rset.getInt("PLACE_NO");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+	
+		return pno;
+	}
+
+	public int insertManagerPlaceImage(Connection conn, int pno, PlaceImage pI) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertManagerPlaceImage");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			pstmt.setString(2, pI.getPlaceImageOrigin());
+			pstmt.setString(3, pI.getPlaceImageChange());
+			pstmt.setString(4, pI.getPlaceImagePath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 }

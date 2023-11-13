@@ -7,25 +7,25 @@
       SELECT COUNT(*) COUNT
       FROM PLACE
       WHERE PLACE_TITLE LIKE ?
-			AND PLACE_STATUS = 'Y'
+         AND PLACE_STATUS = 'Y'
    </entry>
 
    <entry key="selectSearchList">
       SELECT *        
-		FROM(SELECT ROWNUM RNUM, A.* 
-		    FROM (SELECT PLACE_NO
-				       , PLACE_TITLE
-				       , PLACE_ADDRESS
-				       , PLACE_IMAGE_PATH
-				       , PLACE_IMAGE_CHANGE
-			      FROM PLACE P
-			      LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
-			      WHERE PLACE_STATUS = 'Y'
-			      AND PLACE_TITLE LIKE ?
-			      ORDER BY PLACE_NO DESC
-		        ) A
-		    )
-		WHERE RNUM BETWEEN ? AND ?
+      FROM(SELECT ROWNUM RNUM, A.* 
+          FROM (SELECT PLACE_NO
+                   , PLACE_TITLE
+                   , PLACE_ADDRESS
+                   , PLACE_IMAGE_PATH
+                   , PLACE_IMAGE_CHANGE
+               FROM PLACE P
+               LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+               WHERE PLACE_STATUS = 'Y'
+               AND PLACE_TITLE LIKE ?
+               ORDER BY PLACE_NO DESC
+              ) A
+          )
+      WHERE RNUM BETWEEN ? AND ?
    </entry>
 
 
@@ -39,21 +39,21 @@
    
    
    <entry key="placeLikeSelectList">
-      SELECT *        
-      FROM(SELECT ROWNUM RNUM, A.* 
-          FROM (SELECT PLACE_NO, 
-                   PLACE_TITLE, 
-                   PLACE_CONTENT_POINT, 
-                   PLACE_CONTENT_DETAIL, 
-                   PLACE_IMAGE_PATH
+     SELECT *
+    FROM(SELECT ROWNUM RNUM, A.*
+        FROM(SELECT PLACE_NO, PLACE_TITLE, PLACE_CONTENT_POINT, PLACE_CONTENT_DETAIL, PLACE_COUNT, PLACE_IMAGE_PATH, PLACE_IMAGE_CHANGE
+            FROM (SELECT LIKE_NO, PLACE_NO, USER_NO
                   FROM PLACE_LIKE
-                  JOIN PLACE USING(PLACE_NO)
-                  LEFT JOIN PLACE_IMAGE USING(PLACE_NO)
-                  WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
-                  ORDER BY LIKE_NO DESC 
-              ) A
-          )
-      WHERE RNUM BETWEEN ? AND ?
+                  WHERE USER_NO = 3) pl
+                JOIN PLACE p USING (PLACE_NO)
+                left JOIN (SELECT max(PLACE_NO) as "PLACE_NO", 
+                                    max(PLACE_IMAGE_PATH) PLACE_IMAGE_PATH, 
+                                    max(PLACE_IMAGE_CHANGE) PLACE_IMAGE_CHANGE
+                              FROM PLACE_IMAGE 
+                          GROUP by place_no) pi  USING (place_no)
+          WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
+          ORDER BY LIKE_NO DESC) A)
+    WHERE RNUM BETWEEN ? AND ?
    </entry>
    
    <entry key="placeLikeDeleteController">
@@ -123,22 +123,22 @@
    </entry>
    
    <entry key="selectReviewList">
-		SELECT *
-		FROM(
-			SELECT ROWNUM RNUM, A.REVIEW_NO, A.USER_NAME, A.REVIEW_STAR, A.REVIEW_CONTENT,TO_CHAR(REVIEW_CREATE_DATE, 'YYYY-MM-DD') AS REVIEW_CREATE_DATE
-					FROM(
-							SELECT REVIEW_NO
-									,USER_NAME
-									,REVIEW_STAR
-									,REVIEW_CONTENT
-									,REVIEW_CREATE_DATE
-							FROM REVIEW
-							JOIN MEMBER USING (USER_NO)
-							WHERE PLACE_NO = ?
-							ORDER BY REVIEW_CREATE_DATE DESC
-						) A
-			)
-		WHERE RNUM BETWEEN ? AND ?
+      SELECT *
+      FROM(
+         SELECT ROWNUM RNUM, A.REVIEW_NO, A.USER_NAME, A.REVIEW_STAR, A.REVIEW_CONTENT,TO_CHAR(REVIEW_CREATE_DATE, 'YYYY-MM-DD') AS REVIEW_CREATE_DATE
+               FROM(
+                     SELECT REVIEW_NO
+                           ,USER_NAME
+                           ,REVIEW_STAR
+                           ,REVIEW_CONTENT
+                           ,REVIEW_CREATE_DATE
+                     FROM REVIEW
+                     JOIN MEMBER USING (USER_NO)
+                     WHERE PLACE_NO = ?
+                     ORDER BY REVIEW_CREATE_DATE DESC
+                  ) A
+         )
+      WHERE RNUM BETWEEN ? AND ?
    </entry>
    
     <entry key="reviewListCount">
@@ -188,119 +188,153 @@
    </entry>
    
    <entry key="mainCountSearch">
-		SELECT ROWNUM, A.*
-		FROM (SELECT PLACE.PLACE_NO,
-		         PLACE_TITLE,
-		         PLACE_CONTENT_POINT,
-		         PLACE_THEMA,
-		         PLACE_ADDRESS,
-		         PLACE_TIME,
-		        TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
-		        TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
-		         PLACE_COUNT,
-		         PLACE_IMAGE_PATH,
-		         PLACE_IMAGE_CHANGE
-		    FROM PLACE
-		    left JOIN (select max(PLACE_NO) as "PLACE_NO", 
-		                        max(PLACE_IMAGE_PATH) PLACE_IMAGE_PATH, 
-		                        max(PLACE_IMAGE_CHANGE) PLACE_IMAGE_CHANGE
-		                  from PLACE_IMAGE 
-		              GROUP by place_no) pi 
-		          on (pi.place_no = PLACE.place_no)
-		    WHERE PLACE_STATUS = 'Y'
-		      ORDER BY PLACE_COUNT DESC)A
-		WHERE 4 > ROWNUM
+      SELECT ROWNUM, A.*
+      FROM (SELECT PLACE.PLACE_NO,
+               PLACE_TITLE,
+               PLACE_CONTENT_POINT,
+               PLACE_THEMA,
+               PLACE_ADDRESS,
+               PLACE_TIME,
+              TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+              TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+               PLACE_COUNT,
+               PLACE_IMAGE_PATH,
+               PLACE_IMAGE_CHANGE
+          FROM PLACE
+          left JOIN (select max(PLACE_NO) as "PLACE_NO", 
+                              max(PLACE_IMAGE_PATH) PLACE_IMAGE_PATH, 
+                              max(PLACE_IMAGE_CHANGE) PLACE_IMAGE_CHANGE
+                        from PLACE_IMAGE 
+                    GROUP by place_no) pi 
+                on (pi.place_no = PLACE.place_no)
+          WHERE PLACE_STATUS = 'Y'
+            ORDER BY PLACE_COUNT DESC)A
+      WHERE 4 > ROWNUM
 
    </entry>
-   
-	<entry key="insertManagerPlace">
-      INSERT 
-      INTO PLACE
-         (
-	         PLACE_NO,
-	         PLACE_TITLE,
-	         PLACE_CONTENT_POINT,
-	         PLACE_CONTENT_DETAIL,
-			 PLACE_THEMA,
-			 PLACE_ADDRESS,
-			 PLACE_HOMEPAGE,
-			 PLACE_CONTACT,
-			 PLACE_TIME,
-			 PLACE_START,
-          	 PLACE_END
-	         )
-	  VALUES
-	         (
-	         SEQ_PLNO.NEXTVAL,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?
-         )
+
+   <entry key="insertManagerPlace">
+     INSERT INTO PLACE
+           (
+           PLACE_NO, 
+           PLACE_TITLE,
+           PLACE_CONTENT_POINT,
+           PLACE_CONTENT_DETAIL,
+           PLACE_THEMA,
+           PLACE_ADDRESS,
+           PLACE_HOMEPAGE,
+           PLACE_CONTACT,
+           PLACE_TIME,
+           PLACE_START,
+           PLACE_END
+           )
+           VALUES(
+           SEQ_PNO.NEXTVAL,
+           ?,
+           ?,
+           ?,
+           ?,
+           ?,
+           ?,
+           ?,
+           ?,
+           ?,
+           ?
+           )
    </entry>
-   <entry key="insertPlaceImage">
-      INSERT INTO PLACE_IMAGE
+   
+      <entry key="selectManagerPlace">
+         SELECT PLACE_NO
+         FROM PLACE
+         WHERE PLACE_TITLE = ?
+   </entry>
+   
+   <entry key = "insertManagerPlaceImage">
+         INSERT INTO PLACE_IMAGE
          (
-	        PLACE_IMAGE_NO,
-			PLACE_NO,
-			PLACE_IMAGE_ORIGIN,
-			PLACE_IMAGE_CHANGE,
-			PLACE_IMAGE_PATH,
-			PLACE_IMAGE_DATE
-	         )
-	  VALUES
-	     (
-	        SEQ_PLNO.NEXTVAL,
-	        ?,
-	        ?,
-	        ?,
-	        ?,
-	        ?   
+           PLACE_IMAGE_NO,
+         PLACE_NO,
+         PLACE_IMAGE_ORIGIN,
+         PLACE_IMAGE_CHANGE,
+         PLACE_IMAGE_PATH
+            )
+     VALUES
+        (
+           SEQ_PINO.NEXTVAL,
+           ?,
+           ?,
+           ?,
+           ?
          )
    </entry>
    
    <entry key="insertReview">
-   		INSERT INTO REVIEW(
-   						REVIEW_NO,
-						PLACE_NO,
-						USER_NO,
-						REVIEW_STAR,
-						REVIEW_CONTENT
-   						)
-   					VALUES (
-   						SEQ_RNO.NEXTVAL,
-   						?,
-   						?,
-   						?,
-   						?
-   						)
+         INSERT INTO REVIEW(
+                     REVIEW_NO,
+                  PLACE_NO,
+                  USER_NO,
+                  REVIEW_STAR,
+                  REVIEW_CONTENT
+                     )
+                  VALUES (
+                     SEQ_RNO.NEXTVAL,
+                     ?,
+                     ?,
+                     ?,
+                     ?
+                     )
    </entry>
    
    <entry key="deleteReview">
-   		DELETE FROM REVIEW
+         DELETE FROM REVIEW
         WHERE REVIEW_NO = ? AND USER_NO = ?
     </entry>
 
-	<entry key="selectPlaceBoardList">
-		SELECT PLACE_NO,
-				PLACE_TITLE,
-				PLACE_CONTENT_POINT,
-				PLACE_THEMA,
-				PLACE_ADDRESS,
-				PLACE_COUNT,
-				PLACE_IMAGE_PATH,
-				PLACE_IMAGE_CHANGE
-			FROM PLACE
-			LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
-			WHERE PLACE_STATUS = 'Y'
-			ORDER BY PLACE_NO DESC
-	</entry>
-
-
+   <entry key="selectPlaceBoardList">
+      SELECT PLACE_NO,
+            PLACE_TITLE,
+            PLACE_CONTENT_POINT,
+            PLACE_THEMA,
+            PLACE_ADDRESS,
+            PLACE_COUNT,
+            PLACE_IMAGE_PATH,
+            PLACE_IMAGE_CHANGE
+         FROM PLACE
+         LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+         WHERE PLACE_STATUS = 'Y'
+         ORDER BY PLACE_NO DESC
+   </entry>
+   
+   <entry key = "selectEventListCount">
+      SELECT COUNT(*) count
+         FROM PLACE
+         LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+         WHERE PLACE_STATUS = 'Y'
+            AND PLACE_THEMA = ?
+                AND PLACE_START = ?
+         ORDER BY PLACE_NO DESC
+   </entry>
+   
+   <entry key = "mainEventListSearch">
+            SELECT *
+            FROM(SELECT ROWNUM RNUM, A.*
+                FROM(SELECT PLACE_NO,
+                            PLACE_TITLE,
+                            PLACE_CONTENT_POINT,
+                            PLACE_THEMA,
+                            PLACE_ADDRESS,
+                            TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+                            TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+                            PLACE_IMAGE_PATH,
+                            PLACE_IMAGE_CHANGE
+                        FROM PLACE
+                        LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+                        WHERE PLACE_STATUS = 'Y'
+                            AND PLACE_THEMA = ?
+                            AND PLACE_START = ?
+                        ORDER BY PLACE_NO DESC) A
+            )
+             WHERE RNUM BETWEEN ? AND ?
+   </entry>
+           
 </properties>
