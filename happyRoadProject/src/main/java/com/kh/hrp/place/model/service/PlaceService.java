@@ -148,6 +148,7 @@ public class PlaceService {
 	
 	}
 	
+
 	public int insertManagerPlace(PlaceSelect ps, ArrayList<PlaceImage> list) {
 		Connection conn = getConnection();
 
@@ -167,7 +168,6 @@ public class PlaceService {
 	}
 
 	
-
 	public int insertReview(int placeNo, int userNo, int star, String reviewContent) {
 		Connection conn = getConnection();
 		int result = new PlaceDao().insertReview(conn, placeNo, userNo, star, reviewContent);
