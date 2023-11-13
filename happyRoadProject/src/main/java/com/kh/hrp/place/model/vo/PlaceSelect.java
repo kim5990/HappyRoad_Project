@@ -103,7 +103,32 @@ public PlaceSelect(int placeNo, String placeTitle, String placeContentPoint, Str
 	this.imageChange = imageChange;
    }
 
-   public int getPlaceNo() {
+   public PlaceSelect(int placeNo, String placeTitle, String placeStart, String placeEnd, String imagePath,
+		String imageChange) {
+	super();
+	this.placeNo = placeNo;
+	this.placeTitle = placeTitle;
+	this.placeStart = placeStart;
+	this.placeEnd = placeEnd;
+	this.imagePath = imagePath;
+	this.imageChange = imageChange;
+   }
+   
+   
+
+   public PlaceSelect(int placeNo, String placeTitle, String placeContentPoint, String placeContentDetail, int placeCount,
+		String imagePath, String imageChange) {
+	super();
+	this.placeNo = placeNo;
+	this.placeTitle = placeTitle;
+	this.placeContentPoint = placeContentPoint;
+	this.placeContentDetail = placeContentDetail;
+	this.placeCount = placeCount;
+	this.imagePath = imagePath;
+	this.imageChange = imageChange;
+}
+
+public int getPlaceNo() {
       return placeNo;
    }
 

@@ -150,7 +150,7 @@
                 </div>
               </div>
               <button  class="btn btn-outline-success" type="submit">가입하기</button>
-              <button  class="btn btn-danger" id="back-btn" type="button">뒤로가기</button>        
+              <button  class="btn btn-danger" id="back-btn" type="button" onclick = "history.back()">뒤로가기</button>        
             </form>
           </div>
       </div>
