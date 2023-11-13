@@ -285,47 +285,7 @@ public class BoardDao {
 		return list;
    }
    
-   public ArrayList<BoardComment> commentSelectList(Connection conn, PageInfo pi, int boardNo) { // 짭
-	   ArrayList<BoardComment> list = new ArrayList<>();
-	      
-       PreparedStatement pstmt = null;
-       ResultSet rset = null;
-      
-       String sql = prop.getProperty("commentSelectList");
-       
-       try {
-           pstmt = conn.prepareStatement(sql);
-           // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
-           int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-           int endRow = startRow + pi.getBoardLimit() - 1;
-           
-           pstmt.setInt(1, boardNo);
-           pstmt.setInt(2, startRow);
-           pstmt.setInt(3, endRow);
-           
-           rset = pstmt.executeQuery();
-           
-           while(rset.next()) {
-              list.add(new BoardComment(
-                    rset.getInt("COMMENT_NO"),
-                    rset.getString("BOARD_NO"),
-                    rset.getString("USER_NAME"),
-                    rset.getString("COMMENT_USER"),
-                    rset.getString("COMMENT_CONTENT"),
-                    rset.getString("COMMENT_NEWDATE")
-                    
-                    ));
-           }
-           
-        } catch (SQLException e) {
-           e.printStackTrace();
-        }finally {
-           close(rset);
-           close(pstmt);
-        }
-        
-        return list;
-   }
+
    
    public int insertComment(Connection conn, BoardComment c) {
 	   int result = 0;

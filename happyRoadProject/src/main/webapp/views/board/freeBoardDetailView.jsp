@@ -193,15 +193,23 @@
         }
       .cPage{
         /* border: 1px solid gray; */
-        font-size: 17px;
+        font-size: 30px;
         /* color:black; */
         color: rgb(3, 3, 3);
         border-radius: 30px;
+        margin-left: 20px;
         
 	    }
 	    .notcPage{
-	        font-size: 16px;
+	        font-size: 30px;
 	        color:rgb(146, 145, 145);
+	         margin-left: 20px;
+	         cursor:pointer;
+	    }
+	    .review-pagebar{
+	    display: flex;  
+	    justify-content: center;
+	    cursor:pointer;
 	    }
     </style>
 </head>
@@ -260,7 +268,7 @@
             <div class=commentdiv>
              <%if (loginUser != null) { %>
                 <input type="text" id="reply-content" class="comment" placeholder="댓글을 작성하세요">
-                <button type="button" class="btn btn-light" onclick="insertComment()">작성</button>
+                <button type="button" class="btn btn-light" onkeyup="insertComment()" onclick="insertComment()">작성</button>
               <%} else { %>
               	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
                 
@@ -278,13 +286,13 @@
                     </tr>
         
                 </table>
-                 <!-- 댓글 페이지 -->
-                 <div class="review-pagebar">
-             		
-       			 </div>
+                 
        			 
             </div>
-
+				 <!-- 댓글 페이지 -->
+                 <div class="review-pagebar" >
+             		
+       			 </div>
 
 			<script>
 				 window.onload = function(){
@@ -299,17 +307,16 @@
 	            		$.ajax({
 	            			url: "list.fv", //commentList.cm  list.fv 짬봉 되있음 
 	            			data : {
-	            				bno: ${b.boardNo},
+	            				bno: '${b.boardNo}',
 	            				cpage : cp
 	            			},
 	            			success: function(res){     
 	            				let list = res.list;
 	                            let pi = res.pi
-	                            console.log(res);
+	              
 	                            // 리뷰 그려주기
 	            				let str = "";
 	            				for (let BoardComment of list) {
-	            					//console.log(BoardComment)
 	            					
 	            					// 작성자랑 로그인 유저가 맞아야 보이는 리스트 
 	            					if (loginUser == BoardComment.userName){
@@ -340,7 +347,6 @@
 	            				document.querySelector("#commenttable tbody").innerHTML = str;
 	            				//console.log(res);
 	            				
-	            				// 안됨 그냥 pi를 못 가져 옴 이유를 못 찾겠음 
 	            				// 페이징바 그려주기
 	                        	let str2 = ""
 	                        	for (let i = pi.startPage; i <= pi.endPage; i++){
@@ -365,13 +371,13 @@
 	                        url : "insert.fv",
 	                        data : {
 	                            content: document.getElementById("reply-content").value,
-	                            bno: <%=b.getBoardNo()%>
+	                            bno: '${b.boardNo}'
 	                        },
 	                        type:"post",
 	                        success:function(res){
 	                            if (res > 0) {//댓글작성 성공
 	                            	document.getElementById("reply-content").value = "";
-	                            	selectBoardCommentList();
+	                            	selectBoardCommentList(1);
 	                            }
 	                        },
 	                        error:function(){

@@ -43,7 +43,7 @@ public class BoardReplyListConroller extends HttpServlet {
 		
 		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
 		
-		PageInfo pi = PageInfoController.pageController(listCount, currentPage, 5, 3);
+		PageInfo pi = PageInfoController.pageController(listCount, currentPage, 5, 5);
 		
 		ArrayList<BoardComment> list = new BoardService().selectBoardCommentList(pi, boardNo);
 		

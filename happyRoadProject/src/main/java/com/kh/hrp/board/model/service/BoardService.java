@@ -133,16 +133,7 @@ public class BoardService {
 		
 		return list;
    }
-   
-   public ArrayList<BoardComment> commentSelectList(PageInfo pi, int boardNo){ // 댓글 리스트 가져오기
-	      
-	      Connection conn = getConnection();
-	      ArrayList<BoardComment> list = new BoardDao().commentSelectList(conn, pi, boardNo);
-	      
-	      close(conn);
-	      
-	      return list;
-	   }
+  
    
    public int insertComment(BoardComment c) {
 	   
