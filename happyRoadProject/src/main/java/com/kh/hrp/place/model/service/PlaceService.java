@@ -2,6 +2,7 @@ package com.kh.hrp.place.model.service;
 
 import static com.kh.hrp.common.JDBCTemplate.*;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,10 +34,10 @@ public class PlaceService {
 	}
 	
 	
-	public ArrayList<Place> placeLikeSelectList(int userNo, PageInfo pi) {
+	public ArrayList<PlaceSelect> placeLikeSelectList(int userNo, PageInfo pi) {
 		
 		Connection conn = getConnection();
-		ArrayList<Place> placelist = new PlaceDao().placeLikeSelectList(conn, userNo, pi);
+		ArrayList<PlaceSelect> placelist = new PlaceDao().placeLikeSelectList(conn, userNo, pi);
 		
 		close(conn);
 		return placelist;
@@ -147,31 +148,6 @@ public class PlaceService {
 	
 	}
 	
-	public int insertManagerPlace(PlaceSelect ps, ArrayList<PlaceImage> list) {
-		Connection conn = getConnection();
-		System.out.println("서비스");
-		int result1 = new PlaceDao().insertManagerPlace(conn, ps);
-		System.out.println("서비스1후");
-		int result2 = new PlaceDao().insertPlaceImage(conn, list, ps);
-		
-		if (result1 > 0 && result2 > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		
-		return result1 * result2;
-
-		   Connection conn = getConnection();
-		   ArrayList<PlaceSelect> list = new PlaceDao().mainCountSearch(conn);
-		   close(conn);
-		   return list;
-	
-	}
-
-	
 	public int insertReview(int placeNo, int userNo, int star, String reviewContent) {
 		Connection conn = getConnection();
 		int result = new PlaceDao().insertReview(conn, placeNo, userNo, star, reviewContent);
@@ -205,6 +181,51 @@ public class PlaceService {
 		return pslist;
 
 	}
+	
+	public int selectEventListCount(Date sqlDate, String thema) {
+		Connection conn = getConnection();
+		int SearchCount = new PlaceDao().selectEventListCount(conn, sqlDate, thema);
+		
+		close(conn);
+		return SearchCount;
+	}
+
+	public ArrayList<PlaceSelect> mainEventListSearch(Date sqlDate, String thema, PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> pslist = new PlaceDao().mainEventListSearch(conn, thema, sqlDate, pi);
+		close(conn);
+		return pslist;
+	}
+
+	public int insertManagerPlace(Place p) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().insertManagerPlace(conn, p);
+		
+		int pno = 0;
+		if (result > 0) {
+			commit(conn);
+			pno = new PlaceDao().selectManagerPlace(conn, p.getPlaceTitle());
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return pno;
+	}
+
+	public int insertManagerPlaceImage(int pno, PlaceImage pI) {
+		Connection conn = getConnection();
+		int result = new PlaceDao().insertManagerPlaceImage(conn, pno,pI);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+
    
 }
    
