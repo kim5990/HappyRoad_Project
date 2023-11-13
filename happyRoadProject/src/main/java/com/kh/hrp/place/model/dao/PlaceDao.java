@@ -507,7 +507,6 @@ public class PlaceDao {
 	   
    }
 
-
    public int insertManagerPlace(Connection conn, PlaceSelect ps) {
 	   int result = 0;
 	   PreparedStatement pstmt = null;
@@ -536,6 +535,7 @@ public class PlaceDao {
 	  
 	  return result;
    }
+
 
 	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, String placeThema) {
 		ArrayList<PlaceSelect> pslist = new ArrayList<>();
