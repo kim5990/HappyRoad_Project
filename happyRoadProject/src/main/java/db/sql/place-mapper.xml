@@ -212,9 +212,10 @@
 		WHERE 4 > ROWNUM
 
    </entry>
-<<<<<<< HEAD
+   
 	<entry key="insertManagerPlace">
-      INSERT INTO PLACE
+      INSERT 
+      INTO PLACE
          (
 	         PLACE_NO,
 	         PLACE_TITLE,
@@ -226,7 +227,7 @@
 			 PLACE_CONTACT,
 			 PLACE_TIME,
 			 PLACE_START,
-			 PLACE_END
+          	 PLACE_END
 	         )
 	  VALUES
 	         (

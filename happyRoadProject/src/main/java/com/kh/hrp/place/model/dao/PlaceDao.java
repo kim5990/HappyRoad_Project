@@ -512,11 +512,7 @@ public class PlaceDao {
 	   
 	  try {
 	     pstmt = conn.prepareStatement(sql);
-	     SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd");
-	     Date placeStart = (Date)formatter.parse(ps.getPlaceStart());
-	     Date placeEnd = (Date)formatter.parse(ps.getPlaceEnd());
-	     System.out.println(placeStart);
-	     System.out.println(placeEnd);
+	    
 	     pstmt.setString(1, ps.getPlaceTitle());
 	     pstmt.setString(2, ps.getPlaceContentPoint());
 	     pstmt.setString(3, ps.getPlaceContentDetail());
@@ -525,15 +521,13 @@ public class PlaceDao {
 	     pstmt.setString(6, ps.getPlaceHomepage());
 	     pstmt.setString(7, ps.getPlaceContact());
 	     pstmt.setString(8, ps.getPlaceTime());
-	     pstmt.setDate(9, placeStart);
-	     pstmt.setDate(10, placeEnd);
+	     pstmt.setString(9, ps.getPlaceStart());
+	     pstmt.setString(10, ps.getPlaceEnd());
 
 	     result = pstmt.executeUpdate();
 	  } catch (SQLException e) {
 	     e.printStackTrace();
-	  } catch (ParseException e) {
-		e.printStackTrace();
-	} finally {
+	  } finally {
 	     close(pstmt);
 	  }
 	  

@@ -56,7 +56,7 @@ public class ManagerPlaceInsertController extends HttpServlet {
 			ps.setPlaceStart(multiRequest.getParameter("placeStart"));
 			ps.setPlaceEnd(multiRequest.getParameter("placeEnd"));
 			ps.setPlaceTime(multiRequest.getParameter("startTime") + "~" + multiRequest.getParameter("endTime"));
-			System.out.println(ps);
+
 			ArrayList<PlaceImage> list = new ArrayList<>();
 			for(int i = 1; i <= 4; i++) {
 				String key = "file" + i;
