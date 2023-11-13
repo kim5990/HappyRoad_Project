@@ -26,7 +26,7 @@ import com.oreilly.servlet.MultipartRequest;
  */
 @WebServlet("/placeInsert.ma")
 public class ManagerPlaceInsertController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,106 +36,106 @@ public class ManagerPlaceInsertController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		
-		if (ServletFileUpload.isMultipartContent(request)) {
-			System.out.println("나여깄음");
-			
-			//maxSize
-			int maxSize = 10*1024*1024;
-			//물리적 경로
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/images/");
-			//MultipartRequest 생성
-			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-			
-			Place p = new Place();
-			//Place 객체에 추가
-			p.setPlaceTitle(multiRequest.getParameter("placeTitle"));
-			p.setPlaceThema(multiRequest.getParameter("placeThema"));
-			p.setPlaceContentPoint(multiRequest.getParameter("placeContentPoint"));
-			p.setPlaceContentDetail(multiRequest.getParameter("placeContentDetail"));
-			p.setPlaceAddress(multiRequest.getParameter("placeAddress"));
-			p.setPlaceHomepage(multiRequest.getParameter("placeHomepage"));
-			p.setPlaceContact(multiRequest.getParameter("placeContact"));
-			
-			//받은 날짜가 스트링 -> sql날짜로 변환
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			
-			try {
-				//행사 시작일 ~ 종료일
-				Date startDate = dateFormat.parse(multiRequest.getParameter("placeStart"));
-				Date endDate = dateFormat.parse(multiRequest.getParameter("placeEnd"));
-				// SQL 날짜 형식으로 출력
-	            java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
-	            java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
-	            
-	            //바꾼 날짜 데이터 set에 저장
-	            
-				p.setPlaceStart(sqlStartDate);
-				p.setPlaceEnd(sqlEndDate);
-				
-				//행사시작시간부터 끝나는 시간
-				SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm");
-				
-				String startTime = multiRequest.getParameter("startTime");
-				String endTime = multiRequest.getParameter("endTime");
-				
-				Date userstartTime = inputFormat.parse(startTime);
-				Date useroutTime = inputFormat.parse(endTime);
-				
-			    SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
-			    outputFormat.applyPattern("HH:mm");
-			    String convertedStartTime = outputFormat.format(userstartTime);
-			    String convertedOutTime = outputFormat.format(useroutTime);
+   /**
+    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      request.setCharacterEncoding("UTF-8");
+      
+      if (ServletFileUpload.isMultipartContent(request)) {
+         System.out.println("나여깄음");
+         
+         //maxSize
+         int maxSize = 10*1024*1024;
+         //물리적 경로
+         String savePath = request.getSession().getServletContext().getRealPath("/resources/images/");
+         //MultipartRequest 생성
+         MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+         
+         Place p = new Place();
+         //Place 객체에 추가
+         p.setPlaceTitle(multiRequest.getParameter("placeTitle"));
+         p.setPlaceThema(multiRequest.getParameter("placeThema"));
+         p.setPlaceContentPoint(multiRequest.getParameter("placeContentPoint"));
+         p.setPlaceContentDetail(multiRequest.getParameter("placeContentDetail"));
+         p.setPlaceAddress(multiRequest.getParameter("placeAddress"));
+         p.setPlaceHomepage(multiRequest.getParameter("placeHomepage"));
+         p.setPlaceContact(multiRequest.getParameter("placeContact"));
+         
+         //받은 날짜가 스트링 -> sql날짜로 변환
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+         
+         try {
+            //행사 시작일 ~ 종료일
+            Date startDate = dateFormat.parse(multiRequest.getParameter("placeStart"));
+            Date endDate = dateFormat.parse(multiRequest.getParameter("placeEnd"));
+            // SQL 날짜 형식으로 출력
+               java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+               java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+               
+               //바꾼 날짜 데이터 set에 저장
+               
+            p.setPlaceStart(sqlStartDate);
+            p.setPlaceEnd(sqlEndDate);
+            
+            //행사시작시간부터 끝나는 시간
+            SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm");
+            
+            String startTime = multiRequest.getParameter("startTime");
+            String endTime = multiRequest.getParameter("endTime");
+            
+            Date userstartTime = inputFormat.parse(startTime);
+            Date useroutTime = inputFormat.parse(endTime);
+            
+             SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
+             outputFormat.applyPattern("HH:mm");
+             String convertedStartTime = outputFormat.format(userstartTime);
+             String convertedOutTime = outputFormat.format(useroutTime);
 
-			    p.setPlaceTime(convertedStartTime + "~" + convertedOutTime);
-				/////////////////////////////////////////////
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+             p.setPlaceTime(convertedStartTime + "~" + convertedOutTime);
+            /////////////////////////////////////////////
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 
-			PlaceImage pI = null;
-			int result = 0;
-			//PLACE INSERT 후 INSERT한 행의 PlaceNo를 SELECT
-			int pno = new PlaceService().insertManagerPlace(p);
-			
-			if(pno > 0) {
-				for(int i = 1; i < 4; i++) {
-					if(multiRequest.getOriginalFileName("file"+i) != null) {
-						pI = new PlaceImage();
-						pI.setPlaceImageOrigin(multiRequest.getOriginalFileName("file"+i));
-						pI.setPlaceImageChange(multiRequest.getFilesystemName("file"+i));
-						pI.setPlaceImagePath("resources/images/");
-						result = new PlaceService().insertManagerPlaceImage(pno, pI);
-						if(result < 1) {
-							if (pI != null) {
-								new File(savePath + pI.getPlaceImageChange()).delete();
-							}
-						}
-					}
-				}
+         PlaceImage pI = null;
+         int result = 0;
+         //PLACE INSERT 후 INSERT한 행의 PlaceNo를 SELECT
+         int pno = new PlaceService().insertManagerPlace(p);
+         
+         if(pno > 0) {
+            for(int i = 1; i < 4; i++) {
+               if(multiRequest.getOriginalFileName("file"+i) != null) {
+                  pI = new PlaceImage();
+                  pI.setPlaceImageOrigin(multiRequest.getOriginalFileName("file"+i));
+                  pI.setPlaceImageChange(multiRequest.getFilesystemName("file"+i));
+                  pI.setPlaceImagePath("resources/images/");
+                  result = new PlaceService().insertManagerPlaceImage(pno, pI);
+                  if(result < 1) {
+                     if (pI != null) {
+                        new File(savePath + pI.getPlaceImageChange()).delete();
+                     }
+                  }
+               }
+            }
 
-				request.getSession().setAttribute("alertMsg", "PLACE게시글 작성 성공");
-				response.sendRedirect("place.ma");
+            request.getSession().setAttribute("alertMsg", "PLACE게시글 작성 성공");
+            response.sendRedirect("place.ma");
 
-			}else {
-				request.setAttribute("errorMsg", "일반게시글 작성 실패");
-				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-			}
-		}
-	}
+         }else {
+            request.setAttribute("errorMsg", "일반게시글 작성 실패");
+            request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+         }
+      }
+   }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+   /**
+    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO Auto-generated method stub
+      doGet(request, response);
+   }
 
 }

@@ -80,6 +80,7 @@
             <li class="nav-item">
               <a class="nav-link active" style="background-color: rgb(81, 126, 165); color: white;" href="insertform.me" selected >회원가입</a>
             </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -87,16 +88,12 @@
       <div class = "insertFormdiv">
           <div class="insertFormHeader">
               <div class="insertTitle"><h2>회원가입</h2></div>
-              <form action="insert.me" method="post" class="row g-3 needs-validation" novalidate>
+              <form action="insert.me" method="post" id="enroll-form" class="row g-3 needs-validation" novalidate>
               <div class="form-floating">
-                <input type="text" class="form-control" id="idInput" name="userId" placeholder="ID를 입력하세요" required>
+                <input type="text" class="form-control" id="idInput" name="userId" placeholder="ID를 입력하세요(최소 5글자 이상)" required>
+                <button type="button" class="btn btn-light" onclick="idCheck()">중복확인</button>
                 <label for="idInput">아이디</label>
-                <div class="invalid-feedback">
-                  5글자 이상 10글자 이하로 작성해 주세요.
-                </div>
-                <div class="valid-feedback">
-                  사용가능한 아이디 입니다.
-                </div>
+                <div id="checkResult" style="font-size:0.7em; display:none;"></div>
               </div>
               <div class="form-floating">
                 <input type="password" class="form-control" id="passInput" name="userPwd"  placeholder="Password를 입력하세요." required>
@@ -109,7 +106,7 @@
                 </div>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="passCheckInput" placeholder="Password를 입력하세요." required>
+                <input type="password" class="form-control" id="passCheckInput" name="passCheckInput" placeholder="Password를 입력하세요." required>
                 <label for="passCheckInput">비밀번호확인</label>
                 <div class="invalid-feedback">
                   비밀번호가 다릅니다.
@@ -121,12 +118,6 @@
               <div class="form-floating">
                 <input type="text" class="form-control" id="nameInput" name="userName"  placeholder="이름을 입력하세요" required>
                 <label for="floatingName">이름</label>
-                <div class="invalid-feedback">
-                  5글자 이상 10글자 이하로 작성해 주세요.
-                </div>
-                <div class="valid-feedback">
-                  사용가능한 이름 입니다.
-                </div>
               </div>
               <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="이메일작성" name="firstEmail" aria-label="email" required>
@@ -149,8 +140,8 @@
                   참 잘했습니다.
                 </div>
               </div>
-              <button  class="btn btn-outline-success" type="submit">가입하기</button>
-              <button  class="btn btn-danger" id="back-btn" type="button" onclick = "history.back()">뒤로가기</button>        
+              <button  class="btn btn-outline-success" type="submit" onclick="return checkPwd();">가입하기</button>
+              <button  class="btn btn-danger" id="back-btn" type="button">뒤로가기</button>        
             </form>
           </div>
       </div>
@@ -178,56 +169,47 @@
   })()
     </script>
       <script>
-        let isIDINPUT=false;
-        let isPASSINPUT=false;
-        let isPASSCHECKINPUT=false;
-        let isNAMEINPUT=false;
-        let isGENDER=false;
-
-      document.querySelector("#nameInput").addEventListener("input", function(){
-      //1. 입력한 value 값을 읽어온다.
-      let inputId=this.value;
-      //2. 유효성(5글자이상 10글자 이하)을 검증한다.
-      isIDINPUT = inputId.length >= 5 && inputId.length <= 10;
-      //3. 유효하다면 input 요소에 is-valid 클래스 추가, 아니라면 is-invalid 클래스 추가
-      if(isIDINPUT){
-         this.classList.remove("is-invalid");
-         this.classList.add("is-valid");
-      }else{
-         this.classList.remove("is-valid");
-         this.classList.add("is-invalid");
-      }
-   });
-
-   document.querySelector("#idName").addEventListener("input", function(){
-      //1. 입력한 value 값을 읽어온다.
-      let inputName=this.value;
-      //2. 유효성(5글자이상 10글자 이하)을 검증한다.
-      isIDINPUT = inputName.length >= 5 && inputName.length <= 10;
-      //3. 유효하다면 input 요소에 is-valid 클래스 추가, 아니라면 is-invalid 클래스 추가
-      if(isNAMEINPUT){
-         this.classList.remove("is-invalid");
-         this.classList.add("is-valid");
-      }else{
-         this.classList.remove("is-valid");
-         this.classList.add("is-invalid");
-      }
-   });
-    </script>
-
-    <script>
-      document.querySelector("#passCheckInput").addEventListener("input", function(){
-          let passCheak = this.value;
-          let passInput = document.querySelector("#passInput").value
-          isPASSINPUT = passInput === passCheck;
-          if(isNAMEINPUT){
-          this.classList.remove("is-invalid");
-          this.classList.add("is-valid");
-        }else{
-          this.classList.remove("is-valid");
-          this.classList.add("is-invalid");
+   		function idCheck(){
+			const idInput = document.querySelector("#enroll-form input[name=userId]");
+				
+			$.ajax({
+		   		url: "idCheck.me",
+		   		data: {
+		   			"checkId" : idInput.value
+		   		},
+		   		success : function(result){
+		   			if(result === 'NNNNY'){
+		   				if (confirm("사용가능한 아이디입니다. 사용하시겠습니다?")) {
+								let submitBtn = document.querySelector("#enroll-form button[type=submit]");
+								submitBtn.removeAttribute("disabled");
+								
+								idInput.setAttribute("readonly", true);
+							} else {
+								idInput.focus();
+							}
+		   			} else {
+		   				alert("이미 존재하거나 탈퇴한 회원입니다.")
+							idInput.focus();
+		   			}
+		   		},
+		   		error: function(){
+		   			console.log("아이디 중복체크용 ajax통신 실패");
+		   		}
+		   	})
+		};
+		
+		function checkPwd(){
+            let pwdInput = document.querySelector("#enroll-form input[name=userPwd]");
+            let pwdCheckInput = document.querySelector("#enroll-form input[name=passCheckInput]");
+            if (pwdInput.value !== pwdCheckInput.value) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+                let submitBtn = document.querySelector("#enroll-form button[type=submit]");
+				submitBtn.removeAttribute("disabled");
+            }
         }
-      })
     </script>
+
+    
 </body>
 </html>

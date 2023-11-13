@@ -507,6 +507,38 @@ public class PlaceDao {
 	   
    }
 
+<<<<<<< HEAD
+   public int insertManagerPlace(Connection conn, PlaceSelect ps) {
+	   int result = 0;
+	   PreparedStatement pstmt = null;
+	   String sql = prop.getProperty("insertManagerPlace");
+	   
+	  try {
+	     pstmt = conn.prepareStatement(sql);
+	    
+	     pstmt.setString(1, ps.getPlaceTitle());
+	     pstmt.setString(2, ps.getPlaceContentPoint());
+	     pstmt.setString(3, ps.getPlaceContentDetail());
+	     pstmt.setString(4, ps.getPlaceThema());
+	     pstmt.setString(5, ps.getPlaceAddress());
+	     pstmt.setString(6, ps.getPlaceHomepage());
+	     pstmt.setString(7, ps.getPlaceContact());
+	     pstmt.setString(8, ps.getPlaceTime());
+	     pstmt.setString(9, ps.getPlaceStart());
+	     pstmt.setString(10, ps.getPlaceEnd());
+
+	     result = pstmt.executeUpdate();
+	  } catch (SQLException e) {
+	     e.printStackTrace();
+	  } finally {
+	     close(pstmt);
+	  }
+	  
+	  return result;
+   }
+
+=======
+>>>>>>> f0f44f27eeae36ba6ed4db5857fb47dccd00d196
 	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, String placeThema) {
 		ArrayList<PlaceSelect> pslist = new ArrayList<>();
 		PreparedStatement pstmt = null;
