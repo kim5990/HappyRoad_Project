@@ -1,4 +1,4 @@
-package com.kh.hrp.member.controller;
+package com.kh.hrp.place.controller;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class MemberLoginFormController
+ * Servlet implementation class testController
  */
-@WebServlet("/loginForm.me")
-public class MemberLoginFormController extends HttpServlet {
+@WebServlet("/test.pl")
+public class testController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLoginFormController() {
+    public testController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,14 +28,12 @@ public class MemberLoginFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("UTF-8");
-		
 		HttpSession session = request.getSession();
         String referer = request.getHeader("Referer");
-        session.setAttribute("referer", referer);
-		
-		request.getRequestDispatcher("views/member/loginMember.jsp").forward(request, response);
+        System.out.println(referer);
+        
+        response.sendRedirect(referer);
+	
 	}
 
 	/**

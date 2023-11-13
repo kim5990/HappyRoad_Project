@@ -37,6 +37,10 @@ public class MemberLoginController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		
+		HttpSession session = request.getSession();
+        String referer = (String) session.getAttribute("referer");
+        System.out.println(referer);
+		
 		Member loginUser = new MemberService().loginMember(userId, userPwd);
 
 		if(loginUser == null) {
@@ -44,9 +48,8 @@ public class MemberLoginController extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);
 		} else {
-			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(referer);
 		}
 	}
 

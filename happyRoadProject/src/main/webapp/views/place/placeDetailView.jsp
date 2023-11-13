@@ -119,8 +119,8 @@
         justify-content: space-between; 
         max-width: 680px;
     }
-    
-    
+
+
     
 
 
@@ -235,17 +235,21 @@
         <br>
 
 
-        <!-- 로그인 정보 없을 경우 -->
+        <!-- 로그인 정보 있을 경우 | 로그인 정보 없을 경우 -->
 
-        <!-- 리뷰 없을 경우 -->
-
-        <!-- 로그인 정보 + 리뷰 있을 경우 -->
-        
-        <table id="review-area" style="padding-right: 20px; width:650px;">              
-			<tbody>
-		
-			</tbody>
-        </table>
+		<c:choose>
+	  		<c:when test="${loginUser.userNo == null}">   
+		            <h4 class="blur-area2">로그인 후 열람 가능합니다</h4>
+		            <a href="loginForm.me" style="color:black">로그인하러 가기</a>
+		    </c:when>
+		    <c:otherwise>
+	            <table class="review-area" style="padding-right: 20px; width:650px; filter: none;">              
+	                <tbody>
+	                    
+	                </tbody>
+		    	</table>
+		    </c:otherwise>
+	    </c:choose>
         
         <br>
 
@@ -253,6 +257,7 @@
         </div>
         
         <br><br><br>
+        
      
     </div>
     
@@ -359,7 +364,7 @@
 						}
 
                     }
-                	document.querySelector("#review-area tbody").innerHTML = str1;
+                	document.querySelector(".review-area tbody").innerHTML = str1;
                 	
                 	
                 	// 페이징바 그려주기
@@ -462,6 +467,8 @@
                 },
                 success: function(res){
                 	if(res > 0){
+                		$("#starval").val(1);
+                		$("#contentval").val("");
 	                    selectReviewList(1);
                 	} else {
             			alert('등록실패');
