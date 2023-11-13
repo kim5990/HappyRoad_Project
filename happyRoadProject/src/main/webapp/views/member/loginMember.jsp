@@ -107,7 +107,7 @@
                       </div>
                       <br><br><br><br>
                       <button  class="btn btn-outline-success" type="submit">로그인</button>
-                      <button  class="btn btn-danger" id="back-btn" type="submit">뒤로가기</button>
+                      <button  class="btn btn-danger" id="back-btn" onclick = "history.back()" type="button">뒤로가기</button>
                     </form>
                   </div>
                 </div>

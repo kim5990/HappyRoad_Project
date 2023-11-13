@@ -39,21 +39,21 @@
    
    
    <entry key="placeLikeSelectList">
-      SELECT *        
-      FROM(SELECT ROWNUM RNUM, A.* 
-          FROM (SELECT PLACE_NO, 
-                   PLACE_TITLE, 
-                   PLACE_CONTENT_POINT, 
-                   PLACE_CONTENT_DETAIL, 
-                   PLACE_IMAGE_PATH
+     SELECT *
+    FROM(SELECT ROWNUM RNUM, A.*
+        FROM(SELECT PLACE_NO, PLACE_TITLE, PLACE_CONTENT_POINT, PLACE_CONTENT_DETAIL, PLACE_COUNT, PLACE_IMAGE_PATH, PLACE_IMAGE_CHANGE
+            FROM (SELECT LIKE_NO, PLACE_NO, USER_NO
                   FROM PLACE_LIKE
-                  JOIN PLACE USING(PLACE_NO)
-                  LEFT JOIN PLACE_IMAGE USING(PLACE_NO)
-                  WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
-                  ORDER BY LIKE_NO DESC 
-              ) A
-          )
-      WHERE RNUM BETWEEN ? AND ?
+                  WHERE USER_NO = 3) pl
+                JOIN PLACE p USING (PLACE_NO)
+                left JOIN (SELECT max(PLACE_NO) as "PLACE_NO", 
+                                    max(PLACE_IMAGE_PATH) PLACE_IMAGE_PATH, 
+                                    max(PLACE_IMAGE_CHANGE) PLACE_IMAGE_CHANGE
+                              FROM PLACE_IMAGE 
+                          GROUP by place_no) pi  USING (place_no)
+          WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
+          ORDER BY LIKE_NO DESC) A)
+    WHERE RNUM BETWEEN ? AND ?
    </entry>
    
    <entry key="placeLikeDeleteController">
@@ -214,53 +214,57 @@
    </entry>
 
 	<entry key="insertManagerPlace">
-      INSERT INTO PLACE
-         (
-	         PLACE_NO,
-	         PLACE_TITLE,
-	         PLACE_CONTENT_POINT,
-	         PLACE_CONTENT_DETAIL,
-			 PLACE_THEMA,
-			 PLACE_ADDRESS,
-			 PnLACE_HOMEPAGE,
-			 PLACE_CONTACT,
-			 PLACE_TIME,
-			 PLACE_START,
-			 PLACE_END
-	         )
-	  VALUES
-	         (
-	         SEQ_PLNO.NEXTVAL,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?,
-	         ?
-         )
+     INSERT INTO PLACE
+     		(
+     		PLACE_NO, 
+     		PLACE_TITLE,
+     		PLACE_CONTENT_POINT,
+     		PLACE_CONTENT_DETAIL,
+     		PLACE_THEMA,
+     		PLACE_ADDRESS,
+     		PLACE_HOMEPAGE,
+     		PLACE_CONTACT,
+     		PLACE_TIME,
+     		PLACE_START,
+     		PLACE_END
+     		)
+     		VALUES(
+     		SEQ_PNO.NEXTVAL,
+     		?,
+     		?,
+     		?,
+     		?,
+     		?,
+     		?,
+     		?,
+     		?,
+     		?,
+     		?
+     		)
    </entry>
-   <entry key="insertPlaceImage">
-      INSERT INTO PLACE_IMAGE
+   
+   	<entry key="selectManagerPlace">
+	   	SELECT PLACE_NO
+	   	FROM PLACE
+	   	WHERE PLACE_TITLE = ?
+   </entry>
+   
+   <entry key = "insertManagerPlaceImage">
+   		INSERT INTO PLACE_IMAGE
          (
 	        PLACE_IMAGE_NO,
 			PLACE_NO,
 			PLACE_IMAGE_ORIGIN,
 			PLACE_IMAGE_CHANGE,
-			PLACE_IMAGE_PATH,
-			PLACE_IMAGE_DATE
+			PLACE_IMAGE_PATH
 	         )
 	  VALUES
 	     (
-	        SEQ_PLNO.NEXTVAL,
+	        SEQ_PINO.NEXTVAL,
 	        ?,
 	        ?,
 	        ?,
-	        ?,
-	        ?   
+	        ?
          )
    </entry>
    
@@ -300,6 +304,37 @@
 			WHERE PLACE_STATUS = 'Y'
 			ORDER BY PLACE_NO DESC
 	</entry>
-
-
+	
+	<entry key = "selectEventListCount">
+		SELECT COUNT(*) count
+			FROM PLACE
+			LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+			WHERE PLACE_STATUS = 'Y'
+				AND PLACE_THEMA = ?
+                AND PLACE_START = ?
+			ORDER BY PLACE_NO DESC
+	</entry>
+	
+	<entry key = "mainEventListSearch">
+            SELECT *
+            FROM(SELECT ROWNUM RNUM, A.*
+                FROM(SELECT PLACE_NO,
+                            PLACE_TITLE,
+                            PLACE_CONTENT_POINT,
+                            PLACE_THEMA,
+                            PLACE_ADDRESS,
+                            TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+                            TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+                            PLACE_IMAGE_PATH,
+                            PLACE_IMAGE_CHANGE
+                        FROM PLACE
+                        LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+                        WHERE PLACE_STATUS = 'Y'
+                            AND PLACE_THEMA = ?
+                            AND PLACE_START = ?
+                        ORDER BY PLACE_NO DESC) A
+            )
+             WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	        
 </properties>
