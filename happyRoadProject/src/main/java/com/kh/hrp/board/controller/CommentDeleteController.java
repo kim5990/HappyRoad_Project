@@ -32,8 +32,6 @@ public class CommentDeleteController extends HttpServlet {
 		
 		int commentNo = Integer.parseInt(request.getParameter("commentNo"));
 		
-		System.out.println(commentNo);
-		
 		int result = new BoardService().deleteComment(commentNo);
 
 		response.getWriter().print(result);

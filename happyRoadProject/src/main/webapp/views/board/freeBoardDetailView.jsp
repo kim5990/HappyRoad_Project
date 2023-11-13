@@ -267,8 +267,8 @@
             </diV>
             <div class=commentdiv>
              <%if (loginUser != null) { %>
-                <input type="text" id="reply-content" class="comment" placeholder="댓글을 작성하세요">
-                <button type="button" class="btn btn-light" onkeyup="insertComment(this)" onclick="insertComment()">작성</button>
+                <input type="text" id="reply-content" onkeyup="insertComment(event)" class="comment" placeholder="댓글을 작성하세요">
+                <button type="button" class="btn btn-light"  onclick="butnComment()">작성</button>
               <%} else { %>
               	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
                 
@@ -327,7 +327,7 @@
 		       							+'<td class = "tdDate" colspan="2" align="center">' + BoardComment.commentNewdate + "</td>"
 		       							+"</tr>"
 		       							+"<tr>"
-		       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button> </td>'
+		       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()"></button> </td>'
 		       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="deleteComment(' + BoardComment.commentNo
 		       	                        +')">삭제</button>' + ' </td>'
 		       	                        + '</tr>';
@@ -365,9 +365,9 @@
 	            		})
 	            	}
 				 
-				 	function insertComment(){
-					
-				 	 $.ajax({
+				 	function butnComment(){ //작성버튼 눌렀을때 댓글 기능
+				 		
+						$.ajax({
 	                        url : "insert.fv",
 	                        data : {
 	                            content: document.getElementById("reply-content").value,
@@ -384,6 +384,31 @@
 								console.log("댓글 작성중 ajax통신 실패")
 	                        }
 	                    })
+	                    
+				 	}
+				 
+				 	function insertComment(ev){ //엔터키 눌렀을때 댓글 기능
+					
+						if(ev.keycode || ev.keyCode === 13){
+							$.ajax({
+		                        url : "insert.fv",
+		                        data : {
+		                            content: document.getElementById("reply-content").value,
+		                            bno: '${b.boardNo}'
+		                        },
+		                        type:"post",
+		                        success:function(res){
+		                            if (res > 0) {//댓글작성 성공
+		                            	document.getElementById("reply-content").value = "";
+		                            	selectBoardCommentList(1);
+		                            }
+		                        },
+		                        error:function(){
+									console.log("댓글 작성중 ajax통신 실패")
+		                        }
+		                    })
+						}
+						
 	                }
 				 	
 				 	function deleteComment(commentNo){

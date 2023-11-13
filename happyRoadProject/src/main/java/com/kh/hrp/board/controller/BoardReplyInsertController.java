@@ -48,8 +48,6 @@ public class BoardReplyInsertController extends HttpServlet {
 		
 		response.getWriter().print(result);
 		
-		//request.setAttribute("c", c);
-		//new Gson().toJson(c);
 		
 		
 	}
