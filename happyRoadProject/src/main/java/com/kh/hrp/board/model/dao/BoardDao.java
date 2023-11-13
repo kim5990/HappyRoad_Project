@@ -55,16 +55,19 @@ public class BoardDao {
       return listCount;
    }
    
-   public int selectCommentCount(Connection conn) { // 댓글 총 갯수
+   public int selectCommentCount(Connection conn, int boardNo) { // 댓글 총 갯수
 	   int CommentlistCount = 0;
 	      
        PreparedStatement pstmt = null;
        ResultSet rset = null;
       
-       String sql = prop.getProperty("selectListCount");
+       String sql = prop.getProperty("selectCommentCount");
        
        try {
            pstmt = conn.prepareStatement(sql);
+           
+           pstmt.setInt(1, boardNo);
+           
            rset = pstmt.executeQuery();
            
            if(rset.next()) {
@@ -122,46 +125,7 @@ public class BoardDao {
       return list;
    }
    
-   public ArrayList<BoardComment> commentSelectList(Connection conn, PageInfo pi) {
-	   ArrayList<BoardComment> list = new ArrayList<>();
-	      
-       PreparedStatement pstmt = null;
-       ResultSet rset = null;
-      
-       String sql = prop.getProperty("commentSelectList");
-       
-       try {
-           pstmt = conn.prepareStatement(sql);
-           // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
-           int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-           int endRow = startRow + pi.getBoardLimit() - 1;
-           
-           pstmt.setInt(1, startRow);
-           pstmt.setInt(2, endRow);
-           
-           rset = pstmt.executeQuery();
-           
-           while(rset.next()) {
-              list.add(new BoardComment(
-                    rset.getInt("COMMENT_NO"),
-                    rset.getString("BOARD_NO"),
-                    rset.getString("USER_NAME"),
-                    rset.getString("COMMENT_USER"),
-                    rset.getString("COMMENT_CONTENT"),
-                    rset.getString("COMMENT_NEWDATE")
-                    
-                    ));
-           }
-           
-        } catch (SQLException e) {
-           e.printStackTrace();
-        }finally {
-           close(rset);
-           close(pstmt);
-        }
-        
-        return list;
-   }
+  
    
    public int increaseCount(Connection conn, int boardNo) { // 게시물 조회수 올려주고 디테일 페이지 가져오기
       int result = 0;
@@ -281,7 +245,7 @@ public class BoardDao {
 		return result;
    }
    
-   public ArrayList<BoardComment> selectBoardCommentList(Connection conn, int boardNo){
+   public ArrayList<BoardComment> selectBoardCommentList(Connection conn, PageInfo pi, int boardNo){ // 찐 
 	   ArrayList<BoardComment> list = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
@@ -290,7 +254,14 @@ public class BoardDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardNo);
+			// pstmt.setInt(1, boardNo);
+			 // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
+	           int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	           int endRow = startRow + pi.getBoardLimit() - 1;
+	           
+	           pstmt.setInt(1, boardNo);
+	           pstmt.setInt(2, startRow);
+	           pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -312,6 +283,48 @@ public class BoardDao {
 		}
 		
 		return list;
+   }
+   
+   public ArrayList<BoardComment> commentSelectList(Connection conn, PageInfo pi, int boardNo) { // 짭
+	   ArrayList<BoardComment> list = new ArrayList<>();
+	      
+       PreparedStatement pstmt = null;
+       ResultSet rset = null;
+      
+       String sql = prop.getProperty("commentSelectList");
+       
+       try {
+           pstmt = conn.prepareStatement(sql);
+           // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
+           int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+           int endRow = startRow + pi.getBoardLimit() - 1;
+           
+           pstmt.setInt(1, boardNo);
+           pstmt.setInt(2, startRow);
+           pstmt.setInt(3, endRow);
+           
+           rset = pstmt.executeQuery();
+           
+           while(rset.next()) {
+              list.add(new BoardComment(
+                    rset.getInt("COMMENT_NO"),
+                    rset.getString("BOARD_NO"),
+                    rset.getString("USER_NAME"),
+                    rset.getString("COMMENT_USER"),
+                    rset.getString("COMMENT_CONTENT"),
+                    rset.getString("COMMENT_NEWDATE")
+                    
+                    ));
+           }
+           
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }finally {
+           close(rset);
+           close(pstmt);
+        }
+        
+        return list;
    }
    
    public int insertComment(Connection conn, BoardComment c) {

@@ -58,3 +58,9 @@
 .main-section3-button:hover {
     opacity: 0.8;
 }
+
+#nonr{
+   color: rgb(0, 0, 0);
+   font-size: 40px;
+   align-items: center;
+}

@@ -2,6 +2,7 @@ package com.kh.hrp.board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+
+import com.google.gson.Gson;
 import com.kh.hrp.board.model.service.BoardService;
 import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
@@ -42,17 +46,20 @@ public class BoardCommentListController extends HttpServlet {
 		int startPage; //페이징바의 시작수
 		int endPage; //페이징바의 끝수
 		
+		int boardNo = Integer.parseInt(request.getParameter("bno"));	
+		
 		// *listCount : 총 게시글 수 가져오기
-		listCount = new BoardService().selectCommentCount();
+		listCount = new BoardService().selectCommentCount(boardNo);
 		
 		// *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지)
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
+		
 	
 		// *pageLimit : 페이징바의 최대 갯수(단위)
 		pageLimit = 5;
 		
 		//* boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
-		boardLimit = 5;
+		boardLimit = 3;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
 	
@@ -66,13 +73,22 @@ public class BoardCommentListController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<BoardComment> list = new BoardService().commentSelectList(pi);
+		ArrayList<BoardComment> list = new BoardService().commentSelectList(pi, boardNo);
 		
-		request.setAttribute("list", list);
-		request.setAttribute("pi", pi);
+		HashMap<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pi", pi);
+		responseMap.put("list", list);
 		
-		// 댓글 리스트 보여주기
-		request.getRequestDispatcher("views/board/freeBoardDetailView.jsp").forward(request, response);
+		System.out.println(pi);
+		
+//		JSONArray jArr = new JSONArray();
+//		
+//		jArr.add(responseMap);
+//		jArr.add(pi);
+
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(responseMap, response.getWriter());
+		
 	}
 
 	/**
