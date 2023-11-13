@@ -238,7 +238,7 @@
                                 str += '<div class="event-calender-list">'
                                     + '<div class="event-calender-list">'
                                     + '<img class="event-calender-image-thumbnail"  onclick = "location.href = ' + "'eventdetailView.ed" + "?pno=" + r.placeNo 
-                                    		+ "'" + '" src="./'+ r.imagePath + r.imageChange + '">'
+                                          + "'" + '" src="./'+ r.imagePath + r.imageChange + '">'
                                     + '</div>'
                                     + ' <div class="eventName">' + r.placeTitle + '</div>'
                                     + '<div class="eventDay">' + r.placeStart + " ~ " + r.placeEnd + '</div>'
