@@ -268,7 +268,7 @@
             <div class=commentdiv>
              <%if (loginUser != null) { %>
                 <input type="text" id="reply-content" class="comment" placeholder="댓글을 작성하세요">
-                <button type="button" class="btn btn-light" onkeyup="insertComment()" onclick="insertComment()">작성</button>
+                <button type="button" class="btn btn-light" onkeyup="insertComment(this)" onclick="insertComment()">작성</button>
               <%} else { %>
               	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
                 
