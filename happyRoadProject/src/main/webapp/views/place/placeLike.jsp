@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@ page import="java.util.ArrayList, com.kh.hrp.common.PageInfo, com.kh.hrp.place.model.vo.Place" %>
+  <%@ page import="java.util.ArrayList, com.kh.hrp.common.PageInfo, com.kh.hrp.place.model.vo.PlaceSelect" %>
     <%
-    
     PageInfo pi=(PageInfo)request.getAttribute("pi");
-    ArrayList<Place> list = (ArrayList<Place>)request.getAttribute("list");
+    ArrayList<PlaceSelect> list = (ArrayList<PlaceSelect>)request.getAttribute("list");
         %>
         <!DOCTYPE html>
         <html>
@@ -108,6 +107,12 @@
                       <a class="nav-link" style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
                         href="myPage.me">마이페이지</a>
                     </li>
+                    <%if (loginUser.getUser_level().equals("0")){ %>
+                    	<li>
+	             	<a class="nav-link active" style="background-color: rgb(255, 255, 255); color: rgb(81, 126, 165);"
+	                 href="place.ma">장소 추가</a>
+	             </li>
+             <%} %>
                 </div>
               </div>
             </div>
@@ -126,10 +131,10 @@
                         </div>
                    <%}else{%>
                   <div class=favortiesList>
-                      <%for(Place p : list) {%>
+                      <%for(PlaceSelect p : list) {%>
                     <div class="favorites">
                             <div class="card" aria-hidden="true">
-                              <img src="<%=p.getImagePath() %>" class="card-img-top">
+                              <img src="<%=p.getImagePath() + p.getImageChange() %>" class="card-img-top">
                               <div class="card-body">
                                 <h5 class="card-title">
                                   <%=p.getPlaceTitle() %>
@@ -137,7 +142,7 @@
                                 <p class="card-text">
                                   <%=p.getPlaceContentPoint() %>
                                 </p>
-                                <a href="#" class="btn btn-success">보러가기</a>
+                                <a href="eventdetailView.ed?pno=<%=p.getPlaceNo()%>"  class="btn btn-success">보러가기</a>
                                 <a href="delete.fa?userNo=3&placeNo=<%=p.getPlaceNo() %>" class="btn btn-danger">삭제하기</a>
                               </div>
                             </div>
