@@ -307,7 +307,7 @@ public class PlaceDao {
 			while(rset.next()) {
 				list.add(new Review(
 							rset.getString("REVIEW_NO"),
-							rset.getString("USER_NAME"),
+							rset.getString("USER_ID"),
 							rset.getString("REVIEW_STAR"),
 							rset.getString("REVIEW_CONTENT"),
 							rset.getString("REVIEW_CREATE_DATE")

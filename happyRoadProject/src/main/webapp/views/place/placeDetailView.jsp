@@ -151,17 +151,17 @@
 		<div class="image-all">
 		    <c:choose>
 		        <c:when test="${listSize > 1}">
-		            <div id="prev">&lt;</div>
+		            <div id="prev" onclick="prevImage()">&lt;</div>
 		        </c:when>
 		    </c:choose>
 		    <div class="place-image">
 		        <c:forEach var="i" items="${list}" varStatus="loop">
-		            <img src="resources/images/${i.placeImageChange}" alt="사진${loop.index+1}">	
+		            <img  src="resources/images/${i.placeImageChange}" alt="사진${loop.index+1}">	
 		        </c:forEach>
 		    </div>
 		    <c:choose>
 		        <c:when test="${listSize > 1}">
-		            <div id="next">&gt;</div>
+		            <div id="next" onclick="nextImage()">&gt;</div>
 		        </c:when>
 		    </c:choose>
 		</div>
@@ -221,15 +221,9 @@
         
         <div class="review-title">
        		<h2>후기</h2>
-       		<c:choose>
-       			<c:when test="${ loginUser.userNo == null}">
-        			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
-
-        		</c:when>
-        		<c:otherwise>
-        			<div  data-bs-toggle="modal"data-bs-target="#myModal" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>       			
-        		</c:otherwise>
-        	</c:choose>
+       			<c:if test="${ loginUser.userNo != null}">
+        			<div  data-bs-toggle="modal"data-bs-target="#myModal" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+        		</c:if>
         </div>
         <hr width="700">
         <br>
@@ -347,7 +341,7 @@
                                 score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
                             }
 
-						if (loginUser == review.userNo){
+						if (loginUser.userId == review.userId){
 							str1 +='<tr><td rowspan="2" style="width:80px; text-align: center;">' + review.userNo
 	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 23px;">' + score
 	                    	+ '</td><td align="right" style="width:40px; text-align: center;"></td><td align="right" class="hover" onclick="deleteReview(' + review.reviewNo + ',' + pi.currentPage
@@ -509,9 +503,10 @@
 	
  	<script>
         const images = document.querySelectorAll(".place-image img");
-        const prev = document.getElementById("prev");
-        const next = document.getElementById("next");
         let currentIndex = 0;
+        
+     	// 최초 이미지 표시
+       	showImage(currentIndex);
 
         function showImage(index) {
             images.forEach((image, i) => {
@@ -533,11 +528,7 @@
             showImage(currentIndex);
         }
 
-        prev.addEventListener("click", prevImage);
-        next.addEventListener("click", nextImage);
-
-        // 최초 이미지 표시
-       	showImage(currentIndex);
+        
     </script>
     
     
