@@ -156,7 +156,7 @@
 		    </c:choose>
 		    <div class="place-image">
 		        <c:forEach var="i" items="${list}" varStatus="loop">
-		            <img  src="resources/images/${i.placeImageChange}" alt="사진${loop.index+1}">	
+		            <img  src="resources/images/${i.placeImageChange}">	
 		        </c:forEach>
 		    </div>
 		    <c:choose>
@@ -321,7 +321,7 @@
         // 리뷰 + 페이징바 그려주기
         function selectReviewList(cp){
         	var placeNo = "${p.placeNo}";
-        	var loginUser= "${loginUser.userName}"
+        	var loginUser= "${loginUser.userId}"
 
             $.ajax({
                 url : "rlist.pl",
@@ -341,7 +341,7 @@
                                 score += "<img width='15px' src='resources/logo/별점-1.png' alt='별'> ";
                             }
 
-						if (loginUser.userId == review.userId){
+						if (loginUser == review.userNo){
 							str1 +='<tr><td rowspan="2" style="width:80px; text-align: center;">' + review.userNo
 	                    	+ '</td><td id="star" align="left" style="height: 40px; padding-left: 23px;">' + score
 	                    	+ '</td><td align="right" style="width:40px; text-align: center;"></td><td align="right" class="hover" onclick="deleteReview(' + review.reviewNo + ',' + pi.currentPage
