@@ -195,7 +195,7 @@
 
                 <tr>
                     <th style="height:30px"><li>홈페이지</li></th>
-                    <td class="td1"><a>${p.placeHomepage}</a></td>
+                    <td class="td1"><a href="${p.placeHomepage}">${p.placeHomepage}</a></td>
                     <th><li>연락처</li></th>
                     <td>${p.placeContact}</td>
                 </tr>
@@ -314,7 +314,6 @@
 			</div>
 		</div>
 	</div>
-
 
 
 	<!-- --------------------------------- 스크립트 ------------------------------------------ -->

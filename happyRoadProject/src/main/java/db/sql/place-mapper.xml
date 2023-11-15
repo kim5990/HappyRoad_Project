@@ -120,6 +120,7 @@
               ,PLACE_IMAGE_PATH
       FROM PLACE_IMAGE
       WHERE PLACE_NO = ?
+      ORDER BY PLACE_IMAGE_LEVEL
    </entry>
    
    <entry key="selectReviewList">
