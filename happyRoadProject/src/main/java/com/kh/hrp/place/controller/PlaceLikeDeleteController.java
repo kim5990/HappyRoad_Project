@@ -30,11 +30,11 @@ public class PlaceLikeDeleteController extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       int userNo = Integer.parseInt(request.getParameter("userNo"));
       int placeNo = Integer.parseInt(request.getParameter("placeNo"));
-      
       int result = new PlaceService().placeLikeDeleteController(userNo, placeNo);
       if(result > 0 ) {
-         request.getRequestDispatcher("list.fa?cpage=1&userNo=3").forward(request, response);
+         request.getRequestDispatcher("list.fa?cpage=1&userNo="+userNo).forward(request, response);
       }else {
+    	  request.setAttribute("errorMsg", "즐겨찾기 삭제 실패");
          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
       }
       

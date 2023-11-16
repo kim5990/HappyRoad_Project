@@ -316,25 +316,26 @@
    </entry>
    
    <entry key = "mainEventListSearch">
-            SELECT *
-            FROM(SELECT ROWNUM RNUM, A.*
-                FROM(SELECT PLACE_NO,
-                            PLACE_TITLE,
-                            PLACE_CONTENT_POINT,
-                            PLACE_THEMA,
-                            PLACE_ADDRESS,
-                            TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
-                            TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
-                            PLACE_IMAGE_PATH,
-                            PLACE_IMAGE_CHANGE
-                        FROM PLACE
-                        LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
-                        WHERE PLACE_STATUS = 'Y'
-                            AND PLACE_THEMA = ?
-                            AND PLACE_START = ?
-                        ORDER BY PLACE_NO DESC) A
-            )
-             WHERE RNUM BETWEEN ? AND ?
+		SELECT *
+		FROM(SELECT ROWNUM RNUM, A.*
+		    FROM(SELECT PLACE_NO,
+		                PLACE_TITLE,
+		                PLACE_CONTENT_POINT,
+		                PLACE_THEMA,
+		                PLACE_ADDRESS,
+		                TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+		                TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+		                PLACE_IMAGE_PATH,
+		                PLACE_IMAGE_CHANGE
+		            FROM PLACE
+		            LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+		            WHERE PLACE_STATUS = 'Y'
+		                AND PLACE_THEMA = ?
+		                AND PLACE_START = ?
+		                AND PLACE_IMAGE_LEVEL = 1
+		            ORDER BY PLACE_NO DESC) A
+		)
+		 WHERE RNUM BETWEEN ? AND ?
    </entry>
            
    <entry key = "placeThemaListCount">

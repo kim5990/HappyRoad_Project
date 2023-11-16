@@ -47,7 +47,6 @@ public class PlaceService {
       
       Connection conn = getConnection();
       int result = new PlaceDao().placeLikeDeleteController(conn, userNo, placeNo);
-      
       if (result > 0) {
          commit(conn);
       } else {
