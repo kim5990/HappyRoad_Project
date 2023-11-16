@@ -777,4 +777,44 @@ public class PlaceDao {
 		return pslist;
 	}
 	
+	public ArrayList<PlaceSelect> selectSearchPlaceCountList(Connection conn, String placeTitle, PageInfo pi) {
+		
+		ArrayList<PlaceSelect> pslist = new ArrayList<>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectSearchPlaceCountList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, "%" + placeTitle + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				pslist.add(new PlaceSelect(rset.getInt("PLACE_NO"), 
+			                           rset.getString("PLACE_TITLE"), 
+			                           rset.getString("PLACE_ADDRESS"), 
+			                           rset.getString("PLACE_IMAGE_PATH"),
+									   rset.getString("PLACE_IMAGE_CHANGE")
+									));
+  				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pslist;
+
+	}
+	
 }
