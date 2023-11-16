@@ -12,6 +12,8 @@ import com.kh.hrp.board.model.dao.BoardDao;
 import com.kh.hrp.board.model.vo.Board;
 import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.place.model.dao.PlaceDao;
+import com.kh.hrp.place.model.vo.PlaceSelect;
 
 public class BoardService {
 
@@ -25,6 +27,8 @@ public class BoardService {
       return listCount;
    }
    
+  
+   
    public ArrayList<Board> selectList(PageInfo pi){ // 게시물 리스트 가져오기
       
       Connection conn = getConnection();
@@ -34,6 +38,17 @@ public class BoardService {
       
       return list;
    }
+   
+   public int selectCommentCount(int boardNo) { // 댓글 총 갯수 가져오기
+	   Connection conn = getConnection();
+	      
+       int CommentlistCount = new BoardDao().selectCommentCount(conn, boardNo);
+      
+       close(conn);
+       return CommentlistCount;
+   }
+   
+  
    
    public Board increaseCount(int boardNo) { // 카운터 올려주고 게시물 조회
       
@@ -112,14 +127,15 @@ public class BoardService {
       return result;
    }
    
-   public ArrayList<BoardComment> selectBoardCommentList(int boardNo) {
+   public ArrayList<BoardComment> selectBoardCommentList(PageInfo pi, int boardNo) { // 찐 댓글 리스트
 	   Connection conn = getConnection();
 		
-		ArrayList<BoardComment> list = new BoardDao().selectBoardCommentList(conn, boardNo);
+		ArrayList<BoardComment> list = new BoardDao().selectBoardCommentList(conn, pi, boardNo);
 		close(conn);
 		
 		return list;
    }
+  
    
    public int insertComment(BoardComment c) {
 	   
@@ -135,5 +151,38 @@ public class BoardService {
 		close(conn);
 		
 		return result;
+   }
+   
+   public int deleteComment(int cno) {
+	   
+	   Connection conn = getConnection();
+		int result = new BoardDao().deleteComment(conn, cno);
+		
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+   }
+   
+   public int SearchBoardCount(String searchcontent) {
+	   Connection conn = getConnection();
+		int bsearchCount = new BoardDao().SearchBoardCount(conn, searchcontent);
+
+		close(conn);
+		return bsearchCount;
+   }
+   
+   public ArrayList<Board> SearchBoardList(PageInfo pi, String searchcontent){
+	   
+	   Connection conn = getConnection();
+		ArrayList<Board> list = new BoardDao().SearchBoardList(conn, searchcontent, pi);
+		
+		close(conn);
+		return list;
    }
 }

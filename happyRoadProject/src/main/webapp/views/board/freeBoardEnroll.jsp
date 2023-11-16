@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="boardWriter" class="text-area" value = "<%= loginUser.getUserName() %>" disable >>
+                        <input type="text" name="boardWriter" class="text-area" value = "<%= loginUser.getUserName() %>" disabled >
                     </td>
                 </tr>
                 <tr align="left">
@@ -53,21 +53,7 @@
                 <tr>
                     <td><textarea name="boardContend" id="" placeholder="내용을 입력하세요"></textarea></td>
                 </tr>
-               <!-- <tr align="left">
-                    <th>카테고리</th>
-                </tr>
-                <tr>
-                    <td>
-                          <select>
-                            <option>후기</option>
-                            <option>질문</option>
-                            <option>일상</option>
-                            <option>의견</option>
-                            <option>기타</option>
-                        </select>
-                        
-                    </td>
-                </tr>-->
+               
                 <tr>
                     <td align="center">
                         <input type="submit" value="저장"></input>

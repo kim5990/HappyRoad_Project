@@ -104,6 +104,7 @@
 				
 				btnOrderPlaceNo.classList.add("active");
 				
+				
 				btnOrderPlaceNo.addEventListener("click", function() {
 					  btnOrderPlaceNo.classList.add("active");
 					  btnOrderPlaceCount.classList.remove("active");
@@ -253,8 +254,8 @@
 
 	      </script>
 
-	    <%@ include file = "./footer.jsp"%>
-    
+	    
+    <%@ include file = "./footer.jsp"%>
 	    
 </body>
 </html>

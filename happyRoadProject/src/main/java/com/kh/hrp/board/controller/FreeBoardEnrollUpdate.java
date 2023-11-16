@@ -37,9 +37,6 @@ public class FreeBoardEnrollUpdate extends HttpServlet {
 		String boardTitle = request.getParameter("boardTitle");
 		String boardContend = request.getParameter("boardContend");
 		
-		System.out.println(boardNo);
-		System.out.println(boardTitle);
-		System.out.println(boardContend);
 		
 		Board b = new Board();
 		b.setBoardNo(boardNo);

@@ -1,18 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member, com.kh.hrp.board.model.vo.BoardComment"%>
+    pageEncoding="UTF-8"%>
+
+<%@ page import="com.kh.hrp.board.model.vo.Board, com.kh.hrp.member.model.vo.Member, com.kh.hrp.board.model.vo.BoardComment" %>
 <%
    //글번호, 작성자, 카테고리명, 제목, 내용, 작성일
    Board b = (Board)request.getAttribute("b");
    BoardComment c = (BoardComment)request.getAttribute("c");
+  
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<!-- jQuery 3.7.1 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	
   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -186,7 +191,26 @@
             border: none;
             background-color: rgb(224, 224, 224);
         }
-      
+      .cPage{
+        /* border: 1px solid gray; */
+        font-size: 30px;
+        /* color:black; */
+        color: rgb(3, 3, 3);
+        border-radius: 30px;
+        margin-left: 20px;
+        
+	    }
+	    .notcPage{
+	        font-size: 30px;
+	        color:rgb(146, 145, 145);
+	         margin-left: 20px;
+	         cursor:pointer;
+	    }
+	    .review-pagebar{
+	    display: flex;  
+	    justify-content: center;
+	    cursor:pointer;
+	    }
     </style>
 </head>
 
@@ -236,78 +260,104 @@
         <div class="boardbottomcomment">
             <div class=commentTitle>
                 <div>댓글</div>
-                <div></div>
+                <div id="tak"></div>
             </div>
             <diV class="freeBoardTitleLine">
                 <div class="titleLine"></div>
             </diV>
             <div class=commentdiv>
              <%if (loginUser != null) { %>
-                <input type="text" id="reply-content" class="comment" placeholder="댓글을 작성하세요">
-                <button type="button" class="btn btn-light" onclick="insertComment()">작성</button>
+                <input type="text" id="reply-content" onkeyup="insertComment(event)" class="comment" placeholder="댓글을 작성하세요">
+                <button type="button" class="btn btn-light"  onclick="butnComment()">작성</button>
               <%} else { %>
               	<input type="text" class="comment" placeholder="로그인 후 댓글을 작성하세요">
-                <button type="button" class="btn btn-light" >작성</button>
+                
               <%} %>
             </div>
 
 			
             <div class="commenttable" id="commenttable">
                 <table>
-               
+               		<!-- 댓글 -->
                     <tr>
                     	<td class="tdName" rowspan="2" align="center"> </td>
-                    	<td class="tdtext" rowspan="2"><input type="text" value="aa" class="tdtext" disabled readonly> </td>
+                    	<td class="tdtext" rowspan="2"><input type="text" value="" class="tdtext" disabled readonly> </td>
                         <td class="tdDate" colspan="2" align="center"> </td>
                     </tr>
-                       
-                   <!--   
-                   <div align="center">
-			               <button id="num-btn"><a href="" id="text">&lt;</a></button>
-	
-			               <button id="num-btn"><a href="" id="text">1</a></button>
-			           
-			               <button id="num-btn"><a href="" id="text">&gt;</a></button>  
-			        </div>
-                   -->
-                   
+        
                 </table>
+                 
+       			 
             </div>
-
+				 <!-- 댓글 페이지 -->
+                 <div class="review-pagebar" >
+             		
+       			 </div>
 
 			<script>
 				 window.onload = function(){
 					//댓글 가져와서 그려주기
-					selectBoardCommentList();
+					selectBoardCommentList(1);
 					//setInterval(selectReplyList,2000)
 					}
 				 
-				 function selectBoardCommentList(){
+				 function selectBoardCommentList(cp){
+					 	var loginUser= "${loginUser.userName}"
+					 		
 	            		$.ajax({
-	            			url: "list.fv",
+	            			url: "list.fv", //commentList.cm  list.fv 짬봉 되있음 
 	            			data : {
-	            				bno: <%=b.getBoardNo()%>
+	            				bno: '${b.boardNo}',
+	            				cpage : cp
 	            			},
-	            			success: function(res){          
+	            			success: function(res){     
+	            				let list = res.list;
+	                            let pi = res.pi
+	              
+	                            // 리뷰 그려주기
 	            				let str = "";
-	            				for (let BoardComment of res) {
-	            					console.log(BoardComment)
-	            					str += "<tr>"
-	       							+'<td class="tdName" rowspan="2" align="center">' + BoardComment.userName + "</td>"
-	       							+'<td class="tdtext" rowspan="2">' + BoardComment.commentContent + "</td>"
-	       							+'<td class = "tdDate" colspan="2" align="center">' + BoardComment.commentNewdate + "</td>"
-	       							+"</tr>"
-	       							+"<tr>"
-	       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()">수정</button> </td>'
-	       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="location.href=' + "''"
-	       	                        +'">삭제</button>' + ' </td>'
-	       	                        + '</tr>';
+	            				for (let BoardComment of list) {
 	            					
+	            					// 작성자랑 로그인 유저가 맞아야 보이는 리스트 
+	            					if (loginUser == BoardComment.userName){
+	            						console.log(loginUser)
+		            					str += "<tr>"
+		       							+'<td class="tdName" rowspan="2" align="center">' + BoardComment.userName + "</td>"
+		       							+'<td class="tdtext" rowspan="2">' + BoardComment.commentContent + "</td>"
+		       							+'<td class = "tdDate" colspan="2" align="center">' + BoardComment.commentNewdate + "</td>"
+		       							+"</tr>"
+		       							+"<tr>"
+		       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()"></button> </td>'
+		       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button" onclick="deleteComment(' + BoardComment.commentNo
+		       	                        +')">삭제</button>' + ' </td>'
+		       	                        + '</tr>';
+	            					} else { // 아니면 댓글만 보이게
+	            						str += "<tr>"
+	            							+'<td class="tdName" rowspan="2" align="center">' + BoardComment.userName + "</td>"
+			       							+'<td class="tdtext" rowspan="2">' + BoardComment.commentContent + "</td>"
+			       							+'<td class = "tdDate" colspan="2" align="center">' + BoardComment.commentNewdate + "</td>"
+			       							+"</tr>"
+			       							+"<tr>"
+			       	                        +'<td class="tdDate"><button class="tdbtn" type="button" onclick="createBTN()"></button> </td>'
+			       	                        +'<td class="tdDate">' + '<button class="tdbtn" type="button"></button>' + ' </td>'
+			       	                        + '</tr>';
+	            					}
 	            				}
 	            				
 	            				document.querySelector("#commenttable tbody").innerHTML = str;
+	            				document.querySelector("#tak").innerHTML = pi.listCount;
+	            				//console.log(res);
 	            				
-	            				
+	            				// 페이징바 그려주기
+	                        	let str2 = ""
+	                        	for (let i = pi.startPage; i <= pi.endPage; i++){
+	                                if (i === pi.currentPage){
+	                                	 str2 += "<a class='cPage' onclick='selectBoardCommentList("+i+")'>" + i + "</a>"
+	                                } else {
+	                        		    str2 += "<a class='notcPage' onclick='selectBoardCommentList("+i+")'>" + i + "</a>"
+	                              }
+	                        	}
+	                        	document.querySelector(".review-pagebar").innerHTML = str2;
 	            			},
 	            			error: function(){
 	            				console.log("댓글목록 조회중 ajax통신실패");
@@ -315,37 +365,64 @@
 	            		})
 	            	}
 				 
-				 	function insertComment(){
-					
-				 	 $.ajax({
+				 	function butnComment(){ //작성버튼 눌렀을때 댓글 기능
+				 		
+						$.ajax({
 	                        url : "insert.fv",
 	                        data : {
 	                            content: document.getElementById("reply-content").value,
-	                            bno: <%=b.getBoardNo()%>
+	                            bno: '${b.boardNo}'
 	                        },
 	                        type:"post",
 	                        success:function(res){
 	                            if (res > 0) {//댓글작성 성공
 	                            	document.getElementById("reply-content").value = "";
-	                            	selectBoardCommentList();
+	                            	selectBoardCommentList(1);
 	                            }
 	                        },
 	                        error:function(){
 								console.log("댓글 작성중 ajax통신 실패")
 	                        }
 	                    })
+	                    
+				 	}
+				 
+				 	function insertComment(ev){ //엔터키 눌렀을때 댓글 기능
+					
+						if(ev.keycode || ev.keyCode === 13){
+							$.ajax({
+		                        url : "insert.fv",
+		                        data : {
+		                            content: document.getElementById("reply-content").value,
+		                            bno: '${b.boardNo}'
+		                        },
+		                        type:"post",
+		                        success:function(res){
+		                            if (res > 0) {//댓글작성 성공
+		                            	document.getElementById("reply-content").value = "";
+		                            	selectBoardCommentList(1);
+		                            }
+		                        },
+		                        error:function(){
+									console.log("댓글 작성중 ajax통신 실패")
+		                        }
+		                    })
+						}
+						
 	                }
 				 	
-				 	function deleteComment(){
-						
+				 	function deleteComment(commentNo){
+				 		console.log(commentNo)
 					 	 $.ajax({
 		                        url : "commentdelete.fv",
 		                        data : {
-		                            cno: BoardComment.commentNo
+		                            commentNo: commentNo
 		                        },
 		                        success:function(res){
-		                            
-		                            
+		                        	if (res > 0) {//댓글삭제 성공
+		                            	selectBoardCommentList(1);
+		                            }
+		        					
 		                        },
 		                        error:function(){
 									console.log("댓글 작성중 ajax통신 실패")

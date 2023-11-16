@@ -41,15 +41,15 @@
    
    <entry key="placeLikeSelectList">
     SELECT *    
-	FROM(SELECT ROWNUM RNUM, A.* 
-	    FROM(SELECT PLACE_NO, PLACE_TITLE, PLACE_CONTENT_POINT, PLACE_CONTENT_DETAIL, PLACE_COUNT, PLACE_IMAGE_PATH, PLACE_IMAGE_CHANGE
-	        FROM PLACE_LIKE
-	        JOIN PLACE USING (PLACE_NO)
-	        JOIN PLACE_IMAGE USING (PLACE_NO)
-	         WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
-	         AND PLACE_IMAGE_LEVEL = 1
-	          ORDER BY LIKE_NO DESC) A)
-	 WHERE RNUM BETWEEN ? AND ?
+   FROM(SELECT ROWNUM RNUM, A.* 
+       FROM(SELECT PLACE_NO, PLACE_TITLE, PLACE_CONTENT_POINT, PLACE_CONTENT_DETAIL, PLACE_COUNT, PLACE_IMAGE_PATH, PLACE_IMAGE_CHANGE
+           FROM PLACE_LIKE
+           JOIN PLACE USING (PLACE_NO)
+           JOIN PLACE_IMAGE USING (PLACE_NO)
+            WHERE USER_NO = ? AND PLACE_STATUS = 'Y'
+            AND PLACE_IMAGE_LEVEL = 1
+             ORDER BY LIKE_NO DESC) A)
+    WHERE RNUM BETWEEN ? AND ?
    </entry>
    
    <entry key="placeLikeDeleteController">
@@ -186,23 +186,23 @@
    
    <entry key="mainCountSearch">
     SELECT ROWNUM, A.*
-	FROM(SELECT PLACE_NO,
-	            PLACE_TITLE,
-	                   PLACE_CONTENT_POINT,
-	                   PLACE_THEMA,
-	                   PLACE_ADDRESS,
-	                   PLACE_TIME,
-	                  TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
-	                  TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
-	                   PLACE_COUNT,
-	                   PLACE_IMAGE_PATH,
-	                   PLACE_IMAGE_CHANGE
-	    FROM PLACE
-	    JOIN PLACE_IMAGE USING (PLACE_NO)
-	    WHERE PLACE_STATUS = 'Y'
-	    AND PLACE_IMAGE_LEVEL = 1
-	    ORDER BY PLACE_COUNT DESC) A
-	WHERE ROWNUM BETWEEN 1 AND 3
+   FROM(SELECT PLACE_NO,
+               PLACE_TITLE,
+                      PLACE_CONTENT_POINT,
+                      PLACE_THEMA,
+                      PLACE_ADDRESS,
+                      PLACE_TIME,
+                     TO_CHAR(PLACE_START, 'YYYY.MM.DD') as "PLACE_START",
+                     TO_CHAR(PLACE_END, 'YYYY.MM.DD') as "PLACE_END",
+                      PLACE_COUNT,
+                      PLACE_IMAGE_PATH,
+                      PLACE_IMAGE_CHANGE
+       FROM PLACE
+       JOIN PLACE_IMAGE USING (PLACE_NO)
+       WHERE PLACE_STATUS = 'Y'
+       AND PLACE_IMAGE_LEVEL = 1
+       ORDER BY PLACE_COUNT DESC) A
+   WHERE ROWNUM BETWEEN 1 AND 3
 
    </entry>
 
@@ -287,22 +287,22 @@
 
    <entry key="selectPlaceBoardList">
       SELECT *
-	  FROM(SELECT ROWNUM RNUM, A.*
-	    FROM(SELECT PLACE_NO,
-	            PLACE_TITLE,
-	            PLACE_CONTENT_POINT,
-	            PLACE_THEMA,
-	            PLACE_ADDRESS,
-	            PLACE_COUNT,
-	            PLACE_IMAGE_PATH,
-	            PLACE_IMAGE_CHANGE
-	         FROM PLACE
-	         LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
-	         WHERE PLACE_STATUS = 'Y'
-	         	AND PLACE_IMAGE_LEVEL = 1
-	         	AND PLACE_THEMA = ?
-	         ORDER BY PLACE_NO DESC) A )
-		WHERE RNUM BETWEEN ? AND ?
+     FROM(SELECT ROWNUM RNUM, A.*
+       FROM(SELECT PLACE_NO,
+               PLACE_TITLE,
+               PLACE_CONTENT_POINT,
+               PLACE_THEMA,
+               PLACE_ADDRESS,
+               PLACE_COUNT,
+               PLACE_IMAGE_PATH,
+               PLACE_IMAGE_CHANGE
+            FROM PLACE
+            LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+            WHERE PLACE_STATUS = 'Y'
+               AND PLACE_IMAGE_LEVEL = 1
+               AND PLACE_THEMA = ?
+            ORDER BY PLACE_NO DESC) A )
+      WHERE RNUM BETWEEN ? AND ?
    </entry>
    
    <entry key = "selectEventListCount">
@@ -338,9 +338,9 @@
    </entry>
            
    <entry key = "placeThemaListCount">
-	   	SELECT COUNT(*) count
-	   	FROM PLACE
-	   	WHERE PLACE_THEMA = ?
+         SELECT COUNT(*) count
+         FROM PLACE
+         WHERE PLACE_THEMA = ?
    </entry>
    
    <entry key = "selectFaPlaceBoardList">
