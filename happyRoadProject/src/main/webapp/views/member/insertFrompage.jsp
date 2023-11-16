@@ -141,7 +141,7 @@
                 </div>
               </div>
               <button  class="btn btn-outline-success" type="submit" onclick="return checkPwd();">가입하기</button>
-              <button  class="btn btn-danger" id="back-btn" type="button">뒤로가기</button>        
+              <button  class="btn btn-danger" id="back-btn" onclick = "history.back()" type="button">뒤로가기</button>        
             </form>
           </div>
       </div>
