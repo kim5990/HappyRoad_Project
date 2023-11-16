@@ -40,7 +40,7 @@
     justify-content: space-between;
 }
 
- .calendar2 {
+.calendar2 {
     display: flex;
     width: 800px;
     height: 70px;
@@ -111,8 +111,8 @@
 }
 
 .event-calender-image-thumbnail {
-    width: 100%;
-    height: 100%;
+    width: 170px;
+    height: 113px;
     object-fit: cover;
 
 }
