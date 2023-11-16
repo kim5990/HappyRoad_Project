@@ -53,7 +53,7 @@
                 <ul class="ulclass">
                 	<% if (listNull == 0) { %>
                 		<li>검색 결과가 없습니다.</li>
-                		<div style="height: 70px"></div>
+                		<div style="height: 140px"></div>
                 	<% } else { %>
                 	<!-- 일치하지 않는 검색어에도 검색결과가 없습니다 띄우기 -->
                 	<% for (PlaceSelect p : plist) { %>
@@ -76,7 +76,7 @@
 
         <!-- 페이지네이션 -->
         <ul class="pagination justify-content-center" id="search-pagination">
-        	<% if (currentPage != 1) { %>
+        	<%-- <% if (currentPage != 1) { %>
         		<li class="page-item"><a class="page-link" href="<%=contextPath %>/search.sc?cpage=<%=currentPage - 1 %>&title=<%=placeTitle %>">&lt;</a></li>
         	<% } %>
         	<% for(int p = startPage; p <= endPage; p++) { %>
@@ -88,7 +88,7 @@
        		<% } %>
             <% if(listNull != 0 && currentPage != maxPage) { %>
             	<li class="page-item"><a class="page-link" href="<%=contextPath %>/search.sc?cpage=<%=currentPage + 1 %>&title=<%=placeTitle %>">&gt;</a></li>
-            <% } %>
+            <% } %> --%>
         </ul>
         
         
@@ -114,11 +114,46 @@
 					  btnOrderPlaceCount.classList.add("active");
 					  btnOrderPlaceNo.classList.remove("active");
 					}); 
+				
+				/* 페이지네이션 그려주기 */
+				$.ajax({
+					url: "search.sc",
+					data: {
+						title : "<%=placeTitle%>",
+						cpage : 1
+					},
+					success: function(result){
+					let pi = result.pi;
+					let pslist = result.pslist;
+						
+					let str2 = ""
+						
+						if (pi.currentPage != 1){
+							str2 += '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&lt;</a></li>'
+						}
+						for (let i = pi.startPage; i <= pi.endPage; i++){
+							if (i == pi.currentPage){
+								str2 += '<li class="page-item"><a class="page-link" href="" disabled>' + i + '</a></li>'
+							} else {
+								str2 +=  '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + i + '"&title="' + pslist.placeTitle + '"">' + i + '</a></li>'
+							}
+							if (listNull != 0 && pi.currentPage != pi.maxPage) {
+								str2 += '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&gt;</a></li>'
+							}
+							
+						}
+						document.querySelector("#search-pagination").innerHTML = str2;
+					},
+					error: function(){
+						console.log("ajax 통신 실패");
+					}
+				})
 			}
 
 			/* 최신순 버튼 클릭시 다시 최신순으로 보여주기 */
 			function placeNoList(){
 				console.log("최신순");
+				
 				$.ajax({
 					url: "placeNoList.sc",
 					data: {
@@ -160,20 +195,20 @@
 						
 						/* 페이지네이션 그리기 */
 						let str2 = ""
-						str2 += '<ul class="pagination justify-content-center" id="search-pagination">'
+						
 						if (pi.currentPage != 1){
-							str2 += '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&lt;</a></li>'
+							str2 += '<li class="page-item"><a class="page-link" href="placeNoList.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&lt;</a></li>'
 						}
 						for (let i = pi.startPage; i <= pi.endPage; i++){
 							if (i == pi.currentPage){
 								str2 += '<li class="page-item"><a class="page-link" href="" disabled>' + i + '</a></li>'
 							} else {
-								str2 +=  '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + i + '"&title="' + pslist.placeTitle + '"">' + i + '</a></li>'
+								str2 +=  '<li class="page-item"><a class="page-link" href="placeNoList.sc?cpage="' + i + '"&title="' + pslist.placeTitle + '"">' + i + '</a></li>'
 							}
 							if (listNull != 0 && pi.currentPage != pi.maxPage) {
-								str2 += '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&gt;</a></li>'
+								str2 += '<li class="page-item"><a class="page-link" href="placeNoList.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&gt;</a></li>'
 							}
-							str2 += '</ul>'
+							
 						}
 						document.querySelector("#search-pagination").innerHTML = str2;
 							
@@ -226,20 +261,20 @@
 							
 							/* 페이지네이션 그리기 */
 							let str2 = ""
-							str2 += '<ul class="pagination justify-content-center" id="search-pagination">'
+							
 							if (pi.currentPage != 1){
-								str2 += '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&lt;</a></li>'
+								str2 += '<li class="page-item"><a class="page-link" href="placeCountList.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&lt;</a></li>'
 							}
 							for (let i = pi.startPage; i <= pi.endPage; i++){
 								if (i == pi.currentPage){
 									str2 += '<li class="page-item"><a class="page-link" href="" disabled>' + i + '</a></li>'
 								} else {
-									str2 +=  '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + i + '"&title="' + pslist.placeTitle + '"">' + i + '</a></li>'
+									str2 +=  '<li class="page-item"><a class="page-link" href="placeCountList.sc?cpage="' + i + '"&title="' + pslist.placeTitle + '"">' + i + '</a></li>'
 								}
 								if (listNull != 0 && pi.currentPage != pi.maxPage) {
-									str2 += '<li class="page-item"><a class="page-link" href="search.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&gt;</a></li>'
+									str2 += '<li class="page-item"><a class="page-link" href="placeCountList.sc?cpage="' + pi.currentPage + '"&title="' + pslist.placeTitle + '"">&gt;</a></li>'
 								}
-								str2 += '</ul>'
+								
 							}
 							document.querySelector("#search-pagination").innerHTML = str2;
 						
