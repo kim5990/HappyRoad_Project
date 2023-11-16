@@ -143,7 +143,7 @@
                                   <%=p.getPlaceContentPoint() %>
                                 </p>
                                 <a href="eventdetailView.ed?pno=<%=p.getPlaceNo()%>"  class="btn btn-success">보러가기</a>
-                                <a href="delete.fa?userNo=3&placeNo=<%=p.getPlaceNo() %>" class="btn btn-danger">삭제하기</a>
+                                <a href="delete.fa?userNo=<%=loginUser.getUserNo() %>&placeNo=<%=p.getPlaceNo() %>" class="btn btn-danger">삭제하기</a>
                               </div>
                             </div>
                     </div>

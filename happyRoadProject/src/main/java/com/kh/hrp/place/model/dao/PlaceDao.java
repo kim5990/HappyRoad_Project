@@ -73,8 +73,6 @@ public class PlaceDao {
          
          int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
          int endRow = startRow + pi.getBoardLimit() - 1;
-         System.out.println(startRow);
-         System.out.println(endRow);
          pstmt.setInt(1, userNo);
          pstmt.setInt(2, startRow);
          pstmt.setInt(3, endRow);
@@ -636,13 +634,12 @@ public class PlaceDao {
       
       try {
          pstmt = conn.prepareStatement(sql);
-            int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-            int endRow = startRow + pi.getBoardLimit() - 1;
-         System.out.println(sqlDate);
+         int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+         int endRow = startRow + pi.getBoardLimit() - 1;
          pstmt.setString(1, thema);
          pstmt.setDate(2, sqlDate);
-            pstmt.setInt(3, startRow);
-            pstmt.setInt(4, endRow);
+         pstmt.setInt(3, startRow);
+         pstmt.setInt(4, endRow);
          
          rset = pstmt.executeQuery();
          
