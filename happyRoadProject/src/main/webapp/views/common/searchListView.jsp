@@ -33,26 +33,28 @@
    <link rel="stylesheet" href="../../resources/css/fonts.css">
    
 <style>
- .cPage{
-        /* border: 1px solid gray; */
-        font-size: 30px;
-        /* color:black; */
-        color: rgb(3, 3, 3);
-        border-radius: 30px;
-        margin-left: 20px;
-        
-	    }
-	    .notcPage{
-	        font-size: 30px;
-	        color:rgb(146, 145, 145);
-	         margin-left: 20px;
-	         cursor:pointer;
-	    }
-	    .review-pagebar{
-	    display: flex;  
-	    justify-content: center;
-	    cursor:pointer;
-	    }
+.cPage {
+   /* border: 1px solid gray; */
+   font-size: 30px;
+   /* color:black; */
+   color: rgb(3, 3, 3);
+   border-radius: 30px;
+   margin-left: 20px;
+}
+
+.notcPage {
+   font-size: 30px;
+   color: rgb(146, 145, 145);
+   margin-left: 20px;
+   cursor: pointer;
+}
+
+.review-pagebar {
+   padding-top: 40px;
+   display: flex;
+   justify-content: center;
+   cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -106,6 +108,7 @@
             let searchText = '<%=placeTitle%>';
             document.querySelector(".left-section_input").value = searchText;
             
+            placeNoList(1);
            }
 
          /* 최신순 버튼 클릭시 다시 최신순으로 보여주기 */
@@ -137,13 +140,13 @@
                             + '<div class="search-info-list">'
                             + '<ul class="ulclass">' 
                          + '<li>'
-                               + '<a href="eventdetailView.ed?pno="' + r.placeNo + '">'
+                               + '<a href="eventdetailView.ed?pno=' + r.placeNo + '">'
                                 + '<img src="' + r.imagePath + r.imageChange + '" alt="검색결과이미지">'
                                + '</a>'
                              + '<div class="result-content">'
                              + '<div class="">'
                              + '<div class="result-title">'
-                             + '<a href="eventdetailView.ed?pno="' + r.placeNo + '">' + r.placeTitle + '</a></div>'
+                             + '<a href="eventdetailView.ed?pno=' + r.placeNo + '">' + r.placeTitle + '</a></div>'
                              + '<div class="result-area"><span>"' + r.placeAddress + '"</span></div>'
                              + '</div></div></li>'
                              + '</ul></div></div>'
@@ -195,13 +198,13 @@
                                + '<div class="search-info-list">'
                                + '<ul class="ulclass">' 
                             + '<li>'
-                                  + '<a href="eventdetailView.ed?pno="' + r.placeNo + '">'
+                                  + '<a href="eventdetailView.ed?pno=' + r.placeNo + '">'
                                    + '<img src="' + r.imagePath + r.imageChange + '" alt="검색결과이미지">'
                                   + '</a>'
                                 + '<div class="result-content">'
                                 + '<div class="">'
                                 + '<div class="result-title">'
-                                + '<a href="eventdetailView.ed?pno="' + r.placeNo + '">' + r.placeTitle + '</a></div>'
+                                + '<a href="eventdetailView.ed?pno=' + r.placeNo + '">' + r.placeTitle + '</a></div>'
                                 + '<div class="result-area"><span>"' + r.placeAddress + '"</span></div>'
                                 + '</div></div></li>'
                                 + '</ul></div></div>'
