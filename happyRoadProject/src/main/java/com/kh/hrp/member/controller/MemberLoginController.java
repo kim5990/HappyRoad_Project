@@ -39,7 +39,6 @@ public class MemberLoginController extends HttpServlet {
 		
 		HttpSession session = request.getSession();
         String referer = (String) session.getAttribute("referer");
-        System.out.println(referer);
 		
 		Member loginUser = new MemberService().loginMember(userId, userPwd);
 
