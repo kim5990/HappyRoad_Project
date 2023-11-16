@@ -34,11 +34,11 @@ public class FreeBoardDelete extends HttpServlet {
 		int result = new BoardService().deleteBoard(boardNo);
 		
 		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "일반게시글 작성 성공");
+			request.getSession().setAttribute("alertMsg", "일반게시글 삭제 성공");
 			
 			response.sendRedirect(request.getContextPath() + "/freeboardForm.fb?cpage=1");
 		}else {
-			request.setAttribute("errorMsg", "일반게시글 작성 실패");
+			request.setAttribute("errorMsg", "일반게시글 삭제 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 			

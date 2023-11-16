@@ -29,6 +29,11 @@ public class BoardComment {
 	}
 	
 	
+
+
+
+
+
 	public String getUserName() {
 		return userName;
 	}

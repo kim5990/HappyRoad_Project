@@ -45,11 +45,9 @@ public class BoardReplyInsertController extends HttpServlet {
 		c.setCommentUser(String.valueOf(userNo));
 		
 		int result = new BoardService().insertComment(c);
-		//request.setAttribute("c", c);
 		
- 
+		response.getWriter().print(result);
 		
-		new Gson().toJson(c);
 		
 		
 	}
