@@ -231,11 +231,7 @@
                 },
                 type: "post",
                 success: function (result) {
-                   
-                    
                     drawEventCalenderImage(result);
-                    
-
                 },
                 error: function () {
                     console.log("축제게시글조회실패");
@@ -270,45 +266,55 @@
                  $(".event-calender-eventlist").css("align-items", "center");
                  $(".event-calender-eventlist-container").css("justify-content", "center");
                  document.querySelector(".event-calender-eventlist-container").innerHTML = str;
-
-                 if (result[1]) {
-                     paging(result[1], result[0]);
-                 }
+                 
              }
         }
         
         //EVENT button 부부분
-        function paging(page) {
-        	console.log(page)
+        function paging(page, sysdate) {
+        	console.log()
             let str = "";
-        	let day = new Date();
+        	let day = "";
+        	console.log(page.currentPage)
+        	
+        	for (let r of sysdate){
+        		day = new Date(r.placeStart);
+        		day = day.getFullYear() + ',' + (day.getMonth() + 1) + ','+ day.getDate();
+        	}
+        	console.log(day)
+        	
+        	
             if (page.currentPage === 1) {
-                str += '<button type="button" disabled onclick = "ajaxEventCalenderImage('+ day.getFullYear() + ',' + (day.getMonth() + 1) + ','+ day.getDate() + ','+ (page.currentPage - 1) + ')"; class="btn btn-dark">'
+                str += '<button type="button" disabled onclick = "ajaxEventCalenderImage('+ day + ','+ (page.currentPage-1) + ')"; class="btn btn-dark">'
                     + '<svg xmlns="http://www.w3.org/2000/svg" width="16"  height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">'
                     + '<path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" /> '
                     + '</svg>'
                     + '</button>'
+                    console.log(str) 
             }else{
-            	 str += '<button type="button" onclick = "ajaxEventCalenderImage('+ day.getFullYear() + ',' + (day.getMonth() + 1) + ','+ day.getDate() + ','+ (page.currentPage - 1) + ')"; class="btn btn-dark">'
+            	 str += '<button type="button" onclick = "ajaxEventCalenderImage('+ day + ','+ (page.currentPage - 1) + ')"; class="btn btn-dark">'
                  + '<svg xmlns="http://www.w3.org/2000/svg" width="16"  height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">'
                  + '<path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" /> '
                  + '</svg>'
                  + '</button>'
+                 console.log(str) 
             }
             
-            if (page.currentPage !== page.maxPage){
-            	 str += '<button type="button" onclick = "ajaxEventCalenderImage('+ day.getFullYear() + ',' + (day.getMonth() + 1) + ','+ day.getDate() + ','+ (page.currentPage + 1) + ')"; class="btn btn-dark">'
+            if (page.currentPage !== (page.maxPage - 1)){
+            	 str += '<button type="button" onclick = "ajaxEventCalenderImage('+ day + ','+ (page.currentPage + 1) + ')"; class="btn btn-dark">'
 	                + '<svg xmlns="http://www.w3.org/2000/svg" width="16"  height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">'
 	                + '<path fill-rule="evenodd"  d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />'
 	                + '</svg>'
 	                + '</button>'
+	                console.log(str) 
              	
             }else{
-            	 str += '<button type="button" disabled  onclick = "ajaxEventCalenderImage('+ day.getFullYear() + ',' + (day.getMonth() + 1) + ','+ day.getDate() + ','+ (page.currentPage + 1) + ')"; class="btn btn-dark">'
+            	 str += '<button type="button" disabled  onclick = "ajaxEventCalenderImage('+ day + ','+ page.currentPage + ')"; class="btn btn-dark">'
 	                + '<svg xmlns="http://www.w3.org/2000/svg" width="16"  height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">'
 	                + '<path fill-rule="evenodd"  d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />'
 	                + '</svg>'
 	                + '</button>'
+	                console.log(str) 
             }
             document.querySelector(".paging-controller").innerHTML = str;
         }
