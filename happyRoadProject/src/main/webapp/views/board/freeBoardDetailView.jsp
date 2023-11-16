@@ -227,7 +227,7 @@
             <div class="freeBoardTop">작성 날짜 : </div>
             <div class="freeBoardTop"><%=b.getBoardEnrollDate() %> </div>
             <div class="freeBoardTop">작성자 : </div>
-            <div class="freeBoardTop"><%=b.getBoardUser() %></div>
+            <div class="freeBoardTop"><%=b.getUserId() %></div>
             <div class="freeBoardTop">조회수 : </div>
             <div class="freeBoardTop"><%=b.getBoardCount() %></div>
         </diV>
@@ -247,7 +247,7 @@
     <div class="boardbuttondiv">
         <div class="boardbutton">
         
-        <%if (loginUser != null && loginUser.getUserName().equals(b.getBoardUser())) {%>
+        <%if (loginUser != null && loginUser.getUserId().equals(b.getUserId())) {%>
             <button type="button" class="btn btn-dark" onclick="location.href='<%=contextPath %>/updateForm.fv?bno=<%=b.getBoardNo() %>'">수정하기</button>
             <button type="button" class="btn btn-dark" onclick="location.href='<%=contextPath %>/delete.fv?bno=<%=b.getBoardNo() %>'">삭제하기</button>
         <%} %>
