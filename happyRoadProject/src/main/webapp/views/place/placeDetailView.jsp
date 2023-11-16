@@ -119,8 +119,8 @@
         justify-content: space-between; 
         max-width: 680px;
     }
-    
-    
+
+
     
 
 
@@ -151,17 +151,17 @@
 		<div class="image-all">
 		    <c:choose>
 		        <c:when test="${listSize > 1}">
-		            <div id="prev">&lt;</div>
+		            <div id="prev" onclick="prevImage()">&lt;</div>
 		        </c:when>
 		    </c:choose>
 		    <div class="place-image">
 		        <c:forEach var="i" items="${list}" varStatus="loop">
-		            <img src="resources/images/${i.placeImageChange}" alt="사진${loop.index+1}">	
+		            <img  src="resources/images/${i.placeImageChange}">	
 		        </c:forEach>
 		    </div>
 		    <c:choose>
 		        <c:when test="${listSize > 1}">
-		            <div id="next">&gt;</div>
+		            <div id="next" onclick="nextImage()">&gt;</div>
 		        </c:when>
 		    </c:choose>
 		</div>
@@ -195,7 +195,7 @@
 
                 <tr>
                     <th style="height:30px"><li>홈페이지</li></th>
-                    <td class="td1"><a>${p.placeHomepage}</a></td>
+                    <td class="td1"><a href="${p.placeHomepage}">${p.placeHomepage}</a></td>
                     <th><li>연락처</li></th>
                     <td>${p.placeContact}</td>
                 </tr>
@@ -221,31 +221,29 @@
         
         <div class="review-title">
        		<h2>후기</h2>
-       		<c:choose>
-       			<c:when test="${ loginUser.userNo == null}">
-        			<div onclick="alert('리뷰작성 기능은 로그인 후 사용가능합니다.')" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
-					<button type="button" data-bs-toggle="modal"data-bs-target="#myModal"> 버튼 </button>
-        		</c:when>
-        		<c:otherwise>
-        			<div  data-bs-toggle="modal"data-bs-target="#myModal" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>       			
-        		</c:otherwise>
-        	</c:choose>
+       			<c:if test="${ loginUser.userNo != null}">
+        			<div  data-bs-toggle="modal"data-bs-target="#myModal" class="hover" style="padding-top:18px; margin-right: 10px; font-size: 16px;">작성하기</div>
+        		</c:if>
         </div>
         <hr width="700">
         <br>
 
 
-        <!-- 로그인 정보 없을 경우 -->
+        <!-- 로그인 정보 있을 경우 | 로그인 정보 없을 경우 -->
 
-        <!-- 리뷰 없을 경우 -->
-
-        <!-- 로그인 정보 + 리뷰 있을 경우 -->
-        
-        <table id="review-area" style="padding-right: 20px; width:650px;">              
-			<tbody>
-		
-			</tbody>
-        </table>
+		<c:choose>
+	  		<c:when test="${loginUser.userNo == null}">   
+		            <h4 class="blur-area2">로그인 후 열람 가능합니다</h4>
+		            <a href="loginForm.me" style="color:black">로그인하러 가기</a>
+		    </c:when>
+		    <c:otherwise>
+	            <table class="review-area" style="padding-right: 20px; width:650px; filter: none;">              
+	                <tbody>
+	                    
+	                </tbody>
+		    	</table>
+		    </c:otherwise>
+	    </c:choose>
         
         <br>
 
@@ -253,6 +251,7 @@
         </div>
         
         <br><br><br>
+        
      
     </div>
     
@@ -311,7 +310,6 @@
 	</div>
 
 
-
 	<!-- --------------------------------- 스크립트 ------------------------------------------ -->
    	
     <script>
@@ -323,7 +321,7 @@
         // 리뷰 + 페이징바 그려주기
         function selectReviewList(cp){
         	var placeNo = "${p.placeNo}";
-        	var loginUser= "${loginUser.userName}"
+        	var loginUser= "${loginUser.userId}"
 
             $.ajax({
                 url : "rlist.pl",
@@ -359,7 +357,7 @@
 						}
 
                     }
-                	document.querySelector("#review-area tbody").innerHTML = str1;
+                	document.querySelector(".review-area tbody").innerHTML = str1;
                 	
                 	
                 	// 페이징바 그려주기
@@ -462,6 +460,8 @@
                 },
                 success: function(res){
                 	if(res > 0){
+                		$("#starval").val(1);
+                		$("#contentval").val("");
 	                    selectReviewList(1);
                 	} else {
             			alert('등록실패');
@@ -503,9 +503,10 @@
 	
  	<script>
         const images = document.querySelectorAll(".place-image img");
-        const prev = document.getElementById("prev");
-        const next = document.getElementById("next");
         let currentIndex = 0;
+        
+     	// 최초 이미지 표시
+       	showImage(currentIndex);
 
         function showImage(index) {
             images.forEach((image, i) => {
@@ -527,11 +528,7 @@
             showImage(currentIndex);
         }
 
-        prev.addEventListener("click", prevImage);
-        next.addEventListener("click", nextImage);
-
-        // 최초 이미지 표시
-       	showImage(currentIndex);
+        
     </script>
     
     
