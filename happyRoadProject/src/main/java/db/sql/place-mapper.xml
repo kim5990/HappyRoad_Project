@@ -115,15 +115,16 @@
               ,PLACE_IMAGE_PATH
       FROM PLACE_IMAGE
       WHERE PLACE_NO = ?
+      ORDER BY PLACE_IMAGE_LEVEL
    </entry>
    
    <entry key="selectReviewList">
       SELECT *
       FROM(
-         SELECT ROWNUM RNUM, A.REVIEW_NO, A.USER_NAME, A.REVIEW_STAR, A.REVIEW_CONTENT,TO_CHAR(REVIEW_CREATE_DATE, 'YYYY-MM-DD') AS REVIEW_CREATE_DATE
+         SELECT ROWNUM RNUM, A.REVIEW_NO, A.USER_ID, A.REVIEW_STAR, A.REVIEW_CONTENT,TO_CHAR(REVIEW_CREATE_DATE, 'YYYY-MM-DD') AS REVIEW_CREATE_DATE
                FROM(
                      SELECT REVIEW_NO
-                           ,USER_NAME
+                           ,USER_ID
                            ,REVIEW_STAR
                            ,REVIEW_CONTENT
                            ,REVIEW_CREATE_DATE
