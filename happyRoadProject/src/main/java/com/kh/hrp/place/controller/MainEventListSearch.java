@@ -53,7 +53,7 @@ public class MainEventListSearch extends HttpServlet {
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             int listCount = new PlaceService().selectEventListCount(sqlDate, thema);
         	int currentPage = Integer.parseInt(request.getParameter("cpage"));
-        	PageInfo pi = PageInfoController.pageController(listCount, currentPage, 1, 4);
+        	PageInfo pi = PageInfoController.pageController(listCount, currentPage, 4, 4);
         	
     		ArrayList<PlaceSelect> list = new PlaceService().mainEventListSearch(sqlDate, thema, pi);
    

@@ -20,6 +20,8 @@ import com.kh.hrp.place.model.vo.Place;
 import com.kh.hrp.place.model.vo.PlaceSelect;
 import com.kh.hrp.place.model.vo.Review;
 
+import oracle.net.aso.p;
+
 public class PlaceDao {
    private Properties prop = new Properties();
    public PlaceDao() {
@@ -537,7 +539,7 @@ public class PlaceDao {
    }
 
 
-	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, String placeThema) {
+	public ArrayList<PlaceSelect> selectPlaceBoardList(Connection conn, PageInfo pi, String placeThema) {
 		ArrayList<PlaceSelect> pslist = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -546,6 +548,11 @@ public class PlaceDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	        int endRow = startRow + pi.getBoardLimit() - 1;
+			pstmt.setString(1, placeThema);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 
 			while(rset.next()) {
@@ -713,20 +720,22 @@ public class PlaceDao {
 		return pno;
 	}
 
-	public int insertManagerPlaceImage(Connection conn, int pno, PlaceImage pI) {
+	public int insertManagerPlaceImage(Connection conn, ArrayList<PlaceImage> plist) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("insertManagerPlaceImage");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pno);
-			pstmt.setString(2, pI.getPlaceImageOrigin());
-			pstmt.setString(3, pI.getPlaceImageChange());
-			pstmt.setString(4, pI.getPlaceImagePath());
-			
-			result = pstmt.executeUpdate();
-			
+			for(PlaceImage pI : plist) {
+				System.out.println(pI);
+				pstmt.setString(1, pI.getPlaceImageOrigin());
+				pstmt.setString(2, pI.getPlaceImageChange());
+				pstmt.setString(3, pI.getPlaceImagePath());
+				pstmt.setInt(4, pI.getPlaceImageLevel());
+				
+				result = pstmt.executeUpdate();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -737,4 +746,64 @@ public class PlaceDao {
 		return result;
 	}
 
+	public int placeThemaListCount(Connection conn, String placeThema) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("placeThemaListCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, placeThema);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return count;
+	}
+
+	public ArrayList<PlaceSelect> selectFaPlaceBoardList(Connection conn, String placeThema, PageInfo pi) {
+		ArrayList<PlaceSelect> pslist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectFaPlaceBoardList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+	        int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	        int endRow = startRow + pi.getBoardLimit() - 1;
+	         
+	        pstmt.setString(1, placeThema);
+	        pstmt.setInt(2, startRow);
+	        pstmt.setInt(3, endRow);
+	        
+	        rset = pstmt.executeQuery();
+			while(rset.next()) {
+				pslist.add(new PlaceSelect(rset.getInt("PLACE_NO"),
+						                  rset.getString("PLACE_TITLE"),
+						                  rset.getString("PLACE_CONTENT_POINT"),
+						                  rset.getString("PLACE_THEMA"),
+						                  rset.getString("PLACE_ADDRESS"),
+						                  rset.getInt("PLACE_COUNT"),
+						                  rset.getString("PLACE_IMAGE_PATH"),
+						                  rset.getString("PLACE_IMAGE_CHANGE")
+						                  ));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return pslist;
+	}
+	
 }
