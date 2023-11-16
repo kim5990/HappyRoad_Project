@@ -57,8 +57,8 @@ public class BoardDao {
    }
    
    public int selectCommentCount(Connection conn, int boardNo) { // 댓글 총 갯수
-	   int CommentlistCount = 0;
-	      
+      int CommentlistCount = 0;
+         
        PreparedStatement pstmt = null;
        ResultSet rset = null;
       
@@ -72,7 +72,7 @@ public class BoardDao {
            rset = pstmt.executeQuery();
            
            if(rset.next()) {
-        	   CommentlistCount = rset.getInt("count");
+              CommentlistCount = rset.getInt("count");
            }
         } catch (SQLException e) {
            e.printStackTrace();
@@ -205,200 +205,200 @@ public class BoardDao {
    }
    
    public int updateBoard(Connection conn, Board b) { // 게시글 수정
-	   int result = 0;
-		
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updateBoard");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, b.getBoardTitle());
-			pstmt.setString(2, b.getBoardContent());
-			pstmt.setInt(3, b.getBoardNo());
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		return result;
+      int result = 0;
+      
+      PreparedStatement pstmt = null;
+      String sql = prop.getProperty("updateBoard");
+      
+      try {
+         pstmt = conn.prepareStatement(sql);
+         pstmt.setString(1, b.getBoardTitle());
+         pstmt.setString(2, b.getBoardContent());
+         pstmt.setInt(3, b.getBoardNo());
+         
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }finally {
+         close(pstmt);
+      }
+      return result;
    }
    
    public int deleteBoard(Connection conn, int boardNo) { // 게시글 삭제
-   		int result = 0;
-		
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("deleteBoard");
-	   
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardNo);
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return result;
+         int result = 0;
+      
+      PreparedStatement pstmt = null;
+      String sql = prop.getProperty("deleteBoard");
+      
+      try {
+         pstmt = conn.prepareStatement(sql);
+         pstmt.setInt(1, boardNo);
+         
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close(pstmt);
+      }
+      return result;
    }
    
    public ArrayList<BoardComment> selectBoardCommentList(Connection conn, PageInfo pi, int boardNo){ // 찐 
-	   ArrayList<BoardComment> list = new ArrayList<>();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectBoardCommentList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			// pstmt.setInt(1, boardNo);
-			 // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
-	           int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-	           int endRow = startRow + pi.getBoardLimit() - 1;
-	           
-	           pstmt.setInt(1, boardNo);
-	           pstmt.setInt(2, startRow);
-	           pstmt.setInt(3, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new BoardComment(
-							rset.getInt("COMMENT_NO"),
-							rset.getString("BOARD_NO"),
-							rset.getString("COMMENT_USER"),
-							rset.getString("COMMENT_CONTENT"),
-							rset.getString("COMMENT_NEWDATE"),
-							rset.getString("USER_ID")
-						));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
+      ArrayList<BoardComment> list = new ArrayList<>();
+      
+      PreparedStatement pstmt = null;
+      ResultSet rset = null;
+      String sql = prop.getProperty("selectBoardCommentList");
+      
+      try {
+         pstmt = conn.prepareStatement(sql);
+         // pstmt.setInt(1, boardNo);
+          // *currentPage : 현재 페이지(즉, 사용자가 요청한 페이지) *boardLimit : 한 페이지내에 보여질 게시글 최대갯수(단위)
+              int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+              int endRow = startRow + pi.getBoardLimit() - 1;
+              
+              pstmt.setInt(1, boardNo);
+              pstmt.setInt(2, startRow);
+              pstmt.setInt(3, endRow);
+         
+         rset = pstmt.executeQuery();
+         
+         while(rset.next()) {
+            list.add(new BoardComment(
+                     rset.getInt("COMMENT_NO"),
+                     rset.getString("BOARD_NO"),
+                     rset.getString("COMMENT_USER"),
+                     rset.getString("COMMENT_CONTENT"),
+                     rset.getString("COMMENT_NEWDATE"),
+                     rset.getString("USER_ID")
+                  ));
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close(rset);
+         close(pstmt);
+      }
+      
+      return list;
    }
    
 
    
    public int insertComment(Connection conn, BoardComment c) {
-	   int result = 0;
-		
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertComment");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, c.getCommentNo());
-			pstmt.setString(2, c.getCommentContent());
-			pstmt.setString(3, c.getCommentUser());
-			
-			result = pstmt.executeUpdate();
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		
-		return result;
-	   
+      int result = 0;
+      
+      PreparedStatement pstmt = null;
+      String sql = prop.getProperty("insertComment");
+      
+      try {
+         pstmt = conn.prepareStatement(sql);
+         pstmt.setInt(1, c.getCommentNo());
+         pstmt.setString(2, c.getCommentContent());
+         pstmt.setString(3, c.getCommentUser());
+         
+         result = pstmt.executeUpdate();
+         
+         
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }finally {
+         close(pstmt);
+      }
+      
+      return result;
+      
    }
    
    public int deleteComment(Connection conn, int cno) {
-	   int result = 0;
-		
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("deleteComment");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cno);
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		return result;
+      int result = 0;
+      
+      PreparedStatement pstmt = null;
+      String sql = prop.getProperty("deleteComment");
+      
+      try {
+         pstmt = conn.prepareStatement(sql);
+         pstmt.setInt(1, cno);
+         
+         result = pstmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close(pstmt);
+      }
+      return result;
    }
    
    public int SearchBoardCount(Connection conn, String searchcontent) { // 검색어 총 죄회수
-	   
-	   int bsearchCount = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("SearchBoardCount");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, searchcontent);
-			pstmt.setString(1, "%" + searchcontent + "%");
-			
-			rset = pstmt.executeQuery();
-		
-			if (rset.next()) {
-				bsearchCount = rset.getInt("count");
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return bsearchCount;
+      
+      int bsearchCount = 0;
+      PreparedStatement pstmt = null;
+      ResultSet rset = null;
+      
+      String sql = prop.getProperty("SearchBoardCount");
+      
+      try {
+         pstmt = conn.prepareStatement(sql);
+         pstmt.setString(1, searchcontent);
+         pstmt.setString(1, "%" + searchcontent + "%");
+         
+         rset = pstmt.executeQuery();
+      
+         if (rset.next()) {
+            bsearchCount = rset.getInt("count");
+         }
+         
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close(rset);
+         close(pstmt);
+      }
+      
+      return bsearchCount;
    }
    
    public ArrayList<Board> SearchBoardList(Connection conn, String searchcontent, PageInfo pi){ // 검색어 리스트
-	   
-	   ArrayList<Board> list = new ArrayList<>();
+      
+      ArrayList<Board> list = new ArrayList<>();
 
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
+      PreparedStatement pstmt = null;
+      ResultSet rset = null;
 
-		String sql = prop.getProperty("SearchBoardList");
+      String sql = prop.getProperty("SearchBoardList");
 
-		try {
-			pstmt = conn.prepareStatement(sql);
+      try {
+         pstmt = conn.prepareStatement(sql);
 
-			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-			int endRow = startRow + pi.getBoardLimit() - 1;
-			
-			pstmt.setString(1, "%" + searchcontent + "%");
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+         int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+         int endRow = startRow + pi.getBoardLimit() - 1;
+         
+         pstmt.setString(1, "%" + searchcontent + "%");
+         pstmt.setInt(2, startRow);
+         pstmt.setInt(3, endRow);
 
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Board(
-		                  rset.getInt("BOARD_NO"),
-		                  rset.getString("USER_ID"),
-		                  rset.getString("BOARD_TITLE"),
-		                  rset.getString("BOARD_CONTENT"),
-		                  rset.getInt("BOARD_COUNT"),
-		                  rset.getString("BOARD_ENROLL_DATE")
-		                  
-		                  ));
- 				}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
+         rset = pstmt.executeQuery();
+         
+         while(rset.next()) {
+            list.add(new Board(
+                        rset.getInt("BOARD_NO"),
+                        rset.getString("USER_ID"),
+                        rset.getString("BOARD_TITLE"),
+                        rset.getString("BOARD_CONTENT"),
+                        rset.getInt("BOARD_COUNT"),
+                        rset.getString("BOARD_ENROLL_DATE")
+                        
+                        ));
+             }
+         
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         close(rset);
+         close(pstmt);
+      }
+      return list;
    }
    
 }

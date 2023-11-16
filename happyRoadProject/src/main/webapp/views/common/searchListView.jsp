@@ -34,26 +34,26 @@
    
 <style>
 .cPage {
-	/* border: 1px solid gray; */
-	font-size: 30px;
-	/* color:black; */
-	color: rgb(3, 3, 3);
-	border-radius: 30px;
-	margin-left: 20px;
+   /* border: 1px solid gray; */
+   font-size: 30px;
+   /* color:black; */
+   color: rgb(3, 3, 3);
+   border-radius: 30px;
+   margin-left: 20px;
 }
 
 .notcPage {
-	font-size: 30px;
-	color: rgb(146, 145, 145);
-	margin-left: 20px;
-	cursor: pointer;
+   font-size: 30px;
+   color: rgb(146, 145, 145);
+   margin-left: 20px;
+   cursor: pointer;
 }
 
 .review-pagebar {
-	padding-top: 40px;
-	display: flex;
-	justify-content: center;
-	cursor: pointer;
+   padding-top: 40px;
+   display: flex;
+   justify-content: center;
+   cursor: pointer;
 }
 </style>
 </head>
