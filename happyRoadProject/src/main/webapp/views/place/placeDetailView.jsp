@@ -382,26 +382,29 @@
         // 즐겨찾기 조회
         function checkLike(){
             
-            $.ajax({
-                url : "checkLike.pl",
-                data : {
-                    pno : "${p.placeNo}",
-                    mno : "${loginUser.userNo}"
-                },
-                success: function(res){
-                    let str3 = "";
-                    if(res){   // 즐겨찾기 있음
-                        str3 += '<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" class="like" onclick="deleteLike()">'
-                    } else {    // 즐겨찾기 없음
-                        str3 += '<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="insertLike()">'
-                    }
-                    document.querySelector("#like-area").innerHTML = str3;
-
-                },
-                error : function(){
-                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
-                }
-            })
+        	const tmp = "${loginUser.userNo}";
+        	if (tmp) {
+	            $.ajax({
+	                url : "checkLike.pl",
+	                data : {
+	                    pno : "${p.placeNo}",
+	                    mno : "${loginUser.userNo}"
+	                },
+	                success: function(res){
+	                    let str3 = "";
+	                    if(res){   // 즐겨찾기 있음
+	                        str3 += '<img src="resources/logo/즐겨찾기-후.png" alt=" 즐겨찾기" class="like" onclick="deleteLike()">'
+	                    } else {    // 즐겨찾기 없음
+	                        str3 += '<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="insertLike()">'
+	                    }
+	                    document.querySelector("#like-area").innerHTML = str3;
+	
+	                },
+	                error : function(){
+	                    console.log("즐겨찾기 조회 중 ajax 통신 실패");
+	                }
+	            })
+        	}
         }
 
         // 즐겨찾기 삭제
