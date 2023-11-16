@@ -33,6 +33,8 @@ public class EventDetailCheckLisk extends HttpServlet {
 		int placeNo = Integer.parseInt(request.getParameter("pno"));
 		int userNo = Integer.parseInt(request.getParameter("mno"));
 		
+				
+				
 		boolean like = new PlaceService().checkLike(placeNo, userNo);
 		
 		response.setContentType("application/json; charset=utf-8");
