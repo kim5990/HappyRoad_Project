@@ -237,11 +237,19 @@ public class PlaceService {
       return list;
    }
 
-   public ArrayList<PlaceSelect> selectFaPlaceBoardList(String placeThema, PageInfo pi) {
-      Connection conn = getConnection();
-      ArrayList<PlaceSelect> list = new PlaceDao().selectFaPlaceBoardList(conn, placeThema, pi);
-      return list;
-   }
+	public ArrayList<PlaceSelect> selectFaPlaceBoardList(String placeThema, PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> list = new PlaceDao().selectFaPlaceBoardList(conn, placeThema, pi);
+		return list;
+	}
+	
+	public ArrayList<PlaceSelect> selectSearchPlaceCountList(String placeTitle, PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> pslist = new PlaceDao().selectSearchPlaceCountList(conn, placeTitle, pi);
+		close(conn);
+		return pslist;
+	}
+
 
 
    

@@ -21,6 +21,7 @@
                FROM PLACE P
                LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
                WHERE PLACE_STATUS = 'Y'
+               AND PLACE_IMAGE_LEVEL = 1
                AND PLACE_TITLE LIKE ?
                ORDER BY PLACE_NO DESC
               ) A
@@ -343,22 +344,42 @@
    </entry>
    
    <entry key = "selectFaPlaceBoardList">
-        SELECT *
-     FROM(SELECT ROWNUM RNUM, A.*
-       FROM(SELECT PLACE_NO,
-               PLACE_TITLE,
-               PLACE_CONTENT_POINT,
-               PLACE_THEMA,
-               PLACE_ADDRESS,
-               PLACE_COUNT,
-               PLACE_IMAGE_PATH,
-               PLACE_IMAGE_CHANGE
-            FROM PLACE
-            LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
-            WHERE PLACE_STATUS = 'Y'
-               AND PLACE_IMAGE_LEVEL = 1
-               AND PLACE_THEMA = ?
-            ORDER BY PLACE_COUNT DESC) A )
-      WHERE RNUM BETWEEN ? AND ?
-   </entry>        
+   	  SELECT *
+	  FROM(SELECT ROWNUM RNUM, A.*
+	    FROM(SELECT PLACE_NO,
+	            PLACE_TITLE,
+	            PLACE_CONTENT_POINT,
+	            PLACE_THEMA,
+	            PLACE_ADDRESS,
+	            PLACE_COUNT,
+	            PLACE_IMAGE_PATH,
+	            PLACE_IMAGE_CHANGE
+	         FROM PLACE
+	         LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+	         WHERE PLACE_STATUS = 'Y'
+	         	AND PLACE_IMAGE_LEVEL = 1
+	         	AND PLACE_THEMA = ?
+	         ORDER BY PLACE_COUNT DESC) A )
+		WHERE RNUM BETWEEN ? AND ?
+   </entry>     
+   
+   <entry key="selectSearchPlaceCountList">
+	      SELECT *        
+	      FROM(SELECT ROWNUM RNUM, A.* 
+	          FROM (SELECT PLACE_NO
+	                   , PLACE_TITLE
+	                   , PLACE_ADDRESS
+	                   , PLACE_IMAGE_PATH
+	                   , PLACE_IMAGE_CHANGE
+	                   , PLACE_COUNT
+	               FROM PLACE P
+	               LEFT JOIN PLACE_IMAGE USING (PLACE_NO)
+	               WHERE PLACE_STATUS = 'Y'
+	               AND PLACE_IMAGE_LEVEL = 1
+	               AND PLACE_TITLE LIKE ?
+	               ORDER BY PLACE_COUNT DESC
+	              ) A
+	          )
+	      WHERE RNUM BETWEEN ? AND ?
+	</entry>   
 </properties>
