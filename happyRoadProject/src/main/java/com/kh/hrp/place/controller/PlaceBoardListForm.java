@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.common.PageInfoController;
 import com.kh.hrp.place.model.service.PlaceService;
 import com.kh.hrp.place.model.vo.PlaceSelect;
 
@@ -33,9 +35,14 @@ public class PlaceBoardListForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String placeThema = request.getParameter("thema");
+		int listCount = new PlaceService().placeThemaListCount(placeThema); //현재 총 게시글 수
+		int currentPage = Integer.parseInt(request.getParameter("cpage")); //현재 페이지(즉, 사용자가 요청한 페이지)
 		
-		ArrayList<PlaceSelect> psList = new PlaceService().selectPlaceBoardList(placeThema);
+		PageInfo pi = PageInfoController.pageController(listCount, currentPage, 8, 8);
+		ArrayList<PlaceSelect> psList = new PlaceService().selectPlaceBoardList(placeThema, pi);
 
+		request.setAttribute("thema", placeThema);
+		request.setAttribute("pi", pi);
 		request.setAttribute("psList", psList);
 		
 		request.getRequestDispatcher("views/place/placeboardList.jsp").forward(request, response);

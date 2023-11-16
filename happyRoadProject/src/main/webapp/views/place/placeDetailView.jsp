@@ -139,7 +139,7 @@
         
         <div id="like-area" align="right" style="max-width: 650px;"> 
 	        <c:choose>
-		        <c:when test="${ loginUser.userNo == null}">
+		        <c:when test="${ empty loginUser.userNo}">
 					<img src="resources/logo/즐겨찾기모음+즐겨찾기전.png" alt=" 즐겨찾기" class="like" onclick="alert('즐겨찾기 기능은 로그인 후 사용가능합니다.')">
 		        </c:when>
 		    </c:choose>            

@@ -183,7 +183,7 @@
                     </ul>
                   </nav>
                   <br><br>
-                  <button class="btn btn-dark" id="back-btn" type="submit">뒤로가기</button>
+                  <button class="btn btn-dark" id="back-btn" onclick = "history.back()"  type="submit">뒤로가기</button>
                   <br><br>
                 </div>
               </div>

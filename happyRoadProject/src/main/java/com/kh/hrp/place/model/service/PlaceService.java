@@ -174,9 +174,9 @@ public class PlaceService {
 		return result;
 	}
 
-	public ArrayList<PlaceSelect> selectPlaceBoardList(String placeThema) {
+	public ArrayList<PlaceSelect> selectPlaceBoardList(String placeThema, PageInfo pi) {
 		Connection conn = getConnection();
-		ArrayList<PlaceSelect> pslist = new PlaceDao().selectPlaceBoardList(conn, placeThema);
+		ArrayList<PlaceSelect> pslist = new PlaceDao().selectPlaceBoardList(conn, pi,placeThema);
 		close(conn);
 		return pslist;
 
@@ -197,32 +197,29 @@ public class PlaceService {
 		return pslist;
 	}
 
-	public int insertManagerPlace(Place p) {
+	public int insertManagerPlaceImage(Place p,ArrayList<PlaceImage> plist) {
 		Connection conn = getConnection();
-		int result = new PlaceDao().insertManagerPlace(conn, p);
-		
-		int pno = 0;
-		if (result > 0) {
-			commit(conn);
-			pno = new PlaceDao().selectManagerPlace(conn, p.getPlaceTitle());
-		} else {
-			rollback(conn);
-		}
-		close(conn);
-		return pno;
-	}
-
-	public int insertManagerPlaceImage(int pno, PlaceImage pI) {
-		Connection conn = getConnection();
-		int result = new PlaceDao().insertManagerPlaceImage(conn, pno,pI);
-		
-		if(result > 0) {
+		int result1 = new PlaceDao().insertManagerPlace(conn, p);
+		int result2 = new PlaceDao().insertManagerPlaceImage(conn ,plist);
+		if(result1 * result2 > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
 		close(conn);
-		return result;
+		return result1*result2;
+	}
+
+	public int placeThemaListCount(String placeThema) {
+		Connection conn = getConnection();
+		int list = new PlaceDao().placeThemaListCount(conn, placeThema);
+		return list;
+	}
+
+	public ArrayList<PlaceSelect> selectFaPlaceBoardList(String placeThema, PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<PlaceSelect> list = new PlaceDao().selectFaPlaceBoardList(conn, placeThema, pi);
+		return list;
 	}
 
 

@@ -43,7 +43,6 @@ public class ManagerPlaceInsertController extends HttpServlet {
       request.setCharacterEncoding("UTF-8");
       
       if (ServletFileUpload.isMultipartContent(request)) {
-         System.out.println("나여깄음");
          
          //maxSize
          int maxSize = 10*1024*1024;
@@ -98,35 +97,43 @@ public class ManagerPlaceInsertController extends HttpServlet {
             // TODO Auto-generated catch block
             e.printStackTrace();
          }
-
+         ArrayList<PlaceImage> plist = new ArrayList<PlaceImage>();
          PlaceImage pI = null;
-         int result = 0;
-         //PLACE INSERT 후 INSERT한 행의 PlaceNo를 SELECT
-         int pno = new PlaceService().insertManagerPlace(p);
          
-         if(pno > 0) {
-            for(int i = 1; i < 4; i++) {
-               if(multiRequest.getOriginalFileName("file"+i) != null) {
-                  pI = new PlaceImage();
-                  pI.setPlaceImageOrigin(multiRequest.getOriginalFileName("file"+i));
-                  pI.setPlaceImageChange(multiRequest.getFilesystemName("file"+i));
-                  pI.setPlaceImagePath("resources/images/");
-                  result = new PlaceService().insertManagerPlaceImage(pno, pI);
-                  if(result < 1) {
-                     if (pI != null) {
-                        new File(savePath + pI.getPlaceImageChange()).delete();
-                     }
-                  }
-               }
-            }
+         //PLACE INSERT 후 INSERT한 행의 PlaceNo를 SELECT
 
-            request.getSession().setAttribute("alertMsg", "PLACE게시글 작성 성공");
-            response.sendRedirect("place.ma");
+        for(int i = 1; i < 4; i++) {
+           if(i == 1 && multiRequest.getOriginalFileName("file"+i) != null) {
+              pI = new PlaceImage();
+              pI.setPlaceImageOrigin(multiRequest.getOriginalFileName("file"+i));
+              pI.setPlaceImageChange(multiRequest.getFilesystemName("file"+i));
+              pI.setPlaceImagePath("resources/images/");
+              pI.setPlaceImageLevel(1);
+              plist.add(pI);
 
-         }else {
-            request.setAttribute("errorMsg", "일반게시글 작성 실패");
-            request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-         }
+           }else if( i > 1 && multiRequest.getOriginalFileName("file"+i) != null ) {
+        	   pI = new PlaceImage();
+               pI.setPlaceImageOrigin(multiRequest.getOriginalFileName("file"+i));
+               pI.setPlaceImageChange(multiRequest.getFilesystemName("file"+i));
+               pI.setPlaceImagePath("resources/images/");
+               pI.setPlaceImageLevel(2);
+               plist.add(pI);
+           }
+        }
+        int result = new PlaceService().insertManagerPlaceImage(p , plist);
+        	
+		 if(result > 0) {
+	         request.getSession().setAttribute("alertMsg", "PLACE게시글 작성 성공");
+	         response.sendRedirect("place.ma");
+	      }else {
+	    	 if (pI != null) {
+	            new File(savePath + pI.getPlaceImageChange()).delete();
+	         }
+	    	 
+	    	  request.setAttribute("errorMsg", "PLACE게시글 작성 실패");
+	          request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		     
+	      }
       }
    }
 
