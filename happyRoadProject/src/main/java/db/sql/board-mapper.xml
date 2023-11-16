@@ -20,7 +20,7 @@
             SELECT ROWNUM RNUM, A.*
                    FROM (
                        SELECT BOARD_NO
-                               ,USER_NAME
+                               ,USER_ID
                                ,BOARD_TITLE
                                ,BOARD_CONTENT
                                ,BOARD_COUNT
@@ -45,7 +45,7 @@
    
    <entry key="selectBoard">
        SELECT BOARD_NO
-             , USER_NAME
+             , USER_ID
            , BOARD_TITLE
            , BOARD_CONTENT
            , BOARD_COUNT
@@ -113,7 +113,7 @@
 	                   FROM (
 	                       SELECT COMMENT_NO
 	                                ,BOARD_NO
-	                                ,USER_NAME
+	                                ,USER_ID
 	                                ,COMMENT_USER
 	                                ,COMMENT_CONTENT
 	                               ,TO_CHAR(COMMENT_NEWDATE, 'YYYY/MM/DD') AS "COMMENT_NEWDATE"
@@ -167,7 +167,7 @@
             SELECT ROWNUM RNUM, A.*
                    FROM (
                        SELECT BOARD_NO
-                               ,USER_NAME
+                               ,USER_ID
                                ,BOARD_TITLE
                                ,BOARD_CONTENT
                                ,BOARD_COUNT

@@ -106,7 +106,7 @@ public class BoardDao {
          while(rset.next()) {
             list.add(new Board(
                   rset.getInt("BOARD_NO"),
-                  rset.getString("USER_NAME"),
+                  rset.getString("USER_ID"),
                   rset.getString("BOARD_TITLE"),
                   rset.getString("BOARD_CONTENT"),
                   rset.getInt("BOARD_COUNT"),
@@ -163,7 +163,7 @@ public class BoardDao {
          if(rset.next()) {
             b = new Board(
                   rset.getInt("BOARD_NO"),
-                  rset.getString("USER_NAME"),
+                  rset.getString("USER_ID"),
                   rset.getString("BOARD_TITLE"),
                   rset.getString("BOARD_CONTENT"),
                   rset.getInt("BOARD_COUNT"),
@@ -271,7 +271,7 @@ public class BoardDao {
 							rset.getString("COMMENT_USER"),
 							rset.getString("COMMENT_CONTENT"),
 							rset.getString("COMMENT_NEWDATE"),
-							rset.getString("USER_NAME")
+							rset.getString("USER_ID")
 						));
 			}
 		} catch (SQLException e) {
@@ -383,7 +383,7 @@ public class BoardDao {
 			while(rset.next()) {
 				list.add(new Board(
 		                  rset.getInt("BOARD_NO"),
-		                  rset.getString("USER_NAME"),
+		                  rset.getString("USER_ID"),
 		                  rset.getString("BOARD_TITLE"),
 		                  rset.getString("BOARD_CONTENT"),
 		                  rset.getInt("BOARD_COUNT"),
