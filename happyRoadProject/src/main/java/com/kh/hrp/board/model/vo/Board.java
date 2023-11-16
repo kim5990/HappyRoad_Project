@@ -4,12 +4,13 @@ import java.sql.Date;
 
 public class Board {
    private int boardNo;
-   private String boardUser;
+   private String userId;
    private String boardTitle;
    private String boardContent;
    private int boardCount;
    private String boardEnrollDate;
    private String boardStatus;
+   
  
 
    
@@ -17,11 +18,11 @@ public class Board {
    
    
    // 기본 생성자
-   public Board(int boardNo, String boardUser, String boardTitle, String boardContent, int boardCount,
+   public Board(int boardNo, String userId, String boardTitle, String boardContent, int boardCount,
 			String boardEnrollDate, String boardStatus) {
 		super();
 		this.boardNo = boardNo;
-		this.boardUser = boardUser;
+		this.userId = userId;
 		this.boardTitle = boardTitle;
 		this.boardContent = boardContent;
 		this.boardCount = boardCount;
@@ -30,11 +31,11 @@ public class Board {
 	}
    
    // 게시물 가져오기
-   public Board(int boardNo, String boardUser, String boardTitle, String boardContent,
+   public Board(int boardNo, String userId, String boardTitle, String boardContent,
 	         int boardCount, String boardEnrollDate) {
 	      super();
 	      this.boardNo = boardNo;
-	      this.boardUser = boardUser;
+	      this.userId = userId;
 	      this.boardTitle = boardTitle;
 	      this.boardContent = boardContent;
 	      this.boardCount = boardCount;
@@ -43,68 +44,82 @@ public class Board {
 
 
 public int getBoardNo() {
-      return boardNo;
-   }
+	return boardNo;
+}
 
-   public void setBoardNo(int boardNo) {
-      this.boardNo = boardNo;
-   }
 
-   public String getBoardUser() {
-      return boardUser;
-   }
+public void setBoardNo(int boardNo) {
+	this.boardNo = boardNo;
+}
 
-   public void setBoardUser(String boardUser) {
-      this.boardUser = boardUser;
-   }
 
-   public String getBoardTitle() {
-      return boardTitle;
-   }
+public String getUserId() {
+	return userId;
+}
 
-   public void setBoardTitle(String boardTitle) {
-      this.boardTitle = boardTitle;
-   }
 
-   public String getBoardContent() {
-      return boardContent;
-   }
+public void setUserId(String userId) {
+	this.userId = userId;
+}
 
-   public void setBoardContent(String boardContent) {
-      this.boardContent = boardContent;
-   }
 
-   public int getBoardCount() {
-      return boardCount;
-   }
+public String getBoardTitle() {
+	return boardTitle;
+}
 
-   public void setBoardCount(int boardCount) {
-      this.boardCount = boardCount;
-   }
 
-   public String getBoardEnrollDate() {
-      return boardEnrollDate;
-   }
+public void setBoardTitle(String boardTitle) {
+	this.boardTitle = boardTitle;
+}
 
-   public void setBoardEnrollDate(String boardEnrollDate) {
-      this.boardEnrollDate = boardEnrollDate;
-   }
 
-   public String getBoardStatus() {
-      return boardStatus;
-   }
+public String getBoardContent() {
+	return boardContent;
+}
 
-   public void setBoardStatus(String boardStatus) {
-      this.boardStatus = boardStatus;
-   }
+
+public void setBoardContent(String boardContent) {
+	this.boardContent = boardContent;
+}
+
+
+public int getBoardCount() {
+	return boardCount;
+}
+
+
+public void setBoardCount(int boardCount) {
+	this.boardCount = boardCount;
+}
+
+
+public String getBoardEnrollDate() {
+	return boardEnrollDate;
+}
+
+
+public void setBoardEnrollDate(String boardEnrollDate) {
+	this.boardEnrollDate = boardEnrollDate;
+}
+
+
+public String getBoardStatus() {
+	return boardStatus;
+}
+
+
+public void setBoardStatus(String boardStatus) {
+	this.boardStatus = boardStatus;
+}
 
 
 @Override
 public String toString() {
-	return "Board [boardNo=" + boardNo + ", boardUser=" + boardUser + ", boardTitle=" + boardTitle + ", boardContent="
+	return "Board [boardNo=" + boardNo + ", userId=" + userId + ", boardTitle=" + boardTitle + ", boardContent="
 			+ boardContent + ", boardCount=" + boardCount + ", boardEnrollDate=" + boardEnrollDate + ", boardStatus="
 			+ boardStatus + "]";
 }
+
 
 
 
