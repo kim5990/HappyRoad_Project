@@ -8,13 +8,14 @@ public class PlaceImage {
 	private String placeImageChange;
 	private String placeImagePath;
 	private String placeImageDate;
+	private int placeImageLevel;
 	
 	public PlaceImage() {
 		super();
 	}
 
 	public PlaceImage(int placeImageNo, int placeNo, String placeImageOrigin, String placeImageChange,
-			String placeImagePath, String placeImageDate) {
+			String placeImagePath, String placeImageDate, int placeImageLevel) {
 		super();
 		this.placeImageNo = placeImageNo;
 		this.placeNo = placeNo;
@@ -22,6 +23,7 @@ public class PlaceImage {
 		this.placeImageChange = placeImageChange;
 		this.placeImagePath = placeImagePath;
 		this.placeImageDate = placeImageDate;
+		this.placeImageLevel = placeImageLevel;
 	}
 	
 	
@@ -81,13 +83,19 @@ public class PlaceImage {
 		this.placeImageDate = placeImageDate;
 	}
 
+	public int getPlaceImageLevel() {
+		return placeImageLevel;
+	}
+
+	public void setPlaceImageLevel(int placeImageLevel) {
+		this.placeImageLevel = placeImageLevel;
+	}
+
 	@Override
 	public String toString() {
 		return "PlaceImage [placeImageNo=" + placeImageNo + ", placeNo=" + placeNo + ", placeImageOrigin="
 				+ placeImageOrigin + ", placeImageChange=" + placeImageChange + ", placeImagePath=" + placeImagePath
-				+ ", placeImageDate=" + placeImageDate + "]";
+				+ ", placeImageDate=" + placeImageDate + ", placeImageLevel=" + placeImageLevel + "]";
 	}
-	
-	
 
 }

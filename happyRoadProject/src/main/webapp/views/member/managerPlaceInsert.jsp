@@ -208,8 +208,8 @@
                                 <div class="managerPlaceInsert">
                                     <div class="insertPlace2">
                                         <div class="input-group mb-3">
-                                            <label class="input-group-text" for="inputGroupFile01">업로드</label>
-                                            <input type="file" class="form-control" id="inputGroupFile01" name="file1">
+                                            <label class="input-group-text" for="inputGroupFile01">대표이미지</label>
+                                            <input type="file" class="form-control" id="inputGroupFile01" name="file1" required >
                                         </div>
                                     </div>
                                     <div class="insertPlace2">
@@ -235,6 +235,7 @@
                             <br>
 
                             <button type="submit" class="btn btn-success">게시물 추가</button>
+                            <button type="button" onclick = "history.back()" class="btn btn-danger">뒤로가기</button>
                         </form>
                         <%@ include file="../common/footer.jsp" %>
                     </div>
