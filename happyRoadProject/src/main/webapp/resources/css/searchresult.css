@@ -5,15 +5,13 @@
 
 #search-content{
     width: 800px;
-    height: 50px;
-    
     display: flex;
     align-items: center;
     justify-content: center;
     
     border-top: 1px solid rgb(224, 224, 224);
     border-bottom: 1px solid rgb(224, 224, 224);
-    padding: 20px 0;
+    padding: 8px 0;
     margin: 0 auto;
     margin-top: 20px;
 }
@@ -39,7 +37,7 @@
     margin: 0 0 0 0;
     padding-left: 0px;
 }
-#btn-order{
+#btn-order-placeNo, #btn-order-placeCount{
     border-radius: 20px;
 }
 
