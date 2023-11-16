@@ -258,7 +258,7 @@
                          + '</div>'
                  }
                  
-                 paging(result[1]);
+                 paging(result[1], result[0]);
 
                  $(".event-calender-eventlist").css("align-items", "end");
                  $(".event-calender-eventlist-container").css("justify-content", "space-between");
@@ -272,7 +272,7 @@
                  document.querySelector(".event-calender-eventlist-container").innerHTML = str;
 
                  if (result[1]) {
-                     paging(result[1]);
+                     paging(result[1], result[0]);
                  }
              }
         }
