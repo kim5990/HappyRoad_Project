@@ -114,7 +114,7 @@
                     	
                         <td class="td"><%=b.getBoardNo() %></td>
                         <td class="td"><%=b.getBoardTitle() %></td>
-                        <td class="td"><%=b.getBoardUser() %></td>
+                        <td class="td"><%=b.getUserId() %></td>
                         <td class="td">-</td>
                         <td class="td"><%=b.getBoardEnrollDate() %></td>
                         <td class="td"><%=b.getBoardCount() %></td>
