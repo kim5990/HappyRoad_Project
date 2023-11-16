@@ -260,7 +260,7 @@
         <div class="boardbottomcomment">
             <div class=commentTitle>
                 <div>댓글</div>
-                <div></div>
+                <div id="tak"></div>
             </div>
             <diV class="freeBoardTitleLine">
                 <div class="titleLine"></div>
@@ -345,6 +345,7 @@
 	            				}
 	            				
 	            				document.querySelector("#commenttable tbody").innerHTML = str;
+	            				document.querySelector("#tak").innerHTML = pi.listCount;
 	            				//console.log(res);
 	            				
 	            				// 페이징바 그려주기
@@ -357,7 +358,6 @@
 	                              }
 	                        	}
 	                        	document.querySelector(".review-pagebar").innerHTML = str2;
-	                        	
 	            			},
 	            			error: function(){
 	            				console.log("댓글목록 조회중 ajax통신실패");

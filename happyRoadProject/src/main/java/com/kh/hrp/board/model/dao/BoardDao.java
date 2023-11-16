@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.kh.hrp.board.model.vo.Board;
 import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.place.model.vo.PlaceSelect;
 
 public class BoardDao {
    
@@ -106,7 +107,6 @@ public class BoardDao {
             list.add(new Board(
                   rset.getInt("BOARD_NO"),
                   rset.getString("USER_NAME"),
-                  rset.getString("BOARD_CATEGORY"),
                   rset.getString("BOARD_TITLE"),
                   rset.getString("BOARD_CONTENT"),
                   rset.getInt("BOARD_COUNT"),
@@ -164,7 +164,6 @@ public class BoardDao {
             b = new Board(
                   rset.getInt("BOARD_NO"),
                   rset.getString("USER_NAME"),
-                  rset.getString("BOARD_CATEGORY"),
                   rset.getString("BOARD_TITLE"),
                   rset.getString("BOARD_CONTENT"),
                   rset.getInt("BOARD_COUNT"),
@@ -329,6 +328,77 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+   }
+   
+   public int SearchBoardCount(Connection conn, String searchcontent) { // 검색어 총 죄회수
+	   
+	   int bsearchCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("SearchBoardCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, searchcontent);
+			pstmt.setString(1, "%" + searchcontent + "%");
+			
+			rset = pstmt.executeQuery();
+		
+			if (rset.next()) {
+				bsearchCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bsearchCount;
+   }
+   
+   public ArrayList<Board> SearchBoardList(Connection conn, String searchcontent, PageInfo pi){ // 검색어 리스트
+	   
+	   ArrayList<Board> list = new ArrayList<>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("SearchBoardList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, "%" + searchcontent + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(
+		                  rset.getInt("BOARD_NO"),
+		                  rset.getString("USER_NAME"),
+		                  rset.getString("BOARD_TITLE"),
+		                  rset.getString("BOARD_CONTENT"),
+		                  rset.getInt("BOARD_COUNT"),
+		                  rset.getString("BOARD_ENROLL_DATE")
+		                  
+		                  ));
+ 				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
    }
    
 }

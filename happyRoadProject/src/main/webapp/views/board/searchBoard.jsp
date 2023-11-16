@@ -4,6 +4,8 @@
 <%
    PageInfo pi = (PageInfo)request.getAttribute("pi");
    ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+   String searchcontent = (String)request.getAttribute("title");
+   int listNull = (int)request.getAttribute("listNull");
    
    int currentPage = pi.getCurrentPage();
    int startPage = pi.getStartPage();
@@ -101,15 +103,15 @@
                     </tr>
                     
                 </thead>
-        
                 <tbody align="center">
-                <%if(list.isEmpty()){ %>
+                <%if(listNull == 0){ %>
                    <tr>
                        <td colspan="6">조회된 게시글이 없습니다.</td>
                    </tr>
-            <%} else {%>
+               <%} else {%>
                <% for(Board b : list){ %>
                     <tr>
+                    	
                         <td class="td"><%=b.getBoardNo() %></td>
                         <td class="td"><%=b.getBoardTitle() %></td>
                         <td class="td"><%=b.getBoardUser() %></td>
@@ -118,7 +120,8 @@
                         <td class="td"><%=b.getBoardCount() %></td>
                     </tr>
                     <%} %>
-                <%} %>
+                <%}%>
+                
                 </tbody>
             </table>
             <script>
@@ -133,20 +136,22 @@
                  })
               })
               
-              // 게시판 리스트 검색 함수
-              function sera(){
-        	   let content = document.querySelector("input[name='searchBoard']").value;
-        	   location.href = 'boardSearch.bo?cpage=1&title=' + encodeURIComponent(content);
+           // 게시판 리스트 검색 함수
+           
+           function sera(){
+     	   	let content = document.querySelector("input[name='searchBoard']").value;
+     	   	location.href = 'boardSearch.bo?cpage=1&title=' + encodeURIComponent(content);
            }
            
-	       		// 엔터키 눌렀을때 검색 함수 
-	          function enter(){
-	        	  if (window.event.keyCode == 13) {
-	        		  let content = document.querySelector("input[name='searchBoard']").value;
-	            	  location.href = 'boardSearch.bo?cpage=1&title=' + encodeURIComponent(content);
-	        	  }
+           // 엔터키 눌렀을때 검색 함수 
+           function enter(){
+        	   if (window.event.keyCode == 13) {
+        		   let content = document.querySelector("input[name='searchBoard']").value;
+            	   location.href = 'boardSearch.bo?cpage=1&title=' + encodeURIComponent(content);
+        	   }
            }
-	       		
+           
+           
            </script>
         </div>
         <br>
@@ -162,22 +167,15 @@
         <br><br>
 
         <div align="center">
-           <%if(currentPage != 1){ %>
-               <button id="num-btn"><a href="<%=contextPath%>/freeboardForm.fb?cpage=<%=currentPage - 1%>" id="text">&lt;</a></button>
-            <%} %>
-            
+        
             <%for(int p = startPage; p <= endPage; p++) { %>
               <%if(p == currentPage) { %>
                  <button id="num-btn"><a id="text"><%=p %></a></button>
               <%} else { %>
-                  <button id="num-btn"><a href="<%=contextPath%>/freeboardForm.fb?cpage=<%=p %>" id="text"><%=p %></a></button>
+                  <button id="num-btn"><a href="<%=contextPath%>/boardSearch.bo?cpage=<%=p %>&title=<%=searchcontent %>" id="text"><%=p %></a></button>
                <%} %>
-               
-            <%} %>
-            <% if(currentPage != maxPage){ %>
-               <button id="num-btn"><a href="<%=contextPath%>/freeboardForm.fb?cpage=<%=currentPage + 1%>" id="text">&gt;</a></button>
-            <%} %>
-            
+              <%} %>
+           
         </div>
     <%@ include file = "../common/footer.jsp"%>
 

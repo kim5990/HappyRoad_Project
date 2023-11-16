@@ -21,7 +21,6 @@
                    FROM (
                        SELECT BOARD_NO
                                ,USER_NAME
-                               ,BOARD_CATEGORY
                                ,BOARD_TITLE
                                ,BOARD_CONTENT
                                ,BOARD_COUNT
@@ -47,7 +46,6 @@
    <entry key="selectBoard">
        SELECT BOARD_NO
              , USER_NAME
-           , BOARD_CATEGORY
            , BOARD_TITLE
            , BOARD_CONTENT
            , BOARD_COUNT
@@ -152,5 +150,35 @@
    		DELETE 
 		    FROM BOARD_COMMENT
 		    WHERE COMMENT_NO = ?
+   </entry>
+   
+   <!-- 게시판 검색 수량 -->
+   <entry key="SearchBoardCount">
+      SELECT COUNT(*) COUNT
+      FROM BOARD
+      WHERE BOARD_TITLE LIKE ?
+         AND BOARD_STATUS = 'Y'
+   </entry>
+   
+   <!-- 게시판 리스트 -->
+   <entry key="SearchBoardList">
+      SELECT *
+         FROM(
+            SELECT ROWNUM RNUM, A.*
+                   FROM (
+                       SELECT BOARD_NO
+                               ,USER_NAME
+                               ,BOARD_TITLE
+                               ,BOARD_CONTENT
+                               ,BOARD_COUNT
+                               ,TO_CHAR(BOARD_ENROLL_DATE, 'YYYY/MM/DD') AS "BOARD_ENROLL_DATE"
+                           FROM BOARD B
+                           JOIN MEMBER ON (BOARD_USER = USER_NO)
+                             WHERE BOARD_STATUS = 'Y'
+                             AND BOARD_TITLE LIKE ?
+                             ORDER BY BOARD_NO DESC
+                 ) A
+              )
+      		  WHERE RNUM BETWEEN ? AND ?
    </entry>
 </properties>

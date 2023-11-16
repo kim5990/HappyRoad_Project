@@ -12,6 +12,8 @@ import com.kh.hrp.board.model.dao.BoardDao;
 import com.kh.hrp.board.model.vo.Board;
 import com.kh.hrp.board.model.vo.BoardComment;
 import com.kh.hrp.common.PageInfo;
+import com.kh.hrp.place.model.dao.PlaceDao;
+import com.kh.hrp.place.model.vo.PlaceSelect;
 
 public class BoardService {
 
@@ -165,5 +167,22 @@ public class BoardService {
 		close(conn);
 		
 		return result;
+   }
+   
+   public int SearchBoardCount(String searchcontent) {
+	   Connection conn = getConnection();
+		int bsearchCount = new BoardDao().SearchBoardCount(conn, searchcontent);
+
+		close(conn);
+		return bsearchCount;
+   }
+   
+   public ArrayList<Board> SearchBoardList(PageInfo pi, String searchcontent){
+	   
+	   Connection conn = getConnection();
+		ArrayList<Board> list = new BoardDao().SearchBoardList(conn, searchcontent, pi);
+		
+		close(conn);
+		return list;
    }
 }
