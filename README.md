@@ -12,7 +12,7 @@
 | 임도현 | 일정관리 | [@Imdo714](https://github.com/Imdo714) |
 
 ## 프로젝트 소개
-
+[HR_Project.pdf](https://github.com/kim5990/HappyRoad_Project/blob/main/Happy_Road%20Project.pdf)
 
 ## 주요기능
 * 회원
@@ -30,6 +30,14 @@
   * 별점후기
 * 게시판
   * 자유게시판 
+
+## 개발환경
+* HTML, CSS, JS, JQuery
+* Java. JSP, Servlet
+* Oracle
+* Eclipse, Visual studio Code
+* Git, GitHub
+
 
 ## ERD
 ![hrERD](https://github.com/kim5990/HappyRoad_Project/assets/152765272/496f3947-f0a1-4930-90b4-5713f4d8a71a)
